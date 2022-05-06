@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace oop_project_2022_2
+namespace Project.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
