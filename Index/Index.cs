@@ -12,10 +12,10 @@ namespace Project.Index
 
         IEnumerable<string> IndexAll(string[] paths)
         {
-            IEnumerable<string> concat = null;
-            foreach(var path in paths)
+            IEnumerable<string>? concat = null;
+            foreach (var path in paths)
             {
-                if(concat == null)
+                if (concat == null)
                 {
                     concat = Index(path);
                 }
@@ -32,6 +32,8 @@ namespace Project.Index
     public class SimpleDiskIndexer : IIndexer
     {
 
+        public static readonly SimpleDiskIndexer Instance = new SimpleDiskIndexer();
+
         private string[] playableExtensions = new string[]
         {
             "mp3",
@@ -40,11 +42,18 @@ namespace Project.Index
             "wav",
         };
 
+        public SimpleDiskIndexer() { }
+
+        public SimpleDiskIndexer(string[] playableExtensions)
+        {
+            this.playableExtensions = playableExtensions;
+        }
+
         private bool IsPlayable(string filePath)
         {
-            foreach(var ext in playableExtensions)
+            foreach (var ext in playableExtensions)
             {
-                if(filePath.EndsWith("." + ext))
+                if (filePath.EndsWith("." + ext))
                 {
                     return true;
                 }

@@ -3,9 +3,10 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <RootNamespace>oop_project_2022_2</RootNamespace>
+    <RootNamespace>Project</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <AssemblyName>Project</AssemblyName>
   </PropertyGroup>
 
 </Project>
