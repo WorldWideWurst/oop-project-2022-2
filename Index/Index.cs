@@ -32,21 +32,21 @@ namespace Project.Index
     public class SimpleDiskIndexer : IIndexer
     {
 
-        public static readonly SimpleDiskIndexer Instance = new SimpleDiskIndexer();
-
-        private string[] playableExtensions = new string[]
+        public static readonly SimpleDiskIndexer Instance = new(new string[]
         {
             "mp3",
             "ogg",
             "m4a",
             "wav",
-        };
+        });
+
+        private string[] playableExtensions;
 
         public SimpleDiskIndexer() { }
 
-        public SimpleDiskIndexer(string[] playableExtensions)
+        public SimpleDiskIndexer(string[] extensions)
         {
-            this.playableExtensions = playableExtensions;
+            this.playableExtensions = extensions;
         }
 
         private bool IsPlayable(string filePath)
