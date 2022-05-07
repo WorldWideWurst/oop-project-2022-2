@@ -8,8 +8,18 @@ namespace Project.Index
 
     public interface IIndexer
     {
+        /// <summary>
+        /// Liefert alle (potentiell) abspielbaren Audiodateien in einem Ordner.
+        /// </summary>
+        /// <param name="path">Der Pfad eines Ordners, der nach abspielbaren Dateien untersucht werden soll.</param>
+        /// <returns>Eine Menge von Dateipfaden, welche (potentiell) spielbare Audiodateien enthält.</returns>
         IEnumerable<string> Index(string path);
 
+        /// <summary>
+        /// Sammelt alle abspielbaren Dateien mehrerer Ordner zusammen und gibt die in einem "Stream" zurück.
+        /// </summary>
+        /// <param name="paths">Merhere Pfade zu Ordnern</param>
+        /// <returns>Alle (potentiell) abspielbaren Dateien mehrerer Ordner</returns>
         IEnumerable<string> IndexAll(string[] paths)
         {
             IEnumerable<string>? concat = null;
