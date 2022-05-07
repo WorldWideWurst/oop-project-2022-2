@@ -6,11 +6,13 @@ namespace Project.Download
     public interface IDownloader
     {
 
-        string SourceName { get; }
+        string SourceDomain { get; }
 
         void Download(string source, string destination);
 
     }
+
+    
 
 
     public class YoutubeDownloader : IDownloader
@@ -18,7 +20,7 @@ namespace Project.Download
 
         public static readonly YoutubeDownloader Instance = new();
 
-        public string SourceName { get => "YouTube"; }
+        public string SourceDomain { get => "YouTube"; }
 
         public void Download(string source, string destination)
         {
