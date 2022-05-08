@@ -88,7 +88,7 @@ namespace Project.Index
                     Console.WriteLine("Fehler bei zugriff in " + searchPath);
                 }
             }
-            return outputArray.ToArray();
+            return outputArray;
         }
 
 
