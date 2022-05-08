@@ -52,8 +52,6 @@ namespace Project.Index
 
         private string[] playableExtensions;
 
-        public SimpleDiskIndexer() { }
-
         public SimpleDiskIndexer(string[] extensions)
         {
             this.playableExtensions = extensions;
