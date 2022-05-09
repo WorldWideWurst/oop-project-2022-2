@@ -1,7 +1,6 @@
 using System;
 using System.Net;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using Project.Index;
 
@@ -14,7 +13,7 @@ namespace Project
         public static bool Download(string URL, string fileName)
         {
             //fileName: "Name"
-            //fileType: "." + "fileType"
+            //fileType: "." + "fileType" 
 
             WebClient webclient = new WebClient();
             var split = URL.Split(".");

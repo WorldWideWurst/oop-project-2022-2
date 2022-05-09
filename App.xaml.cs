@@ -13,5 +13,8 @@ namespace oop_project_2022_2
     /// </summary>
     public partial class App : Application
     {
+
+
+        
     }
 }
