@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.Database
+namespace Project.Music
 {
     public class Music
     {
@@ -18,6 +18,30 @@ namespace Project.Database
         public IList<string> Sources { get; } = new List<string>();
 
         public DateTime Version { get; set; }
+
+    }
+
+
+    public enum MusicListType
+    {
+        Album,
+        ConceptAlbum,
+        Single,
+        LiveAlbum,
+        EP,
+        Playlist,
+        Queue,
+        Undefined,
+    }
+
+    public class MusicList
+    {
+
+        public static readonly MusicList Empty = new();
+
+        public IList<Music> Entries { get; set; } = new List<Music>();
+
+        public MusicListType Type { get; set; } = MusicListType.Undefined;
 
     }
 

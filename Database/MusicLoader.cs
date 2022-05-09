@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.Database
+namespace Project.Music
 {
-    public interface IMetaLoader
+    public interface IMusicLoader
     {
         bool SupportsExtension(string extension);
 
         Music Load(string path);
     }
 
-    public class MetaLoader : IMetaLoader
+    public class MusicLoader : IMusicLoader
     {
 
-        public static readonly MetaLoader Instance = new MetaLoader();
+        public static readonly MusicLoader Instance = new MusicLoader();
 
-        public IList<IMetaLoader> Loaders { get; } = new List<IMetaLoader>();
+        public IList<IMusicLoader> Loaders { get; } = new List<IMusicLoader>();
 
         public bool SupportsExtension(string extension)
         {
