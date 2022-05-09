@@ -6,7 +6,7 @@ using System.Text;
 using Project.Index;
 
 
-namespace oop_project_2022_2
+namespace Project
 {
     public class DownloadFile
     {
