@@ -17,7 +17,7 @@ namespace Project.Music
 
         public IList<string> Sources { get; } = new List<string>();
 
-        public DateTime Version { get; set; }
+        public DateTime Version { get; set; } = DateTime.MinValue;
 
     }
 
