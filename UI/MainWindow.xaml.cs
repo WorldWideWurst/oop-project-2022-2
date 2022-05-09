@@ -16,9 +16,7 @@ using Project;
 
 namespace Project.UI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// Bearbeitet von Philipp Funk und Janek Engel
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -26,19 +24,38 @@ namespace Project.UI
             InitializeComponent();
         }
 
-        private void playButton_Click(object sender, RoutedEventArgs e)
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("'Never gonna give you up' - Rick Astley");
         }
 
-        private void backButton_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Went to last song");
         }
 
-        private void skipButton_Click(object sender, RoutedEventArgs e)
+        private void SkipButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Skipped song");
+        }
+
+        private void RandomizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Randomizing Song Order!");
+        }
+
+        private void RepeatButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Repeating this song!");
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Maximizing!");
+        }
+        private void LikeButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Liked the song!");
         }
     }
 }
