@@ -9,4 +9,19 @@
     <AssemblyName>Project</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="UI\Play.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\MVVM\Model\" />
+    <Folder Include="UI\MVVM\ViewModel\" />
+    <Folder Include="UI\MVVM\View\" />
+    <Folder Include="UI\Theme\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="UI\Play.png" />
+  </ItemGroup>
+
 </Project>
