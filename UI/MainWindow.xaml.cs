@@ -25,5 +25,20 @@ namespace Project.UI
         {
             InitializeComponent();
         }
+
+        private void playButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("'Never gonna give you up' - Rick Astley");
+        }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Went to last song");
+        }
+
+        private void skipButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Skipped song");
+        }
     }
 }
