@@ -57,8 +57,8 @@
                     BorderBrush="{x:Null}" 
                     Height="40" Width="40"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Left" 
-                    Margin="990,17,0,0" 
+                    HorizontalAlignment="Center" 
+                    Margin="100,17,0,0" 
                     Background="{x:Null}" 
                     Panel.ZIndex="999" />
 
@@ -71,8 +71,8 @@
                     BorderBrush="{x:Null}" 
                     Height="40" Width="40"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Left" 
-                    Margin="890,17,0,0" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,17,100,0" 
                     Background="{x:Null}" 
                     Panel.ZIndex="999" />
 
@@ -85,8 +85,8 @@
                     BorderBrush="{x:Null}" 
                     Height="40" Width="40"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Left" 
-                    Margin="1045,17,0,0" 
+                    HorizontalAlignment="Center" 
+                    Margin="200,17,0,0" 
                     Background="{x:Null}" 
                     Panel.ZIndex="999" />
 
@@ -99,12 +99,13 @@
                     BorderBrush="{x:Null}" 
                     Height="40" Width="40"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Left" 
-                    Margin="1090,17,0,0" 
+                    HorizontalAlignment="Center" 
+                    Margin="300,17,0,0" 
                     Background="{x:Null}" 
                     Panel.ZIndex="999" />
 
-            <Slider Margin="770,62,770,19" Maximum="100"/>
+            <Slider Margin="0,62,0,10" Maximum="100"
+                    HorizontalAlignment="Center" Width="400"/>
 
             <Button x:Name="MaximizeButton" 
                     Click="MaximizeButton_Click" 
@@ -116,7 +117,7 @@
                     Height="40" Width="40"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right" 
-                    Margin="1850,0,20,0" 
+                    Margin="0,0,20,0" 
                     Background="{x:Null}" 
                     Panel.ZIndex="999" />
 
@@ -129,8 +130,8 @@
                     BorderBrush="{x:Null}" 
                     Height="40" Width="40"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Left" 
-                    Margin="788,17,0,0" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,17,300,0" 
                     Background="{x:Null}" 
                     Panel.ZIndex="999" />
         </Grid>

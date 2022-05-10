@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media;
 using Project.Music;
 
 namespace Project.Player
@@ -12,11 +13,13 @@ namespace Project.Player
             {
                 if(value == null)
                 {
+                    // player stoppen
                     _musicList = null;
                     CurrentIndex = null;
                 } 
                 else
-                {
+                {   
+                    // neue liste wird abgespielt
                     _musicList = value;
                     CurrentIndex = 0;
                 }
@@ -40,12 +43,12 @@ namespace Project.Player
         }
 
 
-        public void NextEntry()
+        public void PlayNext()
         {
             throw new NotImplementedException();
         }
 
-        public void PreviousEntry()
+        public void PlayPrevious()
         {
             throw new NotImplementedException();
         }
