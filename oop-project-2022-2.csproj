@@ -10,7 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="UI\Play.png" />
+    <None Remove="UI\Images\Play.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="UI\Images\Play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -18,10 +24,6 @@
     <Folder Include="UI\MVVM\ViewModel\" />
     <Folder Include="UI\MVVM\View\" />
     <Folder Include="UI\Theme\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="UI\Play.png" />
   </ItemGroup>
 
 </Project>
