@@ -37,8 +37,6 @@ namespace Project.Music
     public class MusicList
     {
 
-        public static readonly MusicList Empty = new();
-
         public IList<Music> Entries { get; set; } = new List<Music>();
 
         public MusicListType Type { get; set; } = MusicListType.Undefined;
