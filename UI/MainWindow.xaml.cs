@@ -30,7 +30,7 @@ namespace Project.UI
             switch (this.WindowState)
             {
                 case WindowState.Maximized:
-                    LayoutRoot.Margin = new Thickness(8, 8, 8, 8);
+                    LayoutRoot.Margin = new Thickness(6, 6, 6, 0);
                     break;
                 case WindowState.Normal:
                     LayoutRoot.Margin = new Thickness(0, 0, 0, 0);
