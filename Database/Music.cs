@@ -5,9 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Project.Music
-{
-    public class Music
+{   
+
+    public class MusicObject
     {
+
+    }
+
+    public class Music : MusicObject
+    {
+
+        public Guid Id { get; set; }
 
         public string? Title { get; set; }
 
@@ -18,6 +26,8 @@ namespace Project.Music
         public IList<string> Sources { get; } = new List<string>();
 
         public DateTime Version { get; set; } = DateTime.MinValue;
+
+        public bool IsFavourite { get; set; }
 
     }
 
@@ -34,7 +44,7 @@ namespace Project.Music
         Undefined,
     }
 
-    public class MusicList
+    public class MusicList : MusicObject
     {
 
         public IList<Music> Entries { get; set; } = new List<Music>();

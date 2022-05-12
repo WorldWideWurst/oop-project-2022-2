@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="MusicDB"
+    targetNamespace="http://tempuri.org/MusicDB.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/MusicDB.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="musicdb">
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="music"/>
+				<xs:element name="playlist"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="music">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="title" type="xs:string" minOccurs="0"/>
+				<xs:element name="album" type="xs:string" minOccurs="0"/>
+				<xs:element name="interpret" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="source" minOccurs="0" maxOccurs="unbounded" type="xs:anyURI"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="playlist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" />
+				<xs:element name="entries" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="user" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
