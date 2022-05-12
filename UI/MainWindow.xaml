@@ -11,6 +11,7 @@
         WindowState="Normal"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
+        StateChanged="MainWindow_StateChanged"
         AllowsTransparency="True"
         Background="Transparent">
 

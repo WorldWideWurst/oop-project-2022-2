@@ -27,19 +27,12 @@ namespace Project.UI
 
         private void MainWindow_StateChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("Das funzt 1");
             switch (this.WindowState)
             {
                 case WindowState.Maximized:
-                    MessageBox.Show("Das funzt w");
                     LayoutRoot.Margin = new Thickness(8, 8, 8, 8);
                     break;
-                case WindowState.Minimized:
-                    MessageBox.Show("Das funzt 3");
-                    LayoutRoot.Margin = new Thickness(0, 0, 0, 0);
-                    break;
                 case WindowState.Normal:
-                    MessageBox.Show("Das funzt 4");
                     LayoutRoot.Margin = new Thickness(0, 0, 0, 0);
                     break;
             }
@@ -87,16 +80,7 @@ namespace Project.UI
 
         private void MaximizeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                LayoutRoot.Margin = new Thickness(0, 0, 0, 0);
-                this.WindowState = WindowState.Normal;
-            }
-            else
-            {
-                LayoutRoot.Margin = new Thickness(8, 8, 8, 8);
-                this.WindowState = WindowState.Maximized;
-            }
+            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
