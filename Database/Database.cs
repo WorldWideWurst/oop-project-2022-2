@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
 using System.Xml;
+using System.Reflection;
 
 namespace Project.Music
 {
     public class Database : IDisposable
     {
 
-        private IDictionary<Guid, Music> music = new Dictionary<Guid, Music>();
-        private ISet<string> registeredSources = new HashSet<string>();
+        public const string Version = "0.1";
+        
+        public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite";
+        public static readonly string EmptyDBSQLLoc = "Database\\empty_musicdb_template.sqlite3.sql";
+        
+        public static readonly Database Instance = new();
 
-        // auto-generierte Listen
-        private MusicList favourites = new MusicList();
-        private IList<MusicList> playlists = new List<MusicList>();
 
+        private SQLiteConnection connection;
 
-        public readonly Database Instance = new();
 
         public Database(string path)
         {
@@ -30,78 +32,42 @@ namespace Project.Music
                 string? parent = Directory.GetParent(path)?.FullName;
                 if (!Directory.Exists(parent)) Directory.CreateDirectory(parent);
 
-                File.Copy("Database\\EmptyMusicDBTemplate.xml", path);
+                string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string sqlFile = Path.Combine(assemblyFolder, EmptyDBSQLLoc);
+
+                connection = new SQLiteConnection($"URI=file:{path}");
+                connection.Open();
+
+                var command = new SQLiteCommand(File.ReadAllText(sqlFile), connection);
+                command.ExecuteNonQuery();
             }
-
-            // Daten einlesen
-            var doc = new XmlDocument();
-                doc.Load(File.Open(path, FileMode.Open));
-
-            foreach (XmlNode item in doc.DocumentElement?.ChildNodes)
+            else
             {
-                if(item.Name == "music")
-                {
-                    addMusicFromXml(item);
-                }
-                else if(item.Name == "playlist")
-                {
-                    addPlaylistFromXml(item);
-                }
+                connection = new SQLiteConnection($"URI=file:{path}");
+                connection.Open();
             }
+            
+
         }
 
-        private void addPlaylistFromXml(XmlNode item)
-        {
-            throw new NotImplementedException();
-        }
+        public Database() : this(DefaultDBLoc) { }
 
-        private void addMusicFromXml(XmlNode xml)
-        {
-            var id = xml.Attributes?["id"]?.Name;
-            Guid guid = id != null ? Guid.Parse(id) : Guid.NewGuid();
 
-            Music music = new Music { Id = guid };
 
-            foreach(XmlNode item in xml.ChildNodes)
-            {
-                if(item.Name == "title")
-                {
-                    music.Title = item.InnerText;
-                } 
-                else if(item.Name == "album")
-                {
-                    music.Album = item.InnerText;
-                } 
-                else if(item.Name == "interpret")
-                {
-                    music.Interprets.Add(item.InnerText);
-                }
-                else if(item.Name == "source")
-                {
-                    music.Sources.Add(item.InnerText);
-                    registeredSources.Add(item.InnerText);
-                }
-            }
 
-            this.music[music.Id] = music;
-        }
+        public string? SQLiteVersion => new SQLiteCommand("SELECT SQLITE_VERSION()", connection)?.ExecuteScalar().ToString();
+        
 
-        public Database() : this("Datastore\\MusicDB.xml") { } // TODO: pfad später ändern
-
-        public void Dispose()
-        {
-            // Datenbank ausschreiben
-            // 
-        }
-
-        public Music Register(string source)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<MusicObject> StringQuery(string query)
         {
             throw new NotImplementedException();
+        }
+
+
+        public void Dispose()
+        {
+            connection.Dispose();
         }
         
     }

@@ -23,7 +23,7 @@ namespace Project.Music
 
         public IList<string> Interprets { get; } = new List<string>();
 
-        public IList<string> Sources { get; } = new List<string>();
+        public ISet<string> Sources { get; } = new HashSet<string>();
 
         public DateTime Version { get; set; } = DateTime.MinValue;
 
@@ -50,6 +50,10 @@ namespace Project.Music
         public IList<Music> Entries { get; set; } = new List<Music>();
 
         public MusicListType Type { get; set; } = MusicListType.Undefined;
+
+        public string? Owner { get; set; }
+
+        public DateOnly? PublishDate { get; set; }
 
     }
 

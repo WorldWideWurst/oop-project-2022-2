@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Project;
+using Project.Music;
 
 
 namespace Project.UI
@@ -85,6 +86,7 @@ namespace Project.UI
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(Database.Instance.SQLiteVersion);
             this.Close();
         }
     }
