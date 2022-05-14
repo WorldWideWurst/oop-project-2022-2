@@ -42,11 +42,6 @@ namespace Project.UI
             }
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("'Never gonna give you up' - Rick Astley");
-        }
-
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Went to last song");
@@ -57,22 +52,27 @@ namespace Project.UI
             MessageBox.Show("Skipped song");
         }
 
-        private void RandomizeButton_Click(object sender, RoutedEventArgs e)
+        private void PlayCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("'Never gonna give you up' - Rick Astley");
+        }
+
+        private void RandomizeCheckbox_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Randomizing Song Order!");
         }
 
-        private void RepeatButton_Click(object sender, RoutedEventArgs e)
+        private void RepeatCheckbox_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Repeating this song!");
         }
 
-        private void FullscreenButton_Click(object sender, RoutedEventArgs e)
+        private void FullscreenCheckbox_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Maximizing!");
         }
 
-        private void LikeButton_Click(object sender, RoutedEventArgs e)
+        private void LikeCheckbox_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Liked the song!");
         }

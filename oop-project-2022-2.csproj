@@ -11,12 +11,24 @@
 
   <ItemGroup>
     <None Remove="Database\empty_musicdb_template.sqlite3.sql" />
+    <None Remove="UI\Images\Like.png" />
+    <None Remove="UI\Images\Liked.png" />
+    <None Remove="UI\Images\LikeHover.png" />
     <None Remove="UI\Images\Play.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Database\empty_musicdb_template.sqlite3.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\Like.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\Liked.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\LikeHover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\Play.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -25,7 +37,6 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="UI\Theme\" />
   </ItemGroup>
 
   <ItemGroup>

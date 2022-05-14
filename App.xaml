@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:oop_project_2022_2"
              StartupUri="UI/MVVM/View/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UI/Themes/ButtonStyles.xaml" />
+                <ResourceDictionary Source="/UI/Themes/CheckBoxStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
