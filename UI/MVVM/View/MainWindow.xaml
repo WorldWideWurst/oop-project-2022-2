@@ -5,6 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project.UI"
+        xmlns:views="clr-namespace:Project.UI.MVVM.View"
+        xmlns:models="clr-namespace:Project.UI.MVVM.Model"
+        xmlns:viewmodels="clr-namespace:Project.UI.MVVM.ViewModel"
         mc:Ignorable="d"
         Height="810" Width="1440"
         Title="MainWindow"
@@ -15,9 +18,28 @@
         AllowsTransparency="True"
         Background="Transparent">
 
+    <!-- setzt obere 30px als Titel-Leiste-->
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <DataTemplate x:Name="StartseiteTemplate" DataType="{x:Type viewmodels:StartseiteViewModel}">
+            <views:Startseite DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="PlaylistsTemplate" DataType="{x:Type viewmodels:PlaylistsViewModel}">
+            <views:Playlists DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="DownloaderTemplate" DataType="{x:Type viewmodels:DownloaderViewModel}">
+            <views:Downloader DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="FileManagerTemplate" DataType="{x:Type viewmodels:FileManagerViewModel}">
+            <views:FileManager DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="CurrentListTemplate" DataType="{x:Type viewmodels:CurrentListViewModel}">
+            <views:CurrentList DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
 
     <!--Layout-Design von Philipp Funk, Erstumsetzung von Janek Engel -->
     <Grid x:Name="LayoutRoot"
@@ -47,27 +69,30 @@
 
             <Button x:Name="CloseButton" 
                     Click="CloseButton_Click"
-                    Grid.Column="3"
-                    Background="Red"
-                    BorderThickness="0"
+                    Grid.Column="3" 
+                    Background="Transparent"
+                    BorderThickness="1, 0, 0, 0"
                     Panel.ZIndex="999"
-                    WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    WindowChrome.IsHitTestVisibleInChrome="True"
+                    BorderBrush="#FF454545"/>
 
             <Button x:Name="MaximizeButton" 
                     Click="MaximizeButton_Click"
                     Grid.Column="2"
-                    Background="Orange" 
-                    BorderThickness="0"
+                    Background="Transparent"
+                    BorderThickness="1, 0, 0, 0"
                     Panel.ZIndex="999"
-                    WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    WindowChrome.IsHitTestVisibleInChrome="True"
+                    BorderBrush="#FF454545"/>
 
             <Button x:Name="MinimizeButton"
                     Click="MinimizeButton_Click"
-                    Grid.Column="1" 
-                    Background="Green" 
-                    BorderThickness="0"
+                    Grid.Column="1"
+                    Background="Transparent"
+                    BorderThickness="1, 0, 0, 0"
                     Panel.ZIndex="999"
-                    WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    WindowChrome.IsHitTestVisibleInChrome="True"
+                    BorderBrush="#FF454545"/>
 
         </Grid>
         <Grid x:Name="BottomBar"
@@ -187,8 +212,21 @@
         <Grid x:Name="LeftBar"
               HorizontalAlignment="Left"
               Width="280"
-              Background="#FF323232" Panel.ZIndex="800">
-
+              Margin="0,30,0,100"
+              Background="#FF323232"
+              Panel.ZIndex="800">
+            <StackPanel>
+                <Button x:Name="StartseiteButton" Click="StartseiteButton_Click" Content="Startseite&#xA;"/>
+                <Button x:Name="PlaylistsButton" Click="PlaylistsButton_Click" Content="Playlists&#xA;"/>
+                <Button x:Name="DownloaderButton" Click="DownloaderButton_Click" Content="Downloader&#xA;"/>
+                <Button x:Name="FileManagerButton" Click="FileManagerButton_Click" Content="FileManager&#xA;"/>
+                <Button x:Name="CurrentListButton" Click="CurrentListButton_Click" Content="CurrentList&#xA;"/>
+            </StackPanel>
         </Grid>
+        <ContentControl x:Name="ContentViewer"
+                        Margin="280,30,0,100" 
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Content="{Binding }"/>
     </Grid>
 </Window>

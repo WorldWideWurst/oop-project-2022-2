@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Project;
 using Project.Music;
-
+using Project.UI.MVVM.ViewModel;
 
 namespace Project.UI
 {
@@ -23,15 +23,18 @@ namespace Project.UI
     {
         public MainWindow()
         {
+            //Initialisiert und zeigt Startseite an
+            DataContext = new StartseiteViewModel();
             InitializeComponent();
         }
 
+        //Fügt bei Maximiertem Fenster einen Rand hinzu, damit das Fenster im angezeigten Bereich bleibt
         private void MainWindow_StateChanged(object sender, EventArgs e)
         {
             switch (this.WindowState)
             {
                 case WindowState.Maximized:
-                    LayoutRoot.Margin = new Thickness(6, 6, 6, 0);
+                    LayoutRoot.Margin = new Thickness(7, 7, 7, 7);
                     break;
                 case WindowState.Normal:
                     LayoutRoot.Margin = new Thickness(0, 0, 0, 0);
@@ -86,8 +89,32 @@ namespace Project.UI
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Database.Instance.SQLiteVersion);
             this.Close();
+        }
+
+        private void StartseiteButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new StartseiteViewModel();
+        }
+
+        private void PlaylistsButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new PlaylistsViewModel();
+        }
+
+        private void DownloaderButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new DownloaderViewModel();
+        }
+
+        private void FileManagerButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new FileManagerViewModel();
+        }
+
+        private void CurrentListButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new CurrentListViewModel();
         }
     }
 }
