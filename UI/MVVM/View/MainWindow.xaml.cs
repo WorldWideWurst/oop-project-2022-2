@@ -18,7 +18,7 @@ using Project.UI.MVVM.ViewModel;
 
 namespace Project.UI
 {
-    /// Bearbeitet von Philipp Funk und Janek Engel, nur temorär um Kompilierung zu ermöglichen
+    // Angepasst von Janek Engel
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -42,41 +42,8 @@ namespace Project.UI
             }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Went to last song");
-        }
 
-        private void SkipButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Skipped song");
-        }
-
-        private void PlayCheckbox_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("'Never gonna give you up' - Rick Astley");
-        }
-
-        private void RandomizeCheckbox_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Randomizing Song Order!");
-        }
-
-        private void RepeatCheckbox_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Repeating this song!");
-        }
-
-        private void FullscreenCheckbox_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Maximizing!");
-        }
-
-        private void LikeCheckbox_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Liked the song!");
-        }
-
+        //Knöpfe der Titel-Leiste
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -92,6 +59,70 @@ namespace Project.UI
             this.Close();
         }
 
+
+        //Audio-Player-Buttons
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Went to last song");
+        }
+
+        private void SkipButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Skipped song");
+        }
+
+
+        private void PlayCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("'Never gonna give you up' - Rick Astley");
+        }
+        private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("'Gave you up' - Ack Ristley");
+        }
+
+
+        private void RandomizeCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Randomizing Song Order!");
+        }
+        private void RandomizeCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not randomizing anymore");
+        }
+
+        private void RepeatCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Repeating this song!");
+        }
+        private void RepeatCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not repeating this song anymore");
+        }
+
+
+        private void FullscreenCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Maximizing!");
+        }
+        private void FullscreenCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Minimizing!");
+        }
+
+
+        private void LikeCheckbox_Checked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Liked the song!");
+        }
+
+        private void LikeCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Dont like the song anymore :(");
+        }
+
+
+        //Menü-Buttons
         private void StartseiteButton_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new StartseiteViewModel();
@@ -116,5 +147,6 @@ namespace Project.UI
         {
             DataContext = new CurrentListViewModel();
         }
+
     }
 }

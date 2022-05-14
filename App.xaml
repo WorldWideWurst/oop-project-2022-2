@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:oop_project_2022_2"
              StartupUri="UI/MVVM/View/MainWindow.xaml">
+    <!-- Angepasst von Janek Engel -->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/UI/Themes/ButtonStyles.xaml" />
                 <ResourceDictionary Source="/UI/Themes/CheckBoxStyles.xaml" />
+                <ResourceDictionary Source="/UI/Themes/RadioButtonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
