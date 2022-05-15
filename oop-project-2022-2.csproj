@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UI\MVVM\Model\MediaPlayer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Database\empty_musicdb_template.sqlite3.sql" />
     <None Remove="UI\Images\Like.png" />
     <None Remove="UI\Images\Liked.png" />
@@ -37,6 +41,10 @@
 
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="UI\MVVM\Model\MediaPlayer.cs" />
   </ItemGroup>
 
   <ItemGroup>

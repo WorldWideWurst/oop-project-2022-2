@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using Microsoft.Win32;
 using Project;
 using Project.Music;
 using Project.UI.MVVM.ViewModel;
@@ -21,6 +23,8 @@ namespace Project.UI
     // Angepasst von Janek Engel
     public partial class MainWindow : Window
     {
+        private MediaPlayer mediaPlayer = new MediaPlayer();
+
         public MainWindow()
         {
             //Initialisiert und zeigt Startseite an
@@ -75,10 +79,12 @@ namespace Project.UI
         private void PlayCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("'Never gonna give you up' - Rick Astley");
+            mediaPlayer.Play();
         }
         private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("'Gave you up' - Ack Ristley");
+            mediaPlayer.Pause();
         }
 
 
@@ -148,5 +154,32 @@ namespace Project.UI
             DataContext = new CurrentListViewModel();
         }
 
+        private void EinstellungenButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new EinstellungenViewModel();
+        }
+
+        private void ChooseSong_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == true) { 
+                mediaPlayer.Open(new Uri(openFileDialog.FileName));
+                PlayCheckbox.IsChecked = false;
+
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += timer_Tick;
+                timer.Start();
+            }
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            if (mediaPlayer.Source != null)
+                lblStatus.Content = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
+            else
+                lblStatus.Content = "No file selected...";
+        }
     }
 }

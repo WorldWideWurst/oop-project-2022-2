@@ -1,7 +1,5 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,21 +16,13 @@ using System.Windows.Shapes;
 namespace Project.UI.MVVM.View
 {
     /// <summary>
-    /// Interaktionslogik für Startseite.xaml
+    /// Interaktionslogik für Einstellungen.xaml
     /// </summary>
-    public partial class Startseite : UserControl
+    public partial class Einstellungen : UserControl
     {
-
-        private MediaPlayer mediaPlayer = new MediaPlayer();
-
-        public Startseite()
+        public Einstellungen()
         {
             InitializeComponent();
-        }
-
-        private void TestButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Test bestanden");
         }
     }
 }

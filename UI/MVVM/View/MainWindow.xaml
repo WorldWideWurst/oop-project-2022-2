@@ -40,6 +40,9 @@
         <DataTemplate x:Name="CurrentListTemplate" DataType="{x:Type viewmodels:CurrentListViewModel}">
             <views:CurrentList DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="EinstellungenTemplate" DataType="{x:Type viewmodels:EinstellungenViewModel}">
+            <views:Einstellungen DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
     <!--Layout-Design von Philipp Funk, Erstumsetzung von Janek Engel -->
@@ -70,8 +73,6 @@
             <Button x:Name="CloseButton" 
                     Click="CloseButton_Click"
                     Style="{StaticResource CloseButton}"
-                    BorderThickness="1,0,0,0"
-                    BorderBrush="#FF454545"
                     Grid.Column="3"
                     Panel.ZIndex="999"
                     WindowChrome.IsHitTestVisibleInChrome="True" />
@@ -79,7 +80,6 @@
             <Button x:Name="MaximizeButton" 
                     Click="MaximizeButton_Click"
                     Style="{StaticResource MaximizeButton}"
-                    BorderThickness="1,0,0,0"
                     Grid.Column="2"
                     Panel.ZIndex="999"
                     WindowChrome.IsHitTestVisibleInChrome="True" />
@@ -106,29 +106,21 @@
                   Margin="0,0,0,0">
                 
                 <Button x:Name="SkipButton" 
-                        Click="SkipButton_Click" 
-                        Content="Skip&#xD;&#xA;" 
-                        Foreground="White" 
-                        FontSize="16" 
-                        BorderBrush="{x:Null}" 
+                        Click="SkipButton_Click"
+                        Style="{StaticResource SkipButton}"
                         Height="40" Width="40"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Center" 
-                        Margin="100,17,0,0" 
-                        Background="{x:Null}" 
+                        Margin="100,17,0,0"  
                         Panel.ZIndex="999" />
 
                 <Button x:Name="BackButton" 
                         Click="BackButton_Click" 
-                        Content="Back&#xA;" 
-                        Foreground="White" 
-                        FontSize="16" 
-                        BorderBrush="{x:Null}" 
+                        Style="{StaticResource BackButton}"
                         Height="40" Width="40"
                         VerticalAlignment="Top"
                         HorizontalAlignment="Center" 
                         Margin="0,17,100,0" 
-                        Background="{x:Null}" 
                         Panel.ZIndex="999" />
 
 
@@ -185,7 +177,13 @@
                         Margin="0,50,0,0">
                 </Slider>
 
+                <Label Name="lblStatus" Content="Not playing..." HorizontalContentAlignment="Center" Margin="5,75,5,-5" Foreground="White"/>
+
             </Grid>
+
+            <Button x:Name="ChooseSong"
+                    Click="ChooseSong_Click"
+                    Content="Choose Song (Temporär)" Margin="254,50,1038,24" />
 
             <CheckBox   x:Name="FullscreenCheckbox" 
                         Checked="FullscreenCheckbox_Checked"
@@ -226,6 +224,10 @@
                 <RadioButton x:Name="CurrentListButton"
                              Click="CurrentListButton_Click"
                              Content="CurrentList"
+                             Style="{StaticResource MenuButtonTheme}" />
+                <RadioButton x:Name="EinstellungenButton"
+                             Click="EinstellungenButton_Click"
+                             Content="Einstellungen"
                              Style="{StaticResource MenuButtonTheme}" />
             </StackPanel>
         </Grid>
