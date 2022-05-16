@@ -4,12 +4,12 @@ using System.IO;
 using System.Text;
 using Project.Index;
 
-
+// als Singelton umbauen
+//Interface Implementieren
 namespace Project
 {
     public class DownloadFile
     {
-
         public static bool Download(string URL, string fileName)
         {
             //fileName: "Name"
