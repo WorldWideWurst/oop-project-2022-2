@@ -108,19 +108,19 @@
                 <Button x:Name="SkipButton" 
                         Click="SkipButton_Click"
                         Style="{StaticResource SkipButton}"
-                        Height="40" Width="40"
-                        VerticalAlignment="Top"
+                        Height="25" Width="25"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Center" 
-                        Margin="100,17,0,0"  
+                        Margin="90,0,0,30"  
                         Panel.ZIndex="999" />
 
                 <Button x:Name="BackButton" 
                         Click="BackButton_Click" 
                         Style="{StaticResource BackButton}"
-                        Height="40" Width="40"
-                        VerticalAlignment="Top"
+                        Height="25" Width="25"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Center" 
-                        Margin="0,17,100,0" 
+                        Margin="0,0,90,30" 
                         Panel.ZIndex="999" />
 
 
@@ -130,9 +130,9 @@
                             Style="{StaticResource PlayCheckbox}"
                             BorderBrush="{x:Null}" 
                             Height="40" Width="40"
-                            VerticalAlignment="Top"
+                            VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="0,17,0,0"
+                            Margin="0,0,0,30"
                             Panel.ZIndex="999" />
 
 
@@ -142,21 +142,23 @@
                             Style="{StaticResource RandomizeCheckbox}"
                             BorderBrush="{x:Null}" 
                             Height="40" Width="40"
-                            VerticalAlignment="Top"
+                            VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="200,17,0,0"
+                            Margin="200,0,0,30"
                             Panel.ZIndex="999" />
 
 
                 <CheckBox   x:Name="RepeatCheckbox" 
+                            IsThreeState="True"
                             Checked="RepeatCheckbox_Checked"
                             Unchecked="RepeatCheckbox_Unchecked"
+                            Indeterminate="RepeatCheckbox_Indeterminant"
                             Style="{StaticResource RepeatCheckbox}"
                             BorderBrush="{x:Null}" 
                             Height="40" Width="40"
-                            VerticalAlignment="Top"
+                            VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="300,17,0,0"
+                            Margin="300,0,0,30"
                             Panel.ZIndex="999" />
 
                 <CheckBox   x:Name="LikeCheckbox"
@@ -165,9 +167,9 @@
                             Style="{StaticResource LikeCheckbox}"
                             BorderBrush="{x:Null}" 
                             Height="40" Width="40"
-                            VerticalAlignment="Top"
+                            VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="0,17,300,0"
+                            Margin="0,0,300,30"
                             Panel.ZIndex="999" />
 
                 <Slider Maximum="100" 
