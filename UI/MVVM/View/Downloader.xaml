@@ -7,9 +7,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Downloader" Foreground="White" FontSize="40"/>
-        <TextBox Name="URL" Margin="0,500,367,0" Height="79" VerticalAlignment="Top" />
-        <TextBox Name="Target" Margin="0,100,367,225" Height="79" />
-        <Button Content="OK" Click="DownloaderButton_Click" Margin="0,225,0,111" Height="40">  </Button>
+        <TextBlock Text="Downloader" 
+                   Foreground="White" 
+                   FontSize="40"/>
+
+
+        <TextBlock Foreground="White" 
+                   Text="Ziel hier eingeben"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top" 
+                   Margin="0,130,0,0"/>
+        <TextBox Name="Target"
+                 Height="60" Width="400" 
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Top" 
+                 Margin="0,150,0,0"/>
+
+        <Button Content="OK"
+                Foreground="White" 
+                Click="DownloaderButton_Click" 
+                Margin="0,250,0,0" Height="40" HorizontalAlignment="Center" Width="216" VerticalAlignment="Top" Background="#FF323232" BorderBrush="{x:Null}" />
+        <TextBox Name="URL"
+                 Height="60" Width="400" 
+                 HorizontalAlignment="Center" 
+                 VerticalAlignment="Top" 
+                 Margin="0,330,0,0"/>
+        <TextBlock Foreground="White" 
+                   Text="URL hier eingeben"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top" 
+                   Margin="0,310,0,0"/>
     </Grid>
 </UserControl>
