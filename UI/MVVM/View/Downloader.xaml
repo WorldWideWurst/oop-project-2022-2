@@ -8,17 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TextBlock Text="Downloader" Foreground="White" FontSize="40"/>
-        <TextBox Name="URL" Margin="0,306,367,0" Height="79" VerticalAlignment="Top" />
-        <TextBox Name="Target" Margin="11,137,367,225" />
-        <Button Content="OK" Click="DownloaderButton_Click" Margin="400,225,-22,111" RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="85.259"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+        <TextBox Name="URL" Margin="0,500,367,0" Height="79" VerticalAlignment="Top" />
+        <TextBox Name="Target" Margin="0,100,367,225" Height="79" />
+        <Button Content="OK" Click="DownloaderButton_Click" Margin="0,225,0,111" Height="40">  </Button>
     </Grid>
 </UserControl>
