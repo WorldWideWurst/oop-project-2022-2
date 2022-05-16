@@ -106,6 +106,10 @@ namespace Project.UI
         {
             MessageBox.Show("Not repeating this song anymore");
         }
+        private void RepeatCheckbox_Indeterminant(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Repeating the Playlist");
+        }
 
 
         private void FullscreenCheckbox_Checked(object sender, RoutedEventArgs e)

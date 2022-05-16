@@ -149,8 +149,10 @@
 
 
                 <CheckBox   x:Name="RepeatCheckbox" 
+                            IsThreeState="True"
                             Checked="RepeatCheckbox_Checked"
                             Unchecked="RepeatCheckbox_Unchecked"
+                            Indeterminate="RepeatCheckbox_Indeterminant"
                             Style="{StaticResource RepeatCheckbox}"
                             BorderBrush="{x:Null}" 
                             Height="40" Width="40"

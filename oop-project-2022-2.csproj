@@ -15,26 +15,110 @@
 
   <ItemGroup>
     <None Remove="Database\empty_musicdb_template.sqlite3.sql" />
+    <None Remove="UI\Images\back.png" />
+    <None Remove="UI\Images\back_hover.png" />
+    <None Remove="UI\Images\close.png" />
+    <None Remove="UI\Images\close_hover.png" />
+    <None Remove="UI\Images\forward.png" />
+    <None Remove="UI\Images\forward_hover.png" />
+    <None Remove="UI\Images\heart.png" />
+    <None Remove="UI\Images\heart_full.png" />
     <None Remove="UI\Images\Like.png" />
     <None Remove="UI\Images\Liked.png" />
-    <None Remove="UI\Images\LikeHover.png" />
+    <None Remove="UI\Images\like_hover.png" />
+    <None Remove="UI\Images\loop.png" />
+    <None Remove="UI\Images\loop_aktiv.png" />
+    <None Remove="UI\Images\maxm.png" />
+    <None Remove="UI\Images\maxm_hover.png" />
+    <None Remove="UI\Images\mm.png" />
+    <None Remove="UI\Images\mm_hover.png" />
+    <None Remove="UI\Images\pause.png" />
+    <None Remove="UI\Images\pause_hover.png" />
     <None Remove="UI\Images\Play.png" />
+    <None Remove="UI\Images\play_hover.png" />
+    <None Remove="UI\Images\queque.png" />
+    <None Remove="UI\Images\shuffle.png" />
+    <None Remove="UI\Images\shuffle_hover.png" />
+    <None Remove="UI\Images\sound.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Database\empty_musicdb_template.sqlite3.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\Like.png">
+    <Content Include="UI\Images\back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\Liked.png">
+    <Content Include="UI\Images\back_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\LikeHover.png">
+    <Content Include="UI\Images\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\Play.png">
+    <Content Include="UI\Images\close_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\forward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\forward_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\heart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\heart_full.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\like.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\liked.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\like_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\loop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\loop_aktiv.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\maxm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\maxm_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\mm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\mm_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\pause_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\play_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\queque.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\shuffle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\shuffle_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\sound.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
