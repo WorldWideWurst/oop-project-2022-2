@@ -38,7 +38,7 @@
     <None Remove="UI\Images\play_hover.png" />
     <None Remove="UI\Images\queque.png" />
     <None Remove="UI\Images\shuffle.png" />
-    <None Remove="UI\Images\shuffle_hover.png" />
+    <None Remove="UI\Images\shuffle_aktiv.png" />
     <None Remove="UI\Images\sound.png" />
   </ItemGroup>
 
@@ -115,7 +115,7 @@
     <Content Include="UI\Images\shuffle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\shuffle_hover.png">
+    <Content Include="UI\Images\shuffle_aktiv.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\sound.png">

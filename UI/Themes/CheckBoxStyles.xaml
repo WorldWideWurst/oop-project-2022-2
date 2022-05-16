@@ -14,24 +14,34 @@
                     </StackPanel>
 
                     <ControlTemplate.Triggers>
-
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/heart_full.png"/>
                         </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/like.png" />
-                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    <!-- Randomize-Checkbox -->
+    <Style x:Key="RandomizeCheckbox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <StackPanel>
+                        <Image x:Name="checkboxImage" Source="/UI/Images/shuffle.png" />
+                        <ContentPresenter />
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/shuffle_aktiv.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!-- Play-Checkbox -->
     <Style x:Key="PlayCheckbox" TargetType="{x:Type CheckBox}">
@@ -63,36 +73,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/pause_hover.png" />
                         </MultiTrigger>
-                        
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
-    <!-- Randomize-Checkbox -->
-    <Style x:Key="RandomizeCheckbox" TargetType="{x:Type CheckBox}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <StackPanel>
-                        <Image x:Name="checkboxImage" Source="/UI/Images/shuffle.png" />
-                        <ContentPresenter />
-                    </StackPanel>
-
-                    <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/shuffle_hover.png"/>
-                        </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/like.png" />
-                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -110,22 +91,12 @@
                     </StackPanel>
 
                     <ControlTemplate.Triggers>
-
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/loop_aktiv.png"/>
                         </Trigger>
-
                         <Trigger Property="IsChecked" Value="{x:Null}">
                             <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/liked.png"/>
                         </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/like.png" />
-                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -138,23 +109,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel>
-                        <Image x:Name="checkboxImage" Source="/UI/Images/maxm.png" />
+                        <Image x:Name="checkboxImage" Source="/UI/Images/like.png" />
                         <ContentPresenter />
                     </StackPanel>
 
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/maxm_hover.png"/>
+                            <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/liked.png"/>
                         </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsChecked" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/like.png" />
-                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
