@@ -172,15 +172,16 @@ namespace Project.Music
             using SQLiteCommand cmd = new SQLiteCommand(connection);
             if(!music.Exists)
             {
-                cmd.CommandText = "insert into music (id, title) values (@id, @title)";
+                cmd.CommandText = "insert into music (id, title, album) values (@id, @title, @album)";
             }
             else
             {
-                cmd.CommandText = "update music set title = @title where id = @id";
+                cmd.CommandText = "update music set title = @title, album = @album where id = @id";
             }
             
             cmd.Parameters.AddWithValue("id", music.Id.ToByteArray());
             cmd.Parameters.AddWithValue("title", music.Title);
+            cmd.Parameters.AddWithValue("album", music.Album);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
 
