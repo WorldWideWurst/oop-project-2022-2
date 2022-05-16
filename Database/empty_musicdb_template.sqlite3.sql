@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS "source" (
 CREATE TABLE IF NOT EXISTS "music" (
 	"id"	BLOB NOT NULL,
 	"title"	TEXT,
+	"album" TEXT,
 	PRIMARY KEY("id")
 );
 CREATE TABLE IF NOT EXISTS "_music_by_artist" (

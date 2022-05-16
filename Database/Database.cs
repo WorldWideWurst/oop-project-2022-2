@@ -148,24 +148,23 @@ namespace Project.Music
             return artists;
         }
 
-        public string GetMusicAlbum(Guid id)
-        {
-            return null; // TODO
-        }
-
         public Music? GetMusic(Guid id)
         {
-            var artists = GetMusicArtists(id);
-            var sources = GetMusicSources(id);
-            var album = GetMusicAlbum(id);
-
-            using var cmd = new SQLiteCommand("select title from music where id = @id", connection);
+            using var cmd = new SQLiteCommand("select title, album from music where id = @id", connection);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Prepare();
 
-            string? title = (string?)cmd.ExecuteScalar();
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                var artists = GetMusicArtists(id);
+                var sources = GetMusicSources(id);
+                string? title = reader.GetString(0);
+                string? album = reader.GetString(1);
+                return new Music(id, title, album, artists, sources);
+            }
 
-            return new Music(id, title, album, artists, sources);
+            return null;
         }
 
         public void WriteMusic(Music music)
