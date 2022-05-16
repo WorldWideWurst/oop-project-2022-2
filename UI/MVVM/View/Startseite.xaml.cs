@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Project.Music;
 
 namespace Project.UI.MVVM.View
 {
@@ -32,7 +33,11 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Test bestanden");
+            var music = new Music.Music(null, "Hallelujah", "Great Songs", new List<string> { "Michael Jackson", "Minecraft Steve" }, new List<Source>());
+            Database.Instance.WriteMusic(music);
+
+            var newMusic = Database.Instance.GetMusic(music.Id);
+
         }
     }
 }
