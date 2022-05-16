@@ -64,6 +64,16 @@ namespace Project.Music
             throw new NotImplementedException();
         }
 
+        public Music GetMusic(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MusicList GetMusicList(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public void Dispose()
         {
