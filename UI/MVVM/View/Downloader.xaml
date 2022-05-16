@@ -8,5 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TextBlock Text="Downloader" Foreground="White" FontSize="40"/>
+        <TextBox Name="URL" Margin="440,88,10,225" />
+        <TextBox Name="Target" Margin="0,69,378,293" />
+        <Button Content="OK" Click="DownloaderButton_Click" Margin="193,271,185,65"/>
     </Grid>
 </UserControl>
