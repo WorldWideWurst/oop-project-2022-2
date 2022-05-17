@@ -192,7 +192,7 @@
                         Unchecked="FullscreenCheckbox_Unchecked"
                         Style="{StaticResource FullscreenCheckbox}"
                         BorderBrush="{x:Null}" 
-                        Height="40" Width="40"
+                        Height="25" Width="25"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Right" 
                         Margin="0,0,30,0"

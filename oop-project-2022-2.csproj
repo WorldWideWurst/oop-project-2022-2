@@ -19,15 +19,23 @@
     <None Remove="UI\Images\back_hover.png" />
     <None Remove="UI\Images\close.png" />
     <None Remove="UI\Images\close_hover.png" />
+    <None Remove="UI\Images\feature_active_v1.png" />
+    <None Remove="UI\Images\feature_v1.png" />
     <None Remove="UI\Images\forward.png" />
     <None Remove="UI\Images\forward_hover.png" />
     <None Remove="UI\Images\heart.png" />
-    <None Remove="UI\Images\heart_full.png" />
+    <None Remove="UI\Images\heart_active.png" />
+    <None Remove="UI\Images\heart_active_hover.png" />
+    <None Remove="UI\Images\heart_hover.png" />
     <None Remove="UI\Images\Like.png" />
     <None Remove="UI\Images\Liked.png" />
     <None Remove="UI\Images\like_hover.png" />
     <None Remove="UI\Images\loop.png" />
-    <None Remove="UI\Images\loop_aktiv.png" />
+    <None Remove="UI\Images\loop_active.png" />
+    <None Remove="UI\Images\loop_active_hover.png" />
+    <None Remove="UI\Images\loop_hover.png" />
+    <None Remove="UI\Images\loop_song_active.png" />
+    <None Remove="UI\Images\loop_song_active_hover.png" />
     <None Remove="UI\Images\maxm.png" />
     <None Remove="UI\Images\maxm_hover.png" />
     <None Remove="UI\Images\mm.png" />
@@ -36,9 +44,11 @@
     <None Remove="UI\Images\pause_hover.png" />
     <None Remove="UI\Images\Play.png" />
     <None Remove="UI\Images\play_hover.png" />
-    <None Remove="UI\Images\queque.png" />
+    <None Remove="UI\Images\queue.png" />
     <None Remove="UI\Images\shuffle.png" />
-    <None Remove="UI\Images\shuffle_aktiv.png" />
+    <None Remove="UI\Images\shuffle_active.png" />
+    <None Remove="UI\Images\shuffle_active_hover.png" />
+    <None Remove="UI\Images\shuffle_hover.png" />
     <None Remove="UI\Images\sound.png" />
   </ItemGroup>
 
@@ -58,16 +68,28 @@
     <Content Include="UI\Images\close_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Images\feature_active_v1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\feature_v1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Images\forward.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\forward_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Images\heart_active_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\heart_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Images\heart.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\heart_full.png">
+    <Content Include="UI\Images\heart_active.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\like.png">
@@ -79,10 +101,22 @@
     <Content Include="UI\Images\like_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Images\loop_active_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\loop_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\loop_song_active_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\loop_song_active.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Images\loop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\loop_aktiv.png">
+    <Content Include="UI\Images\loop_active.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\maxm.png">
@@ -109,13 +143,19 @@
     <Content Include="UI\Images\play_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\queque.png">
+    <Content Include="UI\Images\queue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\shuffle_active_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\shuffle_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\shuffle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\Images\shuffle_aktiv.png">
+    <Content Include="UI\Images\shuffle_active.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\sound.png">
