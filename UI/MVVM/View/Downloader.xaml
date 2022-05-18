@@ -6,36 +6,44 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Downloader" 
-                   Foreground="White" 
-                   FontSize="40"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <TextBlock Text="Downloader" 
+                       Foreground="White" 
+                       FontSize="40"/>
 
 
-        <TextBlock Foreground="White" 
-                   Text="Ziel hier eingeben"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top" 
-                   Margin="0,130,0,0"/>
-        <TextBox Name="Target"
-                 Height="60" Width="400" 
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Top" 
-                 Margin="0,150,0,0"/>
+            <TextBlock Foreground="White" 
+                       Text="Ziel hier eingeben"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top" 
+                       Margin="0,130,0,0"/>
+            <TextBox Name="Target"
+                     Height="60" Width="400" 
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top" 
+                     Margin="0,150,0,0"/>
 
-        <Button Content="OK"
-                Foreground="White" 
-                Click="DownloaderButton_Click" 
-                Margin="0,250,0,0" Height="40" HorizontalAlignment="Center" Width="216" VerticalAlignment="Top" Background="#FF323232" BorderBrush="{x:Null}" />
-        <TextBox Name="URL"
-                 Height="60" Width="400" 
-                 HorizontalAlignment="Center" 
-                 VerticalAlignment="Top" 
-                 Margin="0,330,0,0"/>
-        <TextBlock Foreground="White" 
-                   Text="URL hier eingeben"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top" 
-                   Margin="0,310,0,0"/>
-    </Grid>
+            <Button Content="OK"
+                    Foreground="White" 
+                    Click="DownloaderButton_Click" 
+                    Margin="0,250,0,0" 
+                    Height="40" Width="216"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    Background="#FF323232" 
+                    BorderBrush="{x:Null}" />
+
+            <TextBlock Foreground="White" 
+                       Text="URL hier eingeben"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top" 
+                       Margin="0,310,0,0"/>
+            <TextBox Name="URL"
+                     Height="60" Width="400" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Top" 
+                     Margin="0,330,0,0"/>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

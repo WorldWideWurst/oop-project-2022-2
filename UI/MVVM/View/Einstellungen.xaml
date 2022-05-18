@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Einstellungen" Foreground="White" FontSize="40"/>
-    </Grid>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <TextBlock Text="Einstellungen" Foreground="White" FontSize="40"/>
+        </Grid>
+    </ScrollViewer>
+    
 </UserControl>

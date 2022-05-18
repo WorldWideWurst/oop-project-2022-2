@@ -154,11 +154,6 @@ namespace Project.UI
             DataContext = new FileManagerViewModel();
         }
 
-        private void CurrentListButton_Click(object sender, RoutedEventArgs e)
-        {
-            DataContext = new CurrentListViewModel();
-        }
-
         private void EinstellungenButton_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new EinstellungenViewModel();

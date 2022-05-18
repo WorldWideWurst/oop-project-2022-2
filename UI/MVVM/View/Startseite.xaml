@@ -6,17 +6,20 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#FF454545">
-        <TextBlock Text="Startseite" Foreground="White" FontSize="40"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Background="#FF454545">
+            <TextBlock Text="Startseite" Foreground="White" FontSize="40"/>
 
-        <Button x:Name="TestButton" 
-                Click="TestButton_Click"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Margin="10,60,0,0"
-                Background="#FFFF3E3E"
-                Foreground="White">
-            Ich bin ein Testknopf
-        </Button>
-    </Grid>
+            <Button x:Name="TestButton" 
+                    Click="TestButton_Click"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="10,60,0,0"
+                    Background="#FFFF3E3E"
+                    Foreground="White">
+                Ich bin ein Testknopf
+            </Button>
+        </Grid>
+    </ScrollViewer>
+    
 </UserControl>
