@@ -42,6 +42,12 @@
         <DataTemplate x:Name="EinstellungenTemplate" DataType="{x:Type viewmodels:EinstellungenViewModel}">
             <views:Einstellungen DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="CurrentListTemplate" DataType="{x:Type viewmodels:CurrentListDisplayViewModel}">
+            <views:CurrentListDisplay DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="PlaylistDisplayTemplate" DataType="{x:Type viewmodels:PlaylistDisplayViewModel}">
+            <views:PlaylistDisplay DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
     <!--Layout-Design von Philipp Funk, Umsetzung von Janek Engel -->
@@ -49,7 +55,7 @@
           Background="#FF454545"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
-        
+
         <!-- selbst erstellte Titel-Leiste-->
         <Grid x:Name="TitleBar" 
               Margin="0,0,0,0" 
@@ -97,12 +103,12 @@
         <!-- untere Leiste, die den Audio-Player beinhaltet-->
         <Grid x:Name="BottomBar"
               Background="#FF323232" 
-              Height="100" 
+              Height="80" 
               VerticalAlignment="Bottom" 
               Panel.ZIndex="900">
             <Grid x:Name="PlayerInterface"
                   Background="#FF323232" 
-                  Height="100" 
+                  Height="80" 
                   VerticalAlignment="Center"
                   HorizontalAlignment="Center"
                   Panel.ZIndex="901" 
@@ -114,7 +120,7 @@
                         Height="25" Width="25"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center" 
-                        Margin="90,0,0,30"  
+                        Margin="70,0,0,30"  
                         Panel.ZIndex="999" />
 
                 <Button x:Name="BackButton" 
@@ -123,7 +129,7 @@
                         Height="25" Width="25"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center" 
-                        Margin="0,0,90,30" 
+                        Margin="0,0,70,30" 
                         Panel.ZIndex="999" />
 
 
@@ -132,7 +138,7 @@
                             Unchecked="PlayCheckbox_Unchecked"
                             Style="{StaticResource PlayCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="40" Width="40"
+                            Height="30" Width="30"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
                             Margin="0,0,0,30"
@@ -144,10 +150,10 @@
                             Unchecked="RandomizeCheckbox_Unchecked"
                             Style="{StaticResource RandomizeCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="40" Width="40"
+                            Height="25" Width="25"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="200,0,0,30"
+                            Margin="0,0,160,30"
                             Panel.ZIndex="999" />
 
 
@@ -158,10 +164,10 @@
                             Indeterminate="RepeatCheckbox_Indeterminant"
                             Style="{StaticResource RepeatCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="40" Width="40"
+                            Height="26" Width="24"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="300,0,0,30"
+                            Margin="160,0,0,30"
                             Panel.ZIndex="999" />
 
                 <CheckBox   x:Name="LikeCheckbox"
@@ -169,26 +175,26 @@
                             Unchecked="LikeCheckbox_Unchecked"
                             Style="{StaticResource LikeCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="40" Width="40"
+                            Height="25" Width="25"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="0,0,300,30"
+                            Margin="0,0,330,30"
                             Panel.ZIndex="999" />
 
                 <Slider Maximum="100" 
                         HorizontalAlignment="Center" 
-                        VerticalAlignment="Center" 
-                        Height="20" Width="360"
-                        Margin="0,50,0,0">
+                        VerticalAlignment="Top" 
+                        Height="18" Width="360"
+                        Margin="0,46,0,0">
                 </Slider>
 
-                <Label Name="lblStatus" Content="Not playing..." HorizontalContentAlignment="Center" Margin="5,75,5,-5" Foreground="White"/>
+                <Label Name="lblStatus" FontSize="10" Content="Not playing..." HorizontalContentAlignment="Center" Margin="2,55,8,0" Foreground="White"/>
 
             </Grid>
 
             <Button x:Name="ChooseSong"
                     Click="ChooseSong_Click"
-                    Content="Choose Song (Temporär)" Margin="254,50,1038,24" />
+                    Content="Choose Song (Temporär)" Margin="100,30,0,30" HorizontalAlignment="Left" />
 
             <CheckBox   x:Name="FullscreenCheckbox" 
                         Checked="FullscreenCheckbox_Checked"
@@ -205,45 +211,45 @@
         <Grid x:Name="LeftBar"
               HorizontalAlignment="Left"
               Width="280"
-              Margin="0,30,0,100"
+              Margin="0,30,0,80"
               Background="#FF323232"
               Panel.ZIndex="800">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="276*"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.ColumnSpan="2">
-                <RadioButton x:Name="StartseiteButton" 
+
+            <StackPanel Height="200" VerticalAlignment="Top">
+                <RadioButton x:Name="StartseiteButton"
+                             GroupName="Menu" 
                              Click="StartseiteButton_Click" 
                              Content="Startseite"
                              Style="{StaticResource MenuButtonTheme}"
-                             IsChecked="True"/>
+                             IsChecked="True" Height="40"/>
                 <RadioButton x:Name="PlaylistsButton"
+                             GroupName="Menu"
                              Click="PlaylistsButton_Click"
                              Content="Playlists"
-                             Style="{StaticResource MenuButtonTheme}" />
+                             Style="{StaticResource MenuButtonTheme}" Height="40" />
                 <RadioButton x:Name="DownloaderButton"
+                             GroupName="Menu"
                              Click="DownloaderButton_Click"
                              Content="Downloader"
-                             Style="{StaticResource MenuButtonTheme}" />
+                             Style="{StaticResource MenuButtonTheme}" Height="40" />
                 <RadioButton x:Name="FileManagerButton"
+                             GroupName="Menu"
                              Click="FileManagerButton_Click"
                              Content="FileManager"
-                             Style="{StaticResource MenuButtonTheme}" />
+                             Style="{StaticResource MenuButtonTheme}" Height="40" />
                 <RadioButton x:Name="EinstellungenButton"
+                             GroupName="Menu"
                              Click="EinstellungenButton_Click"
                              Content="Einstellungen"
-                             Style="{StaticResource MenuButtonTheme}" />
+                             Style="{StaticResource MenuButtonTheme}" Height="40" />
             </StackPanel>
-            <views:CurrentList Margin="0,250,0,0" Grid.ColumnSpan="2"/>
+            <views:SubMenu Margin="0,200,0,0" />
         </Grid>
         <ContentControl x:Name="ContentViewer"
-                        Margin="280,30,0,100" 
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
+                        Margin="280,30,0,80"
                         Content="{Binding }"/>
 
-        <Rectangle Margin="0,0,0,100" 
+        <Rectangle Margin="0,0,0,80" 
                        Panel.ZIndex="1000" 
                        VerticalAlignment="Bottom" 
                        HorizontalAlignment="Left" 

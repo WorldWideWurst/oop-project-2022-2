@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Project.UI.MVVM.View.SubMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:views="clr-namespace:Project.UI.MVVM.View"
+        xmlns:viewmodels="clr-namespace:Project.UI.MVVM.ViewModel"
+        mc:Ignorable="d" 
+        Background="Transparent"
+        d:DesignHeight="450" d:DesignWidth="280">
+
+    <UserControl.Resources>
+        <DataTemplate x:Name="CurrentListDisplayTemplate" DataType="{x:Type viewmodels:CurrentListDisplayViewModel}">
+            <views:CurrentListDisplay DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="PlaylistDisplayTemplate" DataType="{x:Type viewmodels:PlaylistDisplayViewModel}">
+            <views:PlaylistDisplay DataContext="{Binding}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" Height="24" VerticalAlignment="Top">
+            <RadioButton    x:Name="PlaylistDisplayButton"
+                            IsChecked="True"
+                            GroupName="LeftBar"
+                            Click="PlaylistDisplayButton_Click"
+                            Content="PlaylistDisplay"
+                            HorizontalContentAlignment="Center"
+                            Style="{StaticResource DisplayButtonTheme}"
+                            Width="140" Height="24"/>
+            <RadioButton    x:Name="CurrentListDisplayButton"
+                            GroupName="LeftBar"
+                            Click="CurrentListDisplayButton_Click"
+                            Content="CurrentListDisplay"
+                            HorizontalContentAlignment="Center"
+                            Style="{StaticResource DisplayButtonTheme}"
+                            Width="140" Height="24"/>
+        </StackPanel>
+        <ContentControl x:Name="ContentViewer"
+                        Margin="0,24,0,0"
+                        Content="{Binding }" />
+    </Grid>
+</UserControl>

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Project.UI.MVVM.View
 {
     /// <summary>
-    /// Interaktionslogik für CurrentList.xaml
+    /// Interaktionslogik für PlaylistDisplay.xaml
     /// </summary>
-    public partial class CurrentList : UserControl
+    public partial class PlaylistDisplay : UserControl
     {
-        public CurrentList()
+        public PlaylistDisplay()
         {
             InitializeComponent();
         }

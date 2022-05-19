@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.UI.MVVM.ViewModel
 {
-    internal class CurrentListViewModel
+    internal class PlaylistDisplayViewModel
     {
     }
 }

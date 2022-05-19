@@ -41,4 +41,42 @@
             </MultiTrigger>
         </Style.Triggers>
     </Style>
+
+    <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
+           TargetType="{x:Type RadioButton}"
+           x:Key="DisplayButtonTheme">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="{TemplateBinding Background}">
+
+                            <TextBlock Text="{TemplateBinding Property=Content}" 
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style.Setters>
+
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Background" Value="#FF454545" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True" />
+                    <Condition Property="IsChecked" Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="#FF373737" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
