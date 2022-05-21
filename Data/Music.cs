@@ -110,33 +110,53 @@ namespace Project.Data
         EP,
         Playlist,
         Queue,
+        Compilation,
         Undefined,
     }
 
-    public class MusicList
+
+    public struct MusicInList : IRecordView
+    {
+        public Guid MusicId { get; }
+        public Guid ListId { get; }
+
+        public MusicInList(Guid musicId, Guid listId)
+        {
+            MusicId = musicId;
+            ListId = listId;
+        }
+
+        public void Delete() => Database.Instance.DeleteMusicInList(this);
+
+        public void Insert() => Database.Instance.InsertMusicInList(this);
+
+        public void Save() { }
+    }
+
+    public class MusicList : IRecordView
     {
 
-        public Guid Id { get; set; }
-
-        public IList<Music> Entries { get; set; }
-
+        public Guid Id { get; }
+        public string Name { get; set; }
         public string? Owner { get; set; }
-
         public MusicListType Type { get; set; }
-
         public DateOnly? PublishDate { get; set; }
+        public IEnumerable<MusicInList> Entries => Database.Instance.GetMusicInList(this);
 
-        public MusicList(Guid id, IList<Music> entries, string? owner, DateOnly? publishDate, MusicListType type = MusicListType.Undefined)
+        public MusicList(Guid id, string name, string? owner, DateOnly? publishDate, MusicListType type = MusicListType.Undefined)
         {
             Id = id;
-            Entries = entries;
+            Name = name;
             Owner = owner;
             PublishDate = publishDate;
             Type = type;
         }
 
-        public MusicList() : this(Guid.NewGuid(), new List<Music>(), null, DateOnly.FromDateTime(DateTime.Now)) { }
+        public MusicList(string name) : this(Guid.NewGuid(), name, null, DateOnly.FromDateTime(DateTime.Now)) { }
 
+        public void Delete() => Database.Instance.DeleteMusicList(this);
+        public void Insert() => Database.Instance.InsertMusicList(this);
+        public void Save() => Database.Instance.SaveMusicList(this);
     }
 
 }

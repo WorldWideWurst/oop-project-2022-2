@@ -117,7 +117,6 @@ namespace Project.Data
             cmd.ExecuteNonQuery();
         }
 
-
         internal IEnumerable<MusicByArtist> GetMusicArtists(Music music)
         {
             using var cmd = new SQLiteCommand("select _artist from _music_by_artist where _music = @music", connection);
@@ -161,7 +160,7 @@ namespace Project.Data
 
         internal void InsertSource(Source source)
         {
-            using var cmd = new SQLiteCommand("insert into source(address, type, _source_of) values (@address, @type, @source_of)", connection); ;
+            using var cmd = new SQLiteCommand("insert or ignore into source(address, type, _source_of) values (@address, @type, @source_of)", connection); ;
             cmd.Parameters.AddWithValue("@address", source.Address);
             cmd.Parameters.AddWithValue("@type", sourceTypeToString(source.SourceType));
             cmd.Parameters.AddWithValue("@source_of", source.MusicId);
@@ -183,7 +182,7 @@ namespace Project.Data
 
         internal void InsertArtist(Artist artist)
         {
-            using var cmd = new SQLiteCommand("insert into artist(name) values (@name)", connection);
+            using var cmd = new SQLiteCommand("insert or ignore into artist(name) values (@name)", connection);
             cmd.Parameters.AddWithValue("@name", artist.Name);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
@@ -214,6 +213,78 @@ namespace Project.Data
         }
 
 
+
+
+
+        internal void InsertMusicList(MusicList musicList)
+        {
+            using var cmd = new SQLiteCommand("insert into music_list(id, name, type, publish_date, _owned_by) values (@id, @name, @type, @publish_date, @owned_by)", connection);
+            cmd.Parameters.AddWithValue("@id", musicList.Id);
+            cmd.Parameters.AddWithValue("@name", musicList.Name);
+            cmd.Parameters.AddWithValue("@type", musicListTypeToString(musicList.Type));
+            cmd.Parameters.AddWithValue("@publish_date", musicList.PublishDate);
+            cmd.Parameters.AddWithValue("@owned_by", musicList.Owner);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+        }
+
+        internal void SaveMusicList(MusicList musicList)
+        {
+            using var cmd = new SQLiteCommand("update music_list set name = @name, type = @type, publish_date = @publish_date, _owned_by = @owned_by", connection);
+            cmd.Parameters.AddWithValue("@name", musicList.Name);
+            cmd.Parameters.AddWithValue("@type", musicListTypeToString(musicList.Type));
+            cmd.Parameters.AddWithValue("@publish_date", musicList.PublishDate);
+            cmd.Parameters.AddWithValue("@owned_by", musicList.Owner);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+        }
+
+        internal void DeleteMusicList(MusicList musicList)
+        {
+            using var cmd = new SQLiteCommand("delete from music_list where id = @id", connection);
+            cmd.Parameters.AddWithValue("@id", musicList.Id);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+        }
+
+        internal IEnumerable<MusicInList> GetMusicInList(MusicList musicList)
+        {
+            using var cmd = new SQLiteCommand("select _music from _music_in_list where _list = @list", connection);
+            cmd.Parameters.AddWithValue("@list", musicList.Id);
+            cmd.Prepare();
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                yield return new MusicInList(reader.GetGuid(0), musicList.Id);
+            }
+        }
+
+        internal void InsertMusicInList(MusicInList musicInList)
+        {
+            using var cmd = new SQLiteCommand("insert into _music_in_list(_music, _list) values (@music, @list)", connection);
+            cmd.Parameters.AddWithValue("music", musicInList.MusicId);
+            cmd.Parameters.AddWithValue("list", musicInList.ListId);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+        }
+
+        internal void DeleteMusicInList(MusicInList musicInList)
+        {
+            using var cmd = new SQLiteCommand("delete from _music_in_list where _music = @music and _list = @list", connection);
+            cmd.Parameters.AddWithValue("music", musicInList.MusicId);
+            cmd.Parameters.AddWithValue("list", musicInList.ListId);
+            cmd.Prepare();
+            cmd.ExecuteNonQuery();
+        }
+
+
+
+
+
+
+
+
         public IEnumerable<object> StringQuery(string query)
         {
             throw new NotImplementedException();
@@ -239,6 +310,40 @@ namespace Project.Data
                 case SourceType.AlbumCover: return "album_cover";
                 case SourceType.Image: return "image";
                 default: throw new ArgumentException(sourceType.ToString());
+            }
+        }
+
+        private static MusicListType stringToMusicListType(string? value)
+        {
+            switch(value)
+            {
+                case "album": return MusicListType.Album;
+                case "concept_album": return MusicListType.ConceptAlbum;
+                case "single": return MusicListType.Single;
+                case "live_album": return MusicListType.LiveAlbum;
+                case "ep": return MusicListType.EP;
+                case "playlist": return MusicListType.Playlist;
+                case "queue": return MusicListType.Queue;
+                case "compilation": return MusicListType.Compilation;
+                case "undefined": return MusicListType.Undefined;
+                default: return MusicListType.Undefined;
+            }
+        }
+
+        private static string musicListTypeToString(MusicListType value)
+        {
+            switch (value)
+            {
+                case MusicListType.Album: return "album";
+                case MusicListType.ConceptAlbum: return "concept_album";
+                case MusicListType.Single: return "single";
+                case MusicListType.LiveAlbum: return "live_album";
+                case MusicListType.EP: return "ep";
+                case MusicListType.Playlist: return "playlist";
+                case MusicListType.Queue: return "queue";
+                case MusicListType.Undefined: return "undefined";
+                case MusicListType.Compilation: return "compilation";
+                default: return "undefined";
             }
         }
 
