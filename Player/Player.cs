@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Media;
-using Project.Music;
+using Project.Data;
 
 namespace Project.Player
 {
