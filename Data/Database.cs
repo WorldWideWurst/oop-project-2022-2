@@ -82,6 +82,20 @@ namespace Project.Data
             return null;
         }
 
+        public IEnumerable<Music> QueryMusic(string input, int? limit = null)
+        {
+            var titleQuery = "%" + input.Replace(' ', '%') + "%";
+            using var cmd = new SQLiteCommand("select id, title, album from music where title like @title", connection);
+            cmd.Parameters.AddWithValue("@title", titleQuery);
+            cmd.Prepare();
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                yield return new Music(reader.GetGuid(0), reader.GetString(1), reader.GetString(2));
+            }
+        }
+
         internal void InsertMusic(Music music)
         {
             using SQLiteCommand cmd = new SQLiteCommand("insert into music (id, title, album) values (@id, @title, @album)", connection);
@@ -106,12 +120,28 @@ namespace Project.Data
 
         internal IEnumerable<MusicByArtist> GetMusicArtists(Music music)
         {
-            throw new NotImplementedException();
+            using var cmd = new SQLiteCommand("select _artist from _music_by_artist where _music = @music", connection);
+            cmd.Parameters.AddWithValue("@music", music.Id);
+            cmd.Prepare();
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                yield return new MusicByArtist(music.Id, reader.GetString(0));
+            }
         }
 
         internal IEnumerable<Source> GetMusicSources(Music music)
         {
-            throw new NotImplementedException();
+            using var cmd = new SQLiteCommand("select address, type from source where _source_of = @music", connection);
+            cmd.Parameters.AddWithValue("@music", music.Id);
+            cmd.Prepare();
+
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                yield return new Source(reader.GetString(0), music.Id, stringToSourceType(reader.GetString(1)));
+            }
         }
 
 
