@@ -33,14 +33,8 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            foreach(var entry in Database.Instance.QueryMusic("hello world"))
-            {
-                MessageBox.Show(entry.Title);
-                foreach(var artist in entry.Artists)
-                {
-                    MessageBox.Show(artist.ArtistId);
-                }
-            }
+            var testFile = "C:\\Users\\Foerster\\Downloads\\track7AM0vkVSjpK9aNYwjNBc_Abèh & Cirox - B2 Pellegrino (Master).mp3";
+            var music = MusicLoader.Instance.Load(testFile);
         }
     }
 }
