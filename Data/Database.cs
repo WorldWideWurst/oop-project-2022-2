@@ -179,6 +179,13 @@ namespace Project.Data
         }
 
 
+        public Artist? GetArtist(string name)
+        {
+            using var cmd = new SQLiteCommand("select exists(select 1 from artist where name = @name limit 1)", connection);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Prepare();
+            return (bool)cmd.ExecuteScalar() ? new Artist(name) : null;
+        }
 
         internal void InsertArtist(Artist artist)
         {
@@ -215,6 +222,22 @@ namespace Project.Data
 
 
 
+        public MusicList? GetMusicList(Guid id)
+        {
+            using var cmd = new SQLiteCommand("select name, type, publish_date, _owned_by from music_list where id = @id", connection);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare(); 
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                var name = reader.GetString(0);
+                var type = stringToMusicListType(reader.GetString(1));
+                var publishDate = DateOnly.FromDateTime(reader.GetDateTime(2));
+                var owner = reader.GetString(3);
+                return new MusicList(id, name, owner, publishDate, type);
+            }
+            return null;
+        }
 
         internal void InsertMusicList(MusicList musicList)
         {
@@ -283,7 +306,29 @@ namespace Project.Data
 
 
 
+        public Music RegisterSource(string address, bool forceReload = false)
+        {
+            var source = GetSource(address);
+            if (source != null)
+            {
+                return GetMusic(source.MusicId) ?? throw new System.Data.ConstraintException();
+            }
 
+            MusicFileMeta meta = MetaLoader.Instance.Load(address);
+            
+            Music music = new Music(meta.Title, meta.Album);
+            music.Insert();
+
+            foreach(var artistName in meta.Artists)
+            {
+                if (GetArtist(artistName) == null)
+                    new Artist(artistName).Insert();
+            }
+
+            new Source(address, music.Id).Insert();
+
+            return music;
+        }
 
         public IEnumerable<object> StringQuery(string query)
         {
