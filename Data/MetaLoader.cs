@@ -87,13 +87,39 @@ namespace Project.Data
 
     public class MusicFileMeta
     {
+        public string? FileName;
         public string? Title;
         public string? Album;
         public string? OriginalAlbum;
         public readonly IList<string> Artists = new List<string>();
         public readonly IList<string> OriginalArtists = new List<string>();
+
+        public MusicFileMeta(string? path)
+        {
+            FileName = path != null? Path.GetFileNameWithoutExtension(path) : null;
+        }
     }
 
+
+    /// <summary>
+    /// Bekannte Musik-Meta formate:
+    /// * ID3v*
+    /// * APEtag
+    /// * iXML
+    /// * MP4 Boxes
+    /// * Quicktime Atoms
+    /// * OGG
+    /// * FLAC
+    /// * OPUS
+    /// * Speex
+    /// * Theora
+    /// * VorbisComment
+    /// * WMA native metadata
+    /// * AIFF/AIFC Metadata
+    /// * Matrosca
+    /// 
+    /// Tag-Conversion-Tabelle: https://wiki.hydrogenaud.io/index.php?title=Tag_Mapping
+    /// </summary>
     public class MetaLoader : IMetaLoader
     {
 
@@ -167,7 +193,7 @@ namespace Project.Data
             // 4 byte size
             uint size = (uint)(((reader.U8() & 0x7F) << 21) | ((reader.U8() & 0x7F) << 14) | ((reader.U8() & 0x7F) << 7) | (reader.U8() & 0xFF));
             
-            var meta = new MusicFileMeta();
+            var meta = new MusicFileMeta(path);
 
             if(version.hi == 4)
             {

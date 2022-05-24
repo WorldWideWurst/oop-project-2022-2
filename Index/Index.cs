@@ -73,22 +73,24 @@ namespace Project.Index
 
         public IEnumerable<string> Index(string searchPath)
         {
-            var outputArray = new List<string>();
             var fileEnum = Directory.EnumerateFiles(searchPath, "*.*", SearchOption.AllDirectories).GetEnumerator();
             while (true)
             {
+                string? file = null;
                 try
                 {
                     if (!fileEnum.MoveNext()) break;
                     if (IsPlayable(fileEnum.Current))
-                        outputArray.Add(fileEnum.Current);
+                        file = fileEnum.Current;
                 }
                 catch
                 {
+                    file = null;
                     Console.WriteLine("Fehler bei zugriff in " + searchPath);
                 }
+                if(file != null) yield return file;
+
             }
-            return outputArray;
         }
 
 
