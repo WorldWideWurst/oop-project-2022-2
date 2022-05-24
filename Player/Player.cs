@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows.Media;
 using Project.Data;
+using System.Collections.Generic;
 
 namespace Project.Player
 {
     public class Player
     {
-        public MusicList? CurrentList
+        public IList<Music>? CurrentList
         {
             get => _musicList;
             set
@@ -26,7 +27,7 @@ namespace Project.Player
             }
         }
 
-        private MusicList? _musicList;
+        private IList<Music> _musicList;
 
         public int? CurrentIndex { get; set; }
 
