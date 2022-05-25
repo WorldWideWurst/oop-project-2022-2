@@ -27,7 +27,7 @@ namespace Project.Player
             }
         }
 
-        private IList<Music> _musicList;
+        private IList<Music>? _musicList;
 
         public int? CurrentIndex { get; set; }
 
