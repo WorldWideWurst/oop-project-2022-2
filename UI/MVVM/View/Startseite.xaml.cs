@@ -34,7 +34,7 @@ namespace Project.UI.MVVM.View
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             var testFile = "C:\\Users\\Foerster\\Downloads\\track7AM0vkVSjpK9aNYwjNBc_Abèh & Cirox - B2 Pellegrino (Master).mp3";
-            Database.Instance.RegisterSource(testFile);
+            Database.Instance.RegisterMusicSource(testFile);
         }
     }
 }

@@ -216,7 +216,9 @@ namespace Project.Data
                     var frameName = Encoding.ASCII.GetString(reader.Bytes(4));
                     uint frameSize = (uint)(((reader.U8() & 0x7F) << 21) | ((reader.U8() & 0x7F) << 14) | ((reader.U8() & 0x7F) << 7) | (reader.U8() & 0xFF));
                     ushort frameFlags = reader.U16();
+
                     byte[] data = reader.Bytes(frameSize);
+                    remainingSize -= 4 + 4 + 2 + frameSize;
 
                     switch(frameName)
                     {

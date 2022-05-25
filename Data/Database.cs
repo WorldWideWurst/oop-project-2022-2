@@ -74,8 +74,8 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                string? title = reader.GetString(0);
-                string? album = reader.GetString(1);
+                string? title = reader.GetValue(0) as string;
+                string? album = reader.GetValue(1) as string;
                 return new Music(id, title, album);
             }
 
@@ -92,7 +92,7 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while(reader.Read())
             {
-                yield return new Music(reader.GetGuid(0), reader.GetString(1), reader.GetString(2));
+                yield return new Music(reader.GetGuid(0), reader.GetValue(1) as string, reader.GetValue(2) as string);
             }
         }
 
@@ -139,7 +139,7 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                yield return new Source(reader.GetString(0), music.Id, stringToSourceType(reader.GetString(1)));
+                yield return new Source(reader.GetString(0), music.Id, stringToSourceType(reader.GetValue(1) as string ?? ""));
             }
         }
 
@@ -153,7 +153,7 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while(reader.Read())
             {
-                return new Source(address, reader.GetGuid(1), stringToSourceType(reader.GetString(0)));
+                return new Source(address, reader.GetGuid(1), stringToSourceType(reader.GetValue(0) as string ?? ""));
             }
             return null;
         }
@@ -230,10 +230,11 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while(reader.Read())
             {
-                var name = reader.GetString(0);
-                var type = stringToMusicListType(reader.GetString(1));
-                var publishDate = DateOnly.FromDateTime(reader.GetDateTime(2));
-                var owner = reader.GetString(3);
+                string name = reader.GetString(0);
+                MusicListType type = stringToMusicListType(reader.GetValue(1) as string ?? "");
+                string? publishDateStr = reader.GetValue(2) as string;
+                DateOnly? publishDate = publishDateStr != null ? DateOnly.FromDateTime(DateTime.Parse(publishDateStr)) : null;
+                string? owner = reader.GetValue(3) as string;
                 return new MusicList(id, name, owner, publishDate, type);
             }
             return null;
@@ -306,7 +307,7 @@ namespace Project.Data
 
 
 
-        public Music RegisterSource(string address, bool forceReload = false)
+        public Music RegisterMusicSource(string address, bool forceReload = false)
         {
             var source = GetSource(address);
             if (source != null)
@@ -315,7 +316,7 @@ namespace Project.Data
             }
 
             MusicFileMeta meta = MetaLoader.Instance.Load(address);
-            
+
             Music music = new Music(meta.Title, meta.Album);
             music.Insert();
 
