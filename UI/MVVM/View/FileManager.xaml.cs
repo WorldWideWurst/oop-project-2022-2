@@ -45,7 +45,8 @@ namespace Project.UI.MVVM.View
                 try
                 {
                     var music = Database.Instance.RegisterMusicSource(file);
-                } catch (UnsupportedMusicFormat)
+                } 
+                catch (UnsupportedMusicFormat)
                 {
                     continue;
                 }

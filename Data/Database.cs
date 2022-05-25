@@ -74,8 +74,8 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                string? title = reader.GetValue(0) as string;
-                string? album = reader.GetValue(1) as string;
+                string? title = reader[0] as string;
+                string? album = reader[1] as string;
                 return new Music(id, title, album);
             }
 
@@ -92,7 +92,7 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while(reader.Read())
             {
-                yield return new Music(reader.GetGuid(0), reader.GetValue(1) as string, reader.GetValue(2) as string);
+                yield return new Music(reader.GetGuid(0), reader[1] as string, reader[2] as string);
             }
         }
 
@@ -139,7 +139,7 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                yield return new Source(reader.GetString(0), music.Id, stringToSourceType(reader.GetValue(1) as string ?? ""));
+                yield return new Source(reader.GetString(0), music.Id, stringToSourceType(reader[1] as string ?? ""));
             }
         }
 
@@ -153,7 +153,7 @@ namespace Project.Data
             using var reader = cmd.ExecuteReader();
             while(reader.Read())
             {
-                return new Source(address, reader.GetGuid(1), stringToSourceType(reader.GetValue(0) as string ?? ""));
+                return new Source(address, reader.GetGuid(1), stringToSourceType(reader[0] as string ?? ""));
             }
             return null;
         }
@@ -228,13 +228,13 @@ namespace Project.Data
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare(); 
             using var reader = cmd.ExecuteReader();
-            while(reader.Read())
+            while (reader.Read())
             {
                 string name = reader.GetString(0);
-                MusicListType type = stringToMusicListType(reader.GetValue(1) as string ?? "");
-                string? publishDateStr = reader.GetValue(2) as string;
+                MusicListType type = stringToMusicListType(reader[1] as string ?? "");
+                string? publishDateStr = reader[2] as string;
                 DateOnly? publishDate = publishDateStr != null ? DateOnly.FromDateTime(DateTime.Parse(publishDateStr)) : null;
-                string? owner = reader.GetValue(3) as string;
+                string? owner = reader[3] as string;
                 return new MusicList(id, name, owner, publishDate, type);
             }
             return null;
