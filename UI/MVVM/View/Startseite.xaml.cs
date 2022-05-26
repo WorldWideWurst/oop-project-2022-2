@@ -33,8 +33,8 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            var testFile = "C:\\Users\\Foerster\\Downloads\\track7AM0vkVSjpK9aNYwjNBc_Abèh & Cirox - B2 Pellegrino (Master).mp3";
-            Database.Instance.RegisterMusicSource(testFile);
+            var testFile = "C:\\Users\\Foerster\\Downloads\\Carpenter Brut-Roller Mobster.mp3";
+            var meta = MetaLoader.Instance.Load(testFile);
         }
     }
 }

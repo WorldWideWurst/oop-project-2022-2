@@ -58,7 +58,6 @@ namespace Project.Data
 
         }
 
-
         public Database() : this(DefaultDBLoc) { }
 
         public string? SQLiteVersion => new SQLiteCommand("SELECT SQLITE_VERSION()", connection)?.ExecuteScalar().ToString();
@@ -184,7 +183,7 @@ namespace Project.Data
             using var cmd = new SQLiteCommand("select exists(select 1 from artist where name = @name limit 1)", connection);
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Prepare();
-            return (bool)cmd.ExecuteScalar() ? new Artist(name) : null;
+            return (long)cmd.ExecuteScalar() > 0 ? new Artist(name) : null;
         }
 
         internal void InsertArtist(Artist artist)
@@ -324,6 +323,7 @@ namespace Project.Data
             {
                 if (GetArtist(artistName) == null)
                     new Artist(artistName).Insert();
+                new MusicByArtist(music.Id, artistName).Insert();
             }
 
             new Source(address, music.Id).Insert();
@@ -334,6 +334,25 @@ namespace Project.Data
         public IEnumerable<object> StringQuery(string query)
         {
             throw new NotImplementedException();
+        }
+
+        public void ClearAll()
+        {
+            string[] tables =
+            {
+                "_music_by_artist",
+                "_music_in_list",
+                "source",
+                "music_list",
+                "artist",
+                "music"
+            };
+
+            foreach(var table in tables)
+            {
+                using var cmd = new SQLiteCommand($"delete from {table}", connection);
+                cmd.ExecuteNonQuery();
+            }
         }
 
 

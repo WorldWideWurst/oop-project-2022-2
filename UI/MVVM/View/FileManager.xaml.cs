@@ -35,23 +35,32 @@ namespace Project.UI.MVVM.View
             if(!Directory.Exists(dir))
             {
                 ImportReport.Text = "Ist kein Ordner.";
-
                 return;
             }
 
             var allFiles = SimpleDiskIndexer.Instance.Index(dir).ToList();
+            int filesRegistered = 0;
+            int filesTried = 0;
             foreach(var file in allFiles)
             {
                 try
                 {
+                    filesTried++;
                     var music = Database.Instance.RegisterMusicSource(file);
+                    filesRegistered++;
                 } 
-                catch (UnsupportedMusicFormat)
+                catch (UnknownMusicFormat)
                 {
                     continue;
                 }
             }
-            ImportReport.Text = $"${allFiles.Count} Musikdatei(n) registriert.";
+            ImportReport.Text = $"{filesRegistered} von {filesTried} Musikdatei(n) registriert.";
+        }
+
+        private void ClearDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            Database.Instance.ClearAll();
+            ImportReport.Text = "Datenbank geleert.";
         }
     }
 }

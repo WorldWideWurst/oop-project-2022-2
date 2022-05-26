@@ -13,8 +13,9 @@
         <Grid>
             <TextBlock Text="FileManager" Foreground="White" FontSize="40" Height="auto" VerticalAlignment="Top" Margin="10,0,10,0"/>
             <Button x:Name="SelectMusicDir" Content="Musikordner Importieren" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" FontSize="16" Click="SelectMusicDir_Click" Width="195"/>
-            <TextBlock x:Name="ImportReport" HorizontalAlignment="Left" Margin="210,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="190" Height="25" FontSize="16"><Run/><LineBreak/><Run/></TextBlock>
+            <TextBlock x:Name="ImportReport" HorizontalAlignment="Left" Margin="210,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="auto" Height="25" FontSize="16"><Run/><LineBreak/><Run/></TextBlock>
             <TextBox x:Name="MusicDirInput" HorizontalAlignment="Left" Margin="10,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="390" Height="25"/>
+            <Button x:Name="ClearDatabase" Content="Musikdatenbank leeren" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Click="ClearDatabase_Click"/>
         </Grid>
     </ScrollViewer>
 

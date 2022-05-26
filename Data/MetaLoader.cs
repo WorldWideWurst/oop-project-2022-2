@@ -21,6 +21,12 @@ namespace System.IO
         private Stream stream;
         public Endianness Endian { get; set; }
 
+        public long Position
+        {
+            get => stream.Position;
+            set => stream.Position = value;
+        }
+
         public StreamDecoder(Stream stream, Endianness endian = Endianness.Native)
         {
             this.stream = stream;
@@ -127,7 +133,8 @@ namespace Project.Data
 
         static MetaLoader()
         {
-            Instance.Loaders.Add(MP3Loader.Instance);
+            Instance.Loaders.Add(ID3v2MetaLoader.Instance);
+            Instance.Loaders.Add(MP3MetaLoader.Instance);
         }
 
         public IList<IMetaLoader> Loaders { get; } = new List<IMetaLoader>();
@@ -148,7 +155,7 @@ namespace Project.Data
                     {
                         return loader.Load(path);
                     } 
-                    catch(Exception ex) when (ex is UnsupportedMusicFormat || ex is NotImplementedException)
+                    catch(Exception ex) when (ex is UnknownMusicFormat || ex is NotImplementedException)
                     {
                         Console.WriteLine("Format " + extension + " wird (teilweise?) nicht unterstützt.");
                         continue;
@@ -156,24 +163,51 @@ namespace Project.Data
                 }
             }
 
-            throw new UnsupportedMusicFormat();
+            throw new UnknownMusicFormat();
         }
+    }
+
+    public class MP3MetaLoader : IMetaLoader
+    {
+
+        public static readonly MP3MetaLoader Instance = new MP3MetaLoader();
+
+        private MP3MetaLoader() { }
+
+        public bool SupportsExtension(string extension)
+        {
+            return "mp3" == extension;
+        }
+        public MusicFileMeta Load(string path)
+        {
+            var reader = new StreamDecoder(new FileStream(path, FileMode.Open, FileAccess.Read));
+            if ((reader.U32BE() & 0b11111111_11110000_00000001_00000000) == 0b11111111_11110000_00000000_00000000)
+            {
+                // sieht nach mp3-header aus. Keine Meta vorhanden
+                return new MusicFileMeta(path);
+            }
+            else
+            {
+                throw new UnknownMusicFormat();
+            }
+        }
+
     }
 
     /// <summary>
     /// Zur referenz: das muss geparst werden https://id3.org/id3v2.4.0-structure
     /// </summary>
-    public class MP3Loader : IMetaLoader
+    public class ID3v2MetaLoader : IMetaLoader
     {
 
 
-        public static readonly MP3Loader Instance = new MP3Loader();
+        public static readonly ID3v2MetaLoader Instance = new ID3v2MetaLoader();
 
-        private MP3Loader() { }
+        private ID3v2MetaLoader() { }
 
         public bool SupportsExtension(string extension)
         {
-            return extension == "mp3";
+            return extension == "mp3"; // TODO: gibt es ID3v2 header auch wo anders?
         }
 
         public MusicFileMeta Load(string path)
@@ -183,7 +217,7 @@ namespace Project.Data
 
             // Magic lesen: "ID3"
             var magic = Encoding.ASCII.GetString(reader.Bytes(3));
-            if (magic != "ID3") throw new UnsupportedMusicFormat();
+            if (magic != "ID3") throw new UnknownMusicFormat();
 
             // 2 byte version
             var version = (hi: reader.U8(), lo: reader.U8());
@@ -215,6 +249,11 @@ namespace Project.Data
                 {
                     var frameName = Encoding.ASCII.GetString(reader.Bytes(4));
                     uint frameSize = (uint)(((reader.U8() & 0x7F) << 21) | ((reader.U8() & 0x7F) << 14) | ((reader.U8() & 0x7F) << 7) | (reader.U8() & 0xFF));
+                    if (frameSize <= 0)
+                    {
+                        reader.Skip(remainingSize);
+                        break;
+                    }
                     ushort frameFlags = reader.U16();
 
                     byte[] data = reader.Bytes(frameSize);
@@ -238,13 +277,68 @@ namespace Project.Data
                             // artists
                         case "TOPE":
                             // original artists
-                            foreach (var artistRaw in DecodeTextContent(data).Split(","))
+                            foreach (var artistRaw in DecodeTextContent(data).Split("/"))
                             {
                                 meta.Artists.Add(artistRaw.Trim());
                             }
                             break;
                     }
                 }
+
+            }
+            else if (version.hi == 3)
+            {
+                bool unsyncFlag = (flags & 0b10000000) > 0;
+                bool extHeaderFlag = (flags & 0b01000000) > 0;
+                bool expFlag = (flags & 0b00100000) > 0;
+
+                if(extHeaderFlag)
+                {
+                    uint headerSize = reader.U32();
+                    reader.Skip(headerSize + 2 + 4);
+                }
+
+                var remainingSize = size;
+                while (remainingSize > 0)
+                {
+                    var frameName = Encoding.ASCII.GetString(reader.Bytes(4));
+                    uint frameSize = reader.U32();
+                    if (frameSize == 0)
+                    {
+                        reader.Skip(remainingSize);
+                        break;
+                    }
+                    ushort frameFlags = reader.U16();
+
+                    byte[] data = reader.Bytes(frameSize);
+                    remainingSize -= 4 + 4 + 2 + frameSize;
+
+                    switch (frameName)
+                    {
+                        case "TIT2":
+                            // title
+                            meta.Title = DecodeTextContent(data);
+                            break;
+                        case "TALB":
+                            // album
+                            meta.Album = DecodeTextContent(data);
+                            break;
+                        case "TOAL":
+                            // original album
+                            if (meta.Album == null) meta.Album = DecodeTextContent(data);
+                            break;
+                        case "TPE1":
+                        // artists
+                        case "TOPE":
+                            // original artists
+                            foreach (var artistRaw in DecodeTextContent(data).Split("/"))
+                            {
+                                meta.Artists.Add(artistRaw.Trim());
+                            }
+                            break;
+                    }
+                }
+
 
             }
             else if(version.hi == 2)
@@ -282,7 +376,7 @@ namespace Project.Data
                             // artists
                         case "TOA":
                             // original artists
-                            foreach (var artistRaw in DecodeTextContent(data).Split(","))
+                            foreach (var artistRaw in DecodeTextContent(data).Split("/"))
                             {
                                 meta.Artists.Add(artistRaw.Trim());
                             }
@@ -310,11 +404,11 @@ namespace Project.Data
         private static string DecodeTextContent(byte[] bytes)
         {
             var enc = ByteToEncoding(bytes[0]);
-            return enc.GetString(bytes.AsSpan(1, bytes.Length - 1));
+            return enc.GetString(bytes.AsSpan(1, bytes.Length - 1)).TrimEnd('\0');
         }
     }
     
-    public class UnsupportedMusicFormat : Exception
+    public class UnknownMusicFormat : Exception
     {
         // <3
     }
