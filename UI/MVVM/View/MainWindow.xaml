@@ -181,20 +181,34 @@
                             Margin="0,0,330,30"
                             Panel.ZIndex="999" />
 
-                <Slider Maximum="100" 
+                <Slider Name="SongSlider"
+                        Minimum="0"
+                        Maximum="100"
+                        
+                        PreviewMouseUp="Changed_Slider_Value"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
                         Height="18" Width="360"
-                        Margin="0,46,0,0">
+                        Margin="0,46,0,0"
+                        Panel.ZIndex="5000">
                 </Slider>
 
-                <Label Name="lblStatus" FontSize="10" Content="Not playing..." HorizontalContentAlignment="Center" Margin="2,55,8,0" Foreground="White"/>
+                <Label Name="lblStatus" 
+                       FontSize="10"
+                       Content="Es ist kein Lied ausgewählt!" 
+                       HorizontalContentAlignment="Center" 
+                       VerticalContentAlignment="Top"
+                       Margin="2,55,8,0" 
+                       Foreground="White"
+                       Panel.ZIndex="4000"/>
 
             </Grid>
 
             <Button x:Name="ChooseSong"
                     Click="ChooseSong_Click"
-                    Content="Choose Song (Temporär)" Margin="100,30,0,30" HorizontalAlignment="Left" />
+                    Content="Choose Song (Temporär)" 
+                    Margin="100,30,0,30" 
+                    HorizontalAlignment="Left" />
 
             <CheckBox   x:Name="FullscreenCheckbox" 
                         Checked="FullscreenCheckbox_Checked"
@@ -249,11 +263,12 @@
                         Margin="280,30,0,80"
                         Content="{Binding }"/>
 
-        <Rectangle Margin="0,0,0,80" 
-                       Panel.ZIndex="1000" 
-                       VerticalAlignment="Bottom" 
-                       HorizontalAlignment="Left" 
-                       Height="20" Width="280">
+        <Rectangle  Margin="0,0,0,80" 
+                    Panel.ZIndex="1000" 
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Left" 
+                    Height="20" Width="280"
+                    IsHitTestVisible="False">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                     <GradientStop Color="#00323232" />

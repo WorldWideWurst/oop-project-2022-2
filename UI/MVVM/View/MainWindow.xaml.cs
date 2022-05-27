@@ -79,12 +79,11 @@ namespace Project.UI
 
         private void PlayCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("'Never gonna give you up' - Rick Astley");
-            mediaPlayer.Play();
+            if (mediaPlayer.Source != null)
+                mediaPlayer.Play();
         }
         private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("'Gave you up' - Ack Ristley");
             mediaPlayer.Pause();
         }
 
@@ -133,6 +132,16 @@ namespace Project.UI
         }
 
 
+        private void Changed_Slider_Value(object sender, MouseButtonEventArgs e)
+        {
+            if (mediaPlayer.Source != null) {
+                mediaPlayer.Pause();
+                mediaPlayer.Position = (SongSlider.Value * mediaPlayer.NaturalDuration.TimeSpan) / 100;
+                PlayCheckbox.IsChecked = true;
+                mediaPlayer.Play();
+            }
+        }
+
         //Menü-Buttons
         private void StartseiteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -176,10 +185,12 @@ namespace Project.UI
 
         void timer_Tick(object sender, EventArgs e)
         {
-            if (mediaPlayer.Source != null)
+            if (mediaPlayer.Source != null) { 
                 lblStatus.Content = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
+                SongSlider.Value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
+            }
             else
-                lblStatus.Content = "No file selected...";
+                lblStatus.Content = "Es ist kein Lied ausgewählt!";
         }
     }
 }
