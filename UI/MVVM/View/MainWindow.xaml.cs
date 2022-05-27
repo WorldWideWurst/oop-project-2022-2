@@ -187,7 +187,13 @@ namespace Project.UI
         {
             if (mediaPlayer.Source != null) { 
                 lblStatus.Content = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
-                SongSlider.Value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
+                SongSlider.Value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100; 
+                
+                if (mediaPlayer.Position == mediaPlayer.NaturalDuration.TimeSpan)
+                    if(RepeatCheckbox.IsChecked == true)
+                        mediaPlayer.Position = TimeSpan.Zero;
+                    else
+                        PlayCheckbox.IsChecked = false;
             }
             else
                 lblStatus.Content = "Es ist kein Lied ausgewählt!";
