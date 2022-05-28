@@ -163,7 +163,7 @@ namespace Project.Data
                 }
             }
 
-            throw new UnknownMusicFormat();
+            throw new UnknownMusicFormat(extension);
         }
     }
 
@@ -411,6 +411,10 @@ namespace Project.Data
     public class UnknownMusicFormat : Exception
     {
         // <3
+        public UnknownMusicFormat() { }
+
+        public UnknownMusicFormat(string extension)
+            : base($"Unbekanntes Musikformat .{extension}") { }
     }
 
     public class InvalidFileFormat : Exception
