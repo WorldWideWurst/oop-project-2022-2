@@ -159,6 +159,7 @@
         </Setter>
     </Style>
 
+
     <!-- Fullscreen-Checkbox -->
     <Style x:Key="FullscreenCheckbox" TargetType="{x:Type CheckBox}">
         <Setter Property="Template">
@@ -172,7 +173,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/feature_active_v1.png"/>
+                            <Setter TargetName="checkboxImage" Property="Source" Value="/UI/Images/like.png"/>
                         </Trigger>
 
                         <MultiTrigger>
@@ -180,19 +181,20 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsChecked" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/like.png" />
+                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/feature_active_v1.png" />
                         </MultiTrigger>
-
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="IsChecked" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/liked.png" />
+                            <Setter TargetName="checkboxImage"  Property="Source" Value="/UI/Images/like_hover.png" />
                         </MultiTrigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
 </ResourceDictionary>

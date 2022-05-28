@@ -53,7 +53,5 @@ namespace Project.Player
         {
             throw new NotImplementedException();
         }
-
-
     }
 }
