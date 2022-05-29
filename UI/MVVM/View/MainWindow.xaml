@@ -100,128 +100,7 @@
 
         </Grid>
 
-        <!-- untere Leiste, die den Audio-Player beinhaltet-->
-        <Grid x:Name="BottomBar"
-              Background="#FF323232" 
-              Height="80" 
-              VerticalAlignment="Bottom" 
-              Panel.ZIndex="900">
-            <Grid x:Name="PlayerInterface"
-                  Background="#FF323232" 
-                  Height="80" 
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Center"
-                  Panel.ZIndex="901" 
-                  Margin="0,0,0,0">
-
-                <Button x:Name="SkipButton" 
-                        Click="SkipButton_Click"
-                        Style="{StaticResource SkipButton}"
-                        Height="25" Width="25"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center" 
-                        Margin="70,0,0,30"  
-                        Panel.ZIndex="999" />
-
-                <Button x:Name="BackButton" 
-                        Click="BackButton_Click" 
-                        Style="{StaticResource BackButton}"
-                        Height="25" Width="25"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center" 
-                        Margin="0,0,70,30" 
-                        Panel.ZIndex="999" />
-
-
-                <CheckBox   x:Name="PlayCheckbox" 
-                            Checked="PlayCheckbox_Checked"
-                            Unchecked="PlayCheckbox_Unchecked"
-                            Style="{StaticResource PlayCheckbox}"
-                            BorderBrush="{x:Null}" 
-                            Height="30" Width="30"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" 
-                            Margin="0,0,0,30"
-                            Panel.ZIndex="999" />
-
-
-                <CheckBox   x:Name="RandomizeCheckbox" 
-                            Checked="RandomizeCheckbox_Checked"
-                            Unchecked="RandomizeCheckbox_Unchecked"
-                            Style="{StaticResource RandomizeCheckbox}"
-                            BorderBrush="{x:Null}" 
-                            Height="25" Width="25"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" 
-                            Margin="0,0,160,30"
-                            Panel.ZIndex="999" />
-
-
-                <CheckBox   x:Name="RepeatCheckbox" 
-                            IsThreeState="True"
-                            Checked="RepeatCheckbox_Checked"
-                            Unchecked="RepeatCheckbox_Unchecked"
-                            Indeterminate="RepeatCheckbox_Indeterminant"
-                            Style="{StaticResource RepeatCheckbox}"
-                            BorderBrush="{x:Null}" 
-                            Height="26" Width="24"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" 
-                            Margin="160,0,0,30"
-                            Panel.ZIndex="999" />
-
-                <CheckBox   x:Name="LikeCheckbox"
-                            Checked="LikeCheckbox_Checked"
-                            Unchecked="LikeCheckbox_Unchecked"
-                            Style="{StaticResource LikeCheckbox}"
-                            BorderBrush="{x:Null}" 
-                            Height="25" Width="25"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" 
-                            Margin="0,0,330,30"
-                            Panel.ZIndex="999" />
-
-                <Slider Name="SongSlider"
-                        Minimum="0"
-                        Maximum="100"
-                        
-                        PreviewMouseUp="Changed_Slider_Value"
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Top" 
-                        Height="18" Width="360"
-                        Margin="0,46,0,0"
-                        Panel.ZIndex="5000">
-                </Slider>
-
-                <Label Name="lblStatus" 
-                       FontSize="10"
-                       Content="Es ist kein Lied ausgewählt!" 
-                       HorizontalContentAlignment="Center" 
-                       VerticalContentAlignment="Top"
-                       Margin="2,55,8,0" 
-                       Foreground="White"
-                       Panel.ZIndex="4000"/>
-
-            </Grid>
-
-            <Button x:Name="ChooseSong"
-                    Click="ChooseSong_Click"
-                    Content="Choose Song (Temporär)" 
-                    Margin="100,30,0,30" 
-                    HorizontalAlignment="Left" />
-
-            <CheckBox   x:Name="FullscreenCheckbox" 
-                        Checked="FullscreenCheckbox_Checked"
-                        Unchecked="FullscreenCheckbox_Unchecked"
-                        Style="{StaticResource FullscreenCheckbox}"
-                        BorderBrush="{x:Null}" 
-                        Height="25" Width="25"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Right" 
-                        Margin="0,0,30,0"
-                        Panel.ZIndex="999" />
-
-        </Grid>
+        <!-- linke Leiste -->
         <Grid x:Name="LeftBar"
               HorizontalAlignment="Left"
               Width="280"
@@ -276,5 +155,14 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
+
+        <!-- untere Leiste, die den Audio-Player beinhaltet-->
+
+        <views:MediaController />
+
+        <views:Fullscreen   x:Name="FullscreenView"
+                            Margin="0,30,0,80"
+                            Visibility="Collapsed" 
+                            Panel.ZIndex="9000"/>
     </Grid>
 </Window>
