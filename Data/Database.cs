@@ -239,6 +239,24 @@ namespace Project.Data
             return null;
         }
 
+        public IEnumerable<MusicList> GetMusicListsByName(string name)
+        {
+            using var cmd = new SQLiteCommand("select id, type, publish_date, _owned_by from music_list where name = @name", connection);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Prepare();
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                Guid id = reader.GetGuid(0);
+                MusicListType type = stringToMusicListType(reader[1] as string ?? string.Empty);
+                string? publishDateStr = reader[2] as string;
+                DateOnly? publishDate = publishDateStr != null ? DateOnly.FromDateTime(DateTime.Parse(publishDateStr)) : null;
+                string? owner = reader[3] as string;
+                yield return new MusicList(id, name, owner, publishDate, type);
+            }
+        }
+
         internal void InsertMusicList(MusicList musicList)
         {
             using var cmd = new SQLiteCommand("insert into music_list(id, name, type, publish_date, _owned_by) values (@id, @name, @type, @publish_date, @owned_by)", connection);
@@ -301,6 +319,28 @@ namespace Project.Data
             cmd.ExecuteNonQuery();
         }
 
+        internal IEnumerable<Music> GetMusicInListDirect(MusicList musicList)
+        {
+            using var cmd = new SQLiteCommand(@"
+                select m.id, m.title, m.album from _music_in_list ml
+                inner join music_list l on l.id = ml._list 
+                inner join music m on m.id = ml._music
+                where l.id = @id
+            ", connection);
+            cmd.Parameters.AddWithValue("@id", musicList.Id);
+            cmd.Prepare();
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                Guid id = reader.GetGuid(0);
+                string? title = reader[1] as string;
+                string? album = reader[2] as string;
+                yield return new Music(id, title, album);
+            }
+        }
+
+
 
 
 
@@ -314,11 +354,15 @@ namespace Project.Data
                 return GetMusic(source.MusicId) ?? throw new System.Data.ConstraintException();
             }
 
+            // metadaten aus datei laden
             MusicFileMeta meta = MetaLoader.Instance.Load(address);
 
+            // musik-Eintrag hinzufügen
+            // TODO: gibt es diese Musik schon?
             Music music = new Music(meta.Title, meta.Album);
             music.Insert();
 
+            // künstler hinzufügen und zu künstlern hinzufügen
             foreach(var artistName in meta.Artists)
             {
                 if (GetArtist(artistName) == null)
@@ -326,6 +370,19 @@ namespace Project.Data
                 new MusicByArtist(music.Id, artistName).Insert();
             }
 
+            // ins album hinzufügen, falls albumdaten vorhanden
+            if(music.Album != null)
+            {
+                MusicList? album = GetMusicListsByName(music.Album).FirstOrDefault();
+                if (album == null)
+                {
+                    album = new MusicList(music.Album);    
+                    album.Insert();
+                }
+                new MusicInList(music.Id, album.Id).Insert();
+            }
+            
+            // quellenangabe hinzufügen
             new Source(address, music.Id).Insert();
 
             return music;

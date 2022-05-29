@@ -33,8 +33,9 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            var testFile = "C:\\Users\\Foerster\\Downloads\\Carpenter Brut-Roller Mobster.mp3";
-            var meta = MetaLoader.Instance.Load(testFile);
+            var a = Encoding.Unicode.GetString(new byte[] { (byte)'\xFF', (byte)'\xFE', (byte)'h', (byte)'\0' });
+            var b = Encoding.Unicode.GetString(new byte[] { (byte)'h', (byte)'\0' });
+            MessageBox.Show((a == b).ToString());
         }
     }
 }

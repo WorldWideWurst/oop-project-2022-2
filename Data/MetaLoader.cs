@@ -389,7 +389,7 @@ namespace Project.Data
             return meta;
         }
 
-        private static Encoding ByteToEncoding(byte b)
+        private static Encoding byteToEncoding(byte b)
         {
             return b switch
             {
@@ -401,10 +401,22 @@ namespace Project.Data
             };
         }
 
+        /// <summary>
+        /// Scheiß Micorosft hat mir ganze 3 Stunden Lebenszeit geraubt FÜR DIESEN SCHEIß
+        /// </summary>
+        /// <param name="str">DEINE MUTTER</param>
+        /// <returns>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</returns>
+        private static string stripBOM(string str)
+        {
+            return str[0] == '\uFEFF' ? str[1..] : str;
+        }
+
         private static string DecodeTextContent(byte[] bytes)
         {
-            var enc = ByteToEncoding(bytes[0]);
-            return enc.GetString(bytes.AsSpan(1, bytes.Length - 1)).TrimEnd('\0');
+            var enc = byteToEncoding(bytes[0]);
+            var str = enc.GetString(bytes, 1, bytes.Length - 1).TrimEnd('\0');
+            str = stripBOM(str);
+            return str;
         }
     }
     

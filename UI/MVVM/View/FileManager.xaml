@@ -39,11 +39,6 @@
                        TextWrapping="Wrap"  
                        Width="auto" Height="25" 
                        FontSize="16">
-                <!-- Brauchst du die auskommentierten Zeilen überhaupt?
-                <Run/>
-                <LineBreak/>
-                <Run/>
-                -->
             </TextBlock>
             <Button x:Name="ClearDatabase" 
                     Content="Musikdatenbank leeren" 

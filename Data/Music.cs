@@ -142,6 +142,7 @@ namespace Project.Data
         public MusicListType Type { get; set; }
         public DateOnly? PublishDate { get; set; }
         public IEnumerable<MusicInList> Entries => Database.Instance.GetMusicInList(this);
+        public IEnumerable<Music> MusicEntries => Database.Instance.GetMusicInListDirect(this);
 
         public MusicList(Guid id, string name, string? owner, DateOnly? publishDate, MusicListType type = MusicListType.Undefined)
         {
