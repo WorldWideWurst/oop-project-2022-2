@@ -31,7 +31,10 @@ namespace Project.UI.MVVM.View
 
         private void SelectMusicDir_Click(object sender, RoutedEventArgs e)
         {
-            var dir = MusicDirInput.Text;
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.ShowDialog();
+
+            var dir = dialog.SelectedPath;
             if(!Directory.Exists(dir))
             {
                 ImportReport.Text = "Ist kein Ordner.";
