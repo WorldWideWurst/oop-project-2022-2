@@ -6,6 +6,7 @@
     <RootNamespace>Project</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	<UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>Project</AssemblyName>
   </PropertyGroup>
 
@@ -46,6 +47,15 @@
     <None Remove="UI\Images\shuffle_active_hover.png" />
     <None Remove="UI\Images\shuffle_hover.png" />
     <None Remove="UI\Images\sound.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="{215d64d2-031c-33c7-96e3-61794cd1ee61}">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>4</VersionMinor>
+      <VersionMajor>2</VersionMajor>
+      <Guid>215d64d2-031c-33c7-96e3-61794cd1ee61</Guid>
+    </COMReference>
   </ItemGroup>
 
   <ItemGroup>

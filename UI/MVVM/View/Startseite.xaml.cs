@@ -33,9 +33,9 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            var a = Encoding.Unicode.GetString(new byte[] { (byte)'\xFF', (byte)'\xFE', (byte)'h', (byte)'\0' });
-            var b = Encoding.Unicode.GetString(new byte[] { (byte)'h', (byte)'\0' });
-            MessageBox.Show((a == b).ToString());
+            System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            folderBrowserDialog.ShowDialog();
+            MessageBox.Show(folderBrowserDialog.SelectedPath);
         }
     }
 }

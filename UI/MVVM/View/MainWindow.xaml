@@ -27,7 +27,7 @@
 
     <!-- ermöglicht, dass die Views (Startseite, Einstellungen usw.) angezeigt werden -->
     <Window.Resources>
-        <DataTemplate x:Name="StartseiteTemplate" DataType="{x:Type viewmodels:StartseiteViewModel}">
+        <DataTemplate x:Name="StartseiteTemplate" DataType="{x:Type views:Startseite}">
             <views:Startseite DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="PlaylistsTemplate" DataType="{x:Type viewmodels:PlaylistsViewModel}">
