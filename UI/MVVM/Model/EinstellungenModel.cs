@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.UI.MVVM.Model
 {
-    internal class Playlists
+    internal class EinstellungenModel
     {
     }
 }

@@ -30,7 +30,7 @@ namespace Project.UI
         public MainWindow()
         {
             //Initialisiert und zeigt Startseite an
-            DataContext = new MVVM.View.Startseite();
+            DataContext = new Startseite();
             InitializeComponent();
         }
 
@@ -69,27 +69,27 @@ namespace Project.UI
         //Menü-Buttons
         private void StartseiteButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new MVVM.View.Startseite();
+            DataContext = new Startseite();
         }
 
         private void PlaylistsButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new PlaylistsViewModel();
+            DataContext = new Playlists();
         }
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new DownloaderViewModel();
+            DataContext = new Downloader();
         }
 
         private void FileManagerButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new FileManagerViewModel();
+            DataContext = new FileManager();
         }
 
         private void EinstellungenButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new EinstellungenViewModel();
+            DataContext = new Einstellungen();
         }
 
         public void FullscreenShow(bool show)

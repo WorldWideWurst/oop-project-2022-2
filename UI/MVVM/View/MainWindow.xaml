@@ -30,22 +30,22 @@
         <DataTemplate x:Name="StartseiteTemplate" DataType="{x:Type views:Startseite}">
             <views:Startseite DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="PlaylistsTemplate" DataType="{x:Type viewmodels:PlaylistsViewModel}">
+        <DataTemplate x:Name="PlaylistsTemplate" DataType="{x:Type views:Playlists}">
             <views:Playlists DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="DownloaderTemplate" DataType="{x:Type viewmodels:DownloaderViewModel}">
+        <DataTemplate x:Name="DownloaderTemplate" DataType="{x:Type views:Downloader}">
             <views:Downloader DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="FileManagerTemplate" DataType="{x:Type viewmodels:FileManagerViewModel}">
+        <DataTemplate x:Name="FileManagerTemplate" DataType="{x:Type views:FileManager}">
             <views:FileManager DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="EinstellungenTemplate" DataType="{x:Type viewmodels:EinstellungenViewModel}">
+        <DataTemplate x:Name="EinstellungenTemplate" DataType="{x:Type views:Einstellungen}">
             <views:Einstellungen DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="CurrentListTemplate" DataType="{x:Type viewmodels:CurrentListDisplayViewModel}">
+        <DataTemplate x:Name="CurrentListTemplate" DataType="{x:Type views:CurrentListDisplay}">
             <views:CurrentListDisplay DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="PlaylistDisplayTemplate" DataType="{x:Type viewmodels:PlaylistDisplayViewModel}">
+        <DataTemplate x:Name="PlaylistDisplayTemplate" DataType="{x:Type views:PlaylistDisplay}">
             <views:PlaylistDisplay DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
