@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="800">
+             d:DesignHeight="100" d:DesignWidth="800">
     
     <Grid x:Name="BottomBar"
               Background="#FF323232" 
-              Height="80" 
+              Height="100" 
               VerticalAlignment="Bottom" 
               Panel.ZIndex="900">
         <Grid x:Name="PlayerInterface"
-                  Background="#FF323232" 
-                  Height="80" 
+                  Background="Transparent" 
+                  Height="100" 
                   VerticalAlignment="Center"
                   HorizontalAlignment="Center"
                   Panel.ZIndex="901" 
@@ -23,19 +23,19 @@
             <Button x:Name="SkipButton" 
                         Click="SkipButton_Click"
                         Style="{StaticResource SkipButton}"
-                        Height="25" Width="25"
+                        Height="30" Width="30"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center" 
-                        Margin="70,0,0,30"  
+                        Margin="85,0,0,35"  
                         Panel.ZIndex="999" />
 
             <Button x:Name="BackButton" 
                         Click="BackButton_Click" 
                         Style="{StaticResource BackButton}"
-                        Height="25" Width="25"
+                        Height="30" Width="30"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center" 
-                        Margin="0,0,70,30" 
+                        Margin="0,0,85,35" 
                         Panel.ZIndex="999" />
 
 
@@ -44,10 +44,10 @@
                             Unchecked="PlayCheckbox_Unchecked"
                             Style="{StaticResource PlayCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="30" Width="30"
+                            Height="35" Width="35"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="0,0,0,30"
+                            Margin="0,0,0,35"
                             Panel.ZIndex="999" />
 
 
@@ -56,10 +56,10 @@
                             Unchecked="RandomizeCheckbox_Unchecked"
                             Style="{StaticResource RandomizeCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="25" Width="25"
+                            Height="35" Width="35"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="0,0,160,30"
+                            Margin="0,0,180,35"
                             Panel.ZIndex="999" />
 
 
@@ -70,10 +70,10 @@
                             Indeterminate="RepeatCheckbox_Indeterminant"
                             Style="{StaticResource RepeatCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="26" Width="24"
+                            Height="35" Width="35"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="160,0,0,30"
+                            Margin="180,0,0,35"
                             Panel.ZIndex="999" />
 
             <CheckBox   x:Name="LikeCheckbox"
@@ -81,30 +81,28 @@
                             Unchecked="LikeCheckbox_Unchecked"
                             Style="{StaticResource LikeCheckbox}"
                             BorderBrush="{x:Null}" 
-                            Height="25" Width="25"
+                            Height="35" Width="35"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center" 
-                            Margin="0,0,330,30"
+                            Margin="0,0,340,35"
                             Panel.ZIndex="999" />
 
             <Slider Name="SongSlider"
                         Minimum="0"
                         Maximum="100"
-                        
                         PreviewMouseUp="Changed_Slider_Value"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" 
-                        Height="18" Width="360"
-                        Margin="0,46,0,0"
-                        Panel.ZIndex="5000">
-            </Slider>
+                        Height="18" Width="400"
+                        Margin="0,60,0,0"
+                        Panel.ZIndex="5000" />
 
             <Label     Name="lblStatus" 
                        FontSize="10"
                        Content="Es ist kein Lied ausgewählt!" 
                        HorizontalContentAlignment="Center" 
                        VerticalContentAlignment="Top"
-                       Margin="2,55,8,0" 
+                       Margin="0,75,0,0" 
                        Foreground="White"
                        Panel.ZIndex="4000"/>
 
@@ -113,7 +111,7 @@
         <Button x:Name="ChooseSong"
                     Click="ChooseSong_Click"
                     Content="Choose Song (Temporär)" 
-                    Margin="100,30,0,30" 
+                    Margin="50,30,0,30" 
                     HorizontalAlignment="Left" />
 
         <CheckBox   x:Name="FullscreenCheckbox" 
@@ -121,10 +119,10 @@
                         Unchecked="FullscreenCheckbox_Unchecked"
                         Style="{StaticResource FullscreenCheckbox}"
                         BorderBrush="{x:Null}" 
-                        Height="25" Width="25"
-                        VerticalAlignment="Bottom"
+                        Height="35" Width="35"
+                        VerticalAlignment="Center"
                         HorizontalAlignment="Right" 
-                        Margin="0,0,30,27"
+                        Margin="0,0,32.5,0"
                         Panel.ZIndex="10000" />
 
     </Grid>

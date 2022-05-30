@@ -11,7 +11,7 @@
         xmlns:viewmodels="clr-namespace:Project.UI.MVVM.ViewModel"
         mc:Ignorable="d"
         Height="540" Width="960"
-        MinHeight="380" MinWidth="500"
+        MinHeight="380" MinWidth="600"
         Title="MainWindow"
         WindowState="Normal"
         WindowStartupLocation="CenterScreen"
@@ -104,7 +104,7 @@
         <Grid x:Name="LeftBar"
               HorizontalAlignment="Left"
               Width="280"
-              Margin="0,30,0,80"
+              Margin="0,30,0,100"
               Background="#FF323232"
               Panel.ZIndex="800">
 
@@ -139,10 +139,10 @@
             <views:SubMenu Margin="0,200,0,0" />
         </Grid>
         <ContentControl x:Name="ContentViewer"
-                        Margin="280,30,0,80"
+                        Margin="280,30,0,100"
                         Content="{Binding }"/>
 
-        <Rectangle  Margin="0,0,0,80" 
+        <Rectangle  Margin="0,0,0,100" 
                     Panel.ZIndex="1000" 
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Left" 
@@ -161,7 +161,7 @@
         <views:MediaController />
 
         <views:Fullscreen   x:Name="FullscreenView"
-                            Margin="0,30,0,80"
+                            Margin="0,30,0,100"
                             Visibility="Collapsed" 
                             Panel.ZIndex="9000"/>
     </Grid>
