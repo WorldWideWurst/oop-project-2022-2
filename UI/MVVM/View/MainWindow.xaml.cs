@@ -84,7 +84,7 @@ namespace Project.UI
 
         private void FileManagerButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new FileManager();
+            DataContext = new MusicImporter();
         }
 
         private void EinstellungenButton_Click(object sender, RoutedEventArgs e)

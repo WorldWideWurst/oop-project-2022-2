@@ -36,8 +36,8 @@
         <DataTemplate x:Name="DownloaderTemplate" DataType="{x:Type views:Downloader}">
             <views:Downloader DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="FileManagerTemplate" DataType="{x:Type views:FileManager}">
-            <views:FileManager DataContext="{Binding}"/>
+        <DataTemplate x:Name="FileManagerTemplate" DataType="{x:Type views:MusicImporter}">
+            <views:MusicImporter DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="EinstellungenTemplate" DataType="{x:Type views:Einstellungen}">
             <views:Einstellungen DataContext="{Binding}"/>

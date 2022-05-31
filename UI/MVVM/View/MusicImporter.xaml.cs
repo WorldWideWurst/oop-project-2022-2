@@ -22,9 +22,9 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für FileManager.xaml
     /// </summary>
-    public partial class FileManager : UserControl
+    public partial class MusicImporter : UserControl
     {
-        public FileManager()
+        public MusicImporter()
         {
             InitializeComponent();
         }
