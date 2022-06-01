@@ -105,14 +105,7 @@ namespace Project.UI
 
         public void FullscreenShow(bool show)
         {
-            if(show) 
-            { 
-                FullscreenView.Visibility = Visibility.Visible;
-            }
-            else 
-            {
-                FullscreenView.Visibility = Visibility.Collapsed;
-            }
+            FullscreenView.Visibility = show == true ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

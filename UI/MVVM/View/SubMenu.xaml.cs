@@ -18,9 +18,7 @@ using System.Windows.Shapes;
 
 namespace Project.UI.MVVM.View
 {
-    /// <summary>
-    /// Interaktionslogik für SubMenu.xaml
-    /// </summary>
+    // Verfasst von Janek Engel
     public partial class SubMenu : UserControl
     {
         public SubMenu()

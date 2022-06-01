@@ -19,9 +19,7 @@ using Project.UI.MVVM.View;
 
 namespace Project.UI.MVVM.View
 {
-    /// <summary>
-    /// Interaktionslogik für MediaController.xaml
-    /// </summary>
+    // Verfasst von Janek Engel
     public partial class MediaController : UserControl
     {
         private MediaPlayer mediaPlayer = new MediaPlayer();
@@ -31,7 +29,7 @@ namespace Project.UI.MVVM.View
             InitializeComponent();
         }
 
-        //Audio-Player-Buttons
+        //Audio-Player-Buttons, noch nicht implementiert
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Went to last song");
@@ -47,13 +45,15 @@ namespace Project.UI.MVVM.View
         {
             if (mediaPlayer.Source != null)
                 mediaPlayer.Play();
+            else
+                PlayCheckbox.IsChecked = false;
         }
         private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             mediaPlayer.Pause();
         }
 
-
+        //noch nicht implementiert
         private void RandomizeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Randomizing Song Order!");
@@ -89,7 +89,7 @@ namespace Project.UI.MVVM.View
 
 
 
-
+        //Kontrolliert im MainWindow die Sichtbarkeit des Fullscreen-views
         private void FullscreenCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             ((MainWindow)System.Windows.Application.Current.MainWindow).FullscreenShow(true);
@@ -101,20 +101,16 @@ namespace Project.UI.MVVM.View
             FullscreenCheckbox.IsChecked = false;
         }
 
-
-        //Audio-Player Controls
-
+        //Skippt zur stelle im Lied, die mit dem Slider-Wert übereinstimmt
         private void Changed_Slider_Value(object sender, MouseButtonEventArgs e)
         {
             if (mediaPlayer.Source != null)
             {
-                mediaPlayer.Pause();
                 mediaPlayer.Position = (SongSlider.Value * mediaPlayer.NaturalDuration.TimeSpan) / 100;
-                PlayCheckbox.IsChecked = true;
-                mediaPlayer.Play();
             }
         }
 
+        //Startet den MediaPlayer (nach Songauswahl) und legt die Ticklänge fest
         private void ChooseSong_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -125,18 +121,20 @@ namespace Project.UI.MVVM.View
                 PlayCheckbox.IsChecked = false;
 
                 DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromSeconds(0.5);
+                timer.Interval = TimeSpan.FromSeconds(0.25);
                 timer.Tick += timer_Tick;
                 timer.Start();
             }
         }
 
+        //Event tritt bei jedem Tick des Timers auf
         void timer_Tick(object sender, EventArgs e)
         {
             if (mediaPlayer.Source != null)
             {
                 lblStatus.Content = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
-                SongSlider.Value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
+                if(!SongSlider.IsMouseCaptureWithin)
+                    SongSlider.Value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
 
                 if (mediaPlayer.Position == mediaPlayer.NaturalDuration.TimeSpan)
                     if (RepeatCheckbox.IsChecked == true)
@@ -147,6 +145,5 @@ namespace Project.UI.MVVM.View
             else
                 lblStatus.Content = "Es ist kein Lied ausgewählt!";
         }
-
     }
 }
