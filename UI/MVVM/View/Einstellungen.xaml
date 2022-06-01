@@ -11,9 +11,15 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <StackPanel>
-            <TextBlock Text="Einstellungen" Foreground="White" FontSize="40"/>
-            <Button x:Name="ClearDatabaseButton" 
-                    Click="ClearDatabaseButton_Click">Datenbank leeren</Button>
+            <TextBlock Text="Einstellungen" 
+                       Foreground="White" 
+                       FontSize="40"
+                       Margin="0,0,0,10"/>
+            <Button x:Name="ClearDatabaseButton"
+                    Style="{StaticResource StandardButtonTheme}"
+                    Click="ClearDatabaseButton_Click"
+                    Content="Datenbank leeren"
+                    Height="20"/>
         </StackPanel>
     </ScrollViewer>
     
