@@ -1,4 +1,4 @@
-﻿<!-- Erstellt von Janek Engel -->
+﻿<!-- Erstellt von Richard Förster, visuell angepaJanek Engel -->
 
 <UserControl x:Class="Project.UI.MVVM.View.MusicImporter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -20,26 +20,38 @@
                        Margin="0,0,0,20px"/>
             <Button     x:Name="SelectMusicDir" 
                         Style="{StaticResource StandardButtonTheme}"
+                        Height="50"
                         FontSize="20"
                         Click="SelectMusicDir_Click"
                         Content="Ordner Auswählen" 
                         Margin="0,0,0,20"/>
-            <Expander x:Name="SuccessfulListExpander" Header="Erfolgreich" Foreground="Green">
-                <ListView x:Name="SuccessfulList" MaxHeight="200px">
-                    
-                </ListView>
+            <Expander x:Name="SuccessfulListExpander" 
+                      Header="Erfolgreich" 
+                      Foreground="Green"
+                      Style="{StaticResource StandardExpanderTheme}">
+                <ListView x:Name="SuccessfulList"
+                          MaxHeight="200px"
+                          Style="{StaticResource ExpanderListTheme}"/>
             </Expander>
-            <Expander Header="Fehlerhaft" x:Name="ErrorListExpander" Foreground="Red">
-                <ListView x:Name="ErrorList" MaxHeight="200px">
-
-                </ListView>
+            
+            <Expander Header="Fehlerhaft" 
+                      x:Name="ErrorListExpander" 
+                      Foreground="Red"
+                      Style="{StaticResource StandardExpanderTheme}">
+                <ListView x:Name="ErrorList" 
+                          MaxHeight="200px"
+                          Style="{StaticResource ExpanderListTheme}"/>
             </Expander>
-            <Expander  x:Name="AlreadyExistsListExpander" Header="Schon Vorhanden" Expanded="AlreadyExistsExpander_Expand" Foreground="Gray">
-                <ListView x:Name="AlreadyExistsList" MaxHeight="200px">
-
-                </ListView>
+            
+            <Expander  x:Name="AlreadyExistsListExpander" 
+                       Header="Schon Vorhanden" 
+                       Expanded="AlreadyExistsExpander_Expand" 
+                       Foreground="LightGray"
+                       Style="{StaticResource StandardExpanderTheme}">
+                <ListView x:Name="AlreadyExistsList" 
+                          MaxHeight="200px"
+                          Style="{StaticResource ExpanderListTheme}"/>
             </Expander>
-
 
         </StackPanel>
     </ScrollViewer>

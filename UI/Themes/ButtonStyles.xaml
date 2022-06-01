@@ -40,7 +40,6 @@
             </Setter>
 
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Height" Value="50" />
         </Style.Setters>
     </Style>
     

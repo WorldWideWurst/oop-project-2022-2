@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="/UI/Themes/CheckBoxStyles.xaml" />
                 <ResourceDictionary Source="/UI/Themes/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/UI/Themes/ScrollbarStyles.xaml" />
+                <ResourceDictionary Source="/UI/Themes/ExpanderStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- geschrieben von Janek Engel -->
+
+    <!-- Expanders in MusicImporter.xaml -->
+
+    <Style TargetType="{x:Type Expander}"
+           x:Key="StandardExpanderTheme">
+        <Style.Setters>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#FF454545"/>
+            <Setter Property="Foreground" Value="#202020"/>
+            <Setter Property="Background" Value="#FF383838"/>
+            <Setter Property="Padding" Value="5,2.5,5,2.5"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="{x:Type ListView}"
+           x:Key="ExpanderListTheme">
+        <Style.Setters>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF454545"/>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>
