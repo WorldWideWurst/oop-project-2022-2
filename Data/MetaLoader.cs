@@ -155,7 +155,7 @@ namespace Project.Data
                     {
                         return loader.Load(path);
                     } 
-                    catch(Exception ex) when (ex is UnknownMusicFormat || ex is NotImplementedException)
+                    catch(Exception ex) when (ex is UnknownMusicFileFormat || ex is NotImplementedException)
                     {
                         Console.WriteLine("Format " + extension + " wird (teilweise?) nicht unterstützt.");
                         continue;
@@ -163,7 +163,7 @@ namespace Project.Data
                 }
             }
 
-            throw new UnknownMusicFormat(extension);
+            throw new UnknownMusicFileFormat(extension);
         }
     }
 
@@ -188,7 +188,7 @@ namespace Project.Data
             }
             else
             {
-                throw new UnknownMusicFormat();
+                throw new UnknownMusicFileFormat();
             }
         }
 
@@ -217,7 +217,7 @@ namespace Project.Data
 
             // Magic lesen: "ID3"
             var magic = Encoding.ASCII.GetString(reader.Bytes(3));
-            if (magic != "ID3") throw new UnknownMusicFormat();
+            if (magic != "ID3") throw new UnknownMusicFileFormat();
 
             // 2 byte version
             var version = (hi: reader.U8(), lo: reader.U8());
@@ -420,12 +420,12 @@ namespace Project.Data
         }
     }
     
-    public class UnknownMusicFormat : Exception
+    public class UnknownMusicFileFormat : Exception
     {
         // <3
-        public UnknownMusicFormat() { }
+        public UnknownMusicFileFormat() { }
 
-        public UnknownMusicFormat(string extension)
+        public UnknownMusicFileFormat(string extension)
             : base($"Unbekanntes Musikformat .{extension}") { }
     }
 

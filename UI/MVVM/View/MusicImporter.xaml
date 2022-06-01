@@ -42,7 +42,16 @@
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
             </Expander>
-            
+
+            <Expander Header="Konvertiert" 
+                      x:Name="ConvertedListExpander" 
+                      Foreground="Yellow"
+                      Style="{StaticResource StandardExpanderTheme}">
+                <ListView x:Name="ConvertedList" 
+                          MaxHeight="200px"
+                          Style="{StaticResource ExpanderListTheme}"/>
+            </Expander>
+
             <Expander  x:Name="AlreadyExistsListExpander" 
                        Header="Schon Vorhanden" 
                        Expanded="AlreadyExistsExpander_Expand" 

@@ -17,7 +17,7 @@ namespace Project.Convert
     public class Converter : IConverter
     {
 
-        public static readonly Converter Instance = new Converter();
+        public static readonly Converter Instance = new();
 
         public void Convert(string source, string target)
         {
@@ -28,5 +28,15 @@ namespace Project.Convert
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class UnsupportedFileConversion : Exception
+    {
+
+    }
+
+    public class ConversionException : Exception
+    {
+
     }
 }
