@@ -96,7 +96,8 @@ namespace Project.UI.MVVM.View
             }
 
             ErrorListExpander.IsExpanded = true;
-            MessageBox.Show($@"{filesAdded} Datei(n) hinzugefügt, {filesDiscarded} verworfen, {filesTried - filesAdded - filesDiscarded} ignoriert.Insgesamt {filesTried} Datei(n)");
+            MessageBox.Show($@"{filesAdded} Datei(n) hinzugefügt, {filesDiscarded} verworfen, {filesTried - filesAdded - filesDiscarded} ignoriert.
+Insgesamt {filesTried} Datei(n)");
         }
 
         private void ClearDatabase_Click(object sender, RoutedEventArgs e)

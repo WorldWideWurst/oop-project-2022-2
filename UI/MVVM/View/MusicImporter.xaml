@@ -18,15 +18,12 @@
                        Foreground="White" 
                        FontSize="40" 
                        Margin="0,0,0,20px"/>
-            <Border CornerRadius="20" Background="#FF323232" Padding="10px">
-                <Button x:Name="SelectMusicDir" 
-                        Style="{StaticResource ButtonTheme}"
+            <Button     x:Name="SelectMusicDir" 
+                        Style="{StaticResource StandardButtonTheme}"
                         FontSize="20"
-                        Click="SelectMusicDir_Click">
-                    Ordner Auswählen
-                </Button>
-            </Border>
-            <Rectangle Height="20px"/>
+                        Click="SelectMusicDir_Click"
+                        Content="Ordner Auswählen" 
+                        Margin="0,0,0,20"/>
             <Expander x:Name="SuccessfulListExpander" Header="Erfolgreich" Foreground="Green">
                 <ListView x:Name="SuccessfulList" MaxHeight="200px">
                     

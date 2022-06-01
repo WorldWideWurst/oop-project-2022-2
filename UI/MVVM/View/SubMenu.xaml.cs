@@ -26,19 +26,19 @@ namespace Project.UI.MVVM.View
         public SubMenu()
         {
             //Initialisiert und zeigt PlaylistDisplay an
-            DataContext = new PlaylistDisplayViewModel();
+            DataContext = new PlaylistDisplay();
             InitializeComponent();
         }
 
 
         private void CurrentListDisplayButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new CurrentListDisplayViewModel();
+            DataContext = new CurrentListDisplay();
         }
 
         private void PlaylistDisplayButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new PlaylistDisplayViewModel();
+            DataContext = new PlaylistDisplay();
         }
     }
 }

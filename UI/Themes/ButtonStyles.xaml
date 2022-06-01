@@ -3,37 +3,45 @@
     
     <!-- geschrieben von Janek Engel -->
 
+    <!-- Border-Style, der im folgenden Standard-Button genutzt wird -->
+    
+    <Style TargetType="{x:Type Border}"
+           x:Key="BorderTheme">
+        <Style.Setters>
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Background" Value="#FF323232" />
+        </Style.Setters>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF383838" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- Standard-Buttons -->
     <Style TargetType="{x:Type Button}"
-           x:Key="ButtonTheme">
+           x:Key="StandardButtonTheme">
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid VerticalAlignment="Stretch"
-                              HorizontalAlignment="Stretch"
-                              Background="{TemplateBinding Background}">
-
-                            <TextBlock Text="{TemplateBinding Property=Content}" 
-                                       VerticalAlignment="Center"/>
-                        </Grid>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Style="{StaticResource BorderTheme}">
+                            <Grid VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch">
+                                <TextBlock Text="{TemplateBinding Property=Content}" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Padding="10,0,0,0"/>
+                            </Grid>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
 
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Height" Value="50" />
-            <Setter Property="Background" Value="Transparent" />
         </Style.Setters>
-
-        <Style.Triggers>
-            <Trigger Property="ClickMode" Value="Press">
-                <Setter Property="Background" Value="#FF404040" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#FF454545" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
     
     <!-- Close-Button -->

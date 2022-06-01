@@ -12,10 +12,10 @@
         d:DesignHeight="450" d:DesignWidth="280">
 
     <UserControl.Resources>
-        <DataTemplate x:Name="CurrentListDisplayTemplate" DataType="{x:Type viewmodels:CurrentListDisplayViewModel}">
+        <DataTemplate x:Name="CurrentListDisplayTemplate" DataType="{x:Type views:CurrentListDisplay}">
             <views:CurrentListDisplay DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="PlaylistDisplayTemplate" DataType="{x:Type viewmodels:PlaylistDisplayViewModel}">
+        <DataTemplate x:Name="PlaylistDisplayTemplate" DataType="{x:Type views:PlaylistDisplay}">
             <views:PlaylistDisplay DataContext="{Binding}"/>
         </DataTemplate>
     </UserControl.Resources>
