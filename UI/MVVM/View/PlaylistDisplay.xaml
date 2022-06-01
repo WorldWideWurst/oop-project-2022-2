@@ -10,7 +10,9 @@
              d:DesignHeight="450" d:DesignWidth="280">
     <ScrollViewer>
         <StackPanel>
-            <TextBlock Foreground="White" Background="Transparent" Text="Test&#xD;&#xA;TEst&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Letzteer Test&#xD;&#xA;&lt;3&#xD;&#xA;" />
+            <TextBlock Foreground="White"
+                       Background="Transparent" 
+                       Text="Test&#xD;&#xA;TEst&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Letzteer Test&#xD;&#xA;&lt;3&#xD;&#xA;" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>
