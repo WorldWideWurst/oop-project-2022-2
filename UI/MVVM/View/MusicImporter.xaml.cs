@@ -35,35 +35,87 @@ namespace Project.UI.MVVM.View
             dialog.ShowDialog();
 
             var dir = dialog.SelectedPath;
-            if(!Directory.Exists(dir))
+            if(dir == string.Empty)
             {
-                ImportReport.Text = "Ist kein Ordner.";
+                // abgebrochen
                 return;
             }
 
-            var allFiles = SimpleDiskIndexer.Instance.Index(dir).ToList();
-            int filesRegistered = 0;
+            if(!Directory.Exists(dir))
+            {
+                MessageBox.Show("Dieser Ordner existiert nicht.");
+                return;
+            }
+
+            ClearLists();
+
+            int filesAdded = 0;
+            int filesDiscarded = 0;
             int filesTried = 0;
-            foreach(var file in allFiles)
+            foreach(var file in SimpleDiskIndexer.Instance.Index(dir))
             {
                 try
                 {
                     filesTried++;
-                    var music = Database.Instance.RegisterMusicSource(file);
-                    filesRegistered++;
+
+                    // existiert die datei schon in der DAtenbank?
+                    Source? source = Database.Instance.GetSource(file);
+                    if(source != null)
+                    {
+                        AlreadyExistsList.Items.Add(new ListViewItem()
+                        {
+                            Content = file[(dir.Length + 1)..]
+                        });
+                        continue;
+                    }
+
+                    // Musik laden. Kann fehlschlagen
+                    MusicFileMeta meta = MetaLoader.Instance.Load(file);
+                    Music music = Database.Instance.RegisterMusicSource(meta);
+
+                    // erfolg
+                    filesAdded++;
+                    SuccessfulList.Items.Add(new ListViewItem()
+                    {
+                        Content = file[(dir.Length + 1)..]
+                    });
                 } 
-                catch (UnknownMusicFormat)
+                catch (Exception ex) when (
+                    ex is UnknownMusicFormat ||
+                    ex is FileNotFoundException ||
+                    ex is InvalidMusicFileFormat)
                 {
+                    filesDiscarded++;
+                    ErrorList.Items.Add(new ListViewItem()
+                    {
+                        ToolTip = ex.Message,
+                        Content = file[(dir.Length + 1)..]
+                    });
                     continue;
                 }
             }
-            ImportReport.Text = $"{filesRegistered} von {filesTried} Musikdatei(n) registriert.";
+
+            ErrorListExpander.IsExpanded = true;
+            MessageBox.Show($@"{filesAdded} Datei(n) hinzugefügt, {filesDiscarded} verworfen, {filesTried - filesAdded - filesDiscarded} ignoriert.Insgesamt {filesTried} Datei(n)");
         }
 
         private void ClearDatabase_Click(object sender, RoutedEventArgs e)
         {
             Database.Instance.ClearAll();
-            ImportReport.Text = "Datenbank geleert.";
+            ClearLists();
+            MessageBox.Show("Datenbank geleert.");
+        }
+
+        void ClearLists()
+        {
+            SuccessfulList.Items.Clear();
+            ErrorList.Items.Clear();
+            AlreadyExistsList.Items.Clear();
+        }
+
+        void AlreadyExistsExpander_Expand(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

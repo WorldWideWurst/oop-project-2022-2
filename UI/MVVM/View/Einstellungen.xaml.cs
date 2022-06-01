@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Project.Data;
 
 namespace Project.UI.MVVM.View
 {
@@ -23,6 +24,12 @@ namespace Project.UI.MVVM.View
         public Einstellungen()
         {
             InitializeComponent();
+        }
+
+        private void ClearDatabaseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Database.Instance.ClearAll();
+            MessageBox.Show("Datenbank wurde geleert.");
         }
     }
 }

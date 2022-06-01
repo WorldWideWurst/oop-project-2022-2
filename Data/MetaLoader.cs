@@ -93,7 +93,7 @@ namespace Project.Data
 
     public class MusicFileMeta
     {
-        public string? FileName;
+        public string? File;
         public string? Title;
         public string? Album;
         public string? OriginalAlbum;
@@ -102,7 +102,7 @@ namespace Project.Data
 
         public MusicFileMeta(string? path)
         {
-            FileName = path != null? Path.GetFileNameWithoutExtension(path) : null;
+            File = path;
         }
     }
 
@@ -234,7 +234,7 @@ namespace Project.Data
                 // check flags
                 if((flags & 0b00001111) != 0)
                 {
-                    throw new InvalidFileFormat();
+                    throw new InvalidMusicFileFormat();
                 }
 
                 if((flags & 0b00100000) > 0)
@@ -397,7 +397,7 @@ namespace Project.Data
                 1 => Encoding.Unicode,
                 2 => Encoding.BigEndianUnicode,
                 3 => Encoding.UTF8,
-                _ => throw new InvalidFileFormat()
+                _ => throw new InvalidMusicFileFormat()
             };
         }
 
@@ -429,7 +429,7 @@ namespace Project.Data
             : base($"Unbekanntes Musikformat .{extension}") { }
     }
 
-    public class InvalidFileFormat : Exception
+    public class InvalidMusicFileFormat : Exception
     {
 
     }

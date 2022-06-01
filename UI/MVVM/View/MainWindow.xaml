@@ -128,7 +128,7 @@
                 <RadioButton x:Name="FileManagerButton"
                              GroupName="Menu"
                              Click="FileManagerButton_Click"
-                             Content="FileManager"
+                             Content="Musik importieren"
                              Style="{StaticResource MenuButtonTheme}" Height="40" />
                 <RadioButton x:Name="EinstellungenButton"
                              GroupName="Menu"

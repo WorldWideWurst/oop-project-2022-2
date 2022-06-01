@@ -10,38 +10,41 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                  VerticalScrollBarVisibility="Visible"
-                  Background="Transparent">
-        <Grid>
-            <TextBlock Text="FileManager" 
+                  VerticalScrollBarVisibility="Auto"
+                  Background="Transparent"
+                  Padding="10px">
+        <StackPanel>
+            <TextBlock Text="Musik importieren" 
                        Foreground="White" 
                        FontSize="40" 
-                       Height="auto" 
-                       VerticalAlignment="Top" 
-                       Margin="10,0,10,0"/>
-            <Button x:Name="SelectMusicDir" 
-                    Content="Musikordner Importieren" 
-                    Click="SelectMusicDir_Click"
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Top" 
-                    Margin="10,59,0,0" 
-                    FontSize="16"  
-                    Width="195"/>
-            <TextBlock x:Name="ImportReport" 
-                       HorizontalAlignment="Left" 
-                       VerticalAlignment="Top"
-                       Margin="230,61,0,0" 
-                       TextWrapping="Wrap"  
-                       Width="auto" Height="25" 
-                       FontSize="16">
-            </TextBlock>
-            <Button x:Name="ClearDatabase" 
-                    Content="Musikdatenbank leeren" 
-                    Click="ClearDatabase_Click"
-                    HorizontalAlignment="Left" 
-                    VerticalAlignment="Top" 
-                    Margin="10,89,0,0" />
-        </Grid>
+                       Margin="0,0,0,20px"/>
+            <Border CornerRadius="20" Background="#FF323232" Padding="10px">
+                <Button x:Name="SelectMusicDir" 
+                        Style="{StaticResource ButtonTheme}"
+                        FontSize="20"
+                        Click="SelectMusicDir_Click">
+                    Ordner Auswählen
+                </Button>
+            </Border>
+            <Rectangle Height="20px"/>
+            <Expander x:Name="SuccessfulListExpander" Header="Erfolgreich" Foreground="Green">
+                <ListView x:Name="SuccessfulList" MaxHeight="200px">
+                    
+                </ListView>
+            </Expander>
+            <Expander Header="Fehlerhaft" x:Name="ErrorListExpander" Foreground="Red">
+                <ListView x:Name="ErrorList" MaxHeight="200px">
+
+                </ListView>
+            </Expander>
+            <Expander  x:Name="AlreadyExistsListExpander" Header="Schon Vorhanden" Expanded="AlreadyExistsExpander_Expand" Foreground="Gray">
+                <ListView x:Name="AlreadyExistsList" MaxHeight="200px">
+
+                </ListView>
+            </Expander>
+
+
+        </StackPanel>
     </ScrollViewer>
 
 </UserControl>

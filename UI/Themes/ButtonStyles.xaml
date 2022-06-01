@@ -3,6 +3,39 @@
     
     <!-- geschrieben von Janek Engel -->
 
+    <!-- Standard-Buttons -->
+    <Style TargetType="{x:Type Button}"
+           x:Key="ButtonTheme">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="{TemplateBinding Background}">
+
+                            <TextBlock Text="{TemplateBinding Property=Content}" 
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style.Setters>
+
+        <Style.Triggers>
+            <Trigger Property="ClickMode" Value="Press">
+                <Setter Property="Background" Value="#FF404040" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF454545" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <!-- Close-Button -->
     <Style x:Key="CloseButton" TargetType="Button">
         <Setter Property="Template">

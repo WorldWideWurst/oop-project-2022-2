@@ -357,13 +357,18 @@ namespace Project.Data
             // metadaten aus datei laden
             MusicFileMeta meta = MetaLoader.Instance.Load(address);
 
+            return RegisterMusicSource(meta);
+        }
+
+        public Music RegisterMusicSource(MusicFileMeta meta)
+        {
             // musik-Eintrag hinzufügen
             // TODO: gibt es diese Musik schon?
             Music music = new Music(meta.Title, meta.Album);
             music.Insert();
 
             // künstler hinzufügen und zu künstlern hinzufügen
-            foreach(var artistName in meta.Artists)
+            foreach (var artistName in meta.Artists)
             {
                 if (GetArtist(artistName) == null)
                     new Artist(artistName).Insert();
@@ -371,19 +376,22 @@ namespace Project.Data
             }
 
             // ins album hinzufügen, falls albumdaten vorhanden
-            if(music.Album != null)
+            if (music.Album != null)
             {
                 MusicList? album = GetMusicListsByName(music.Album).FirstOrDefault();
                 if (album == null)
                 {
-                    album = new MusicList(music.Album);    
+                    album = new MusicList(music.Album);
                     album.Insert();
                 }
                 new MusicInList(music.Id, album.Id).Insert();
             }
-            
+
             // quellenangabe hinzufügen
-            new Source(address, music.Id).Insert();
+            if(meta.File != null)
+            {
+                new Source(meta.File, music.Id).Insert();
+            }
 
             return music;
         }
