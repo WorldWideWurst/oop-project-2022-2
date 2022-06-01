@@ -27,6 +27,12 @@ namespace Project.UI
     // Verfasst von Janek Engel
     public partial class MainWindow : Window
     {
+        Startseite startseiteState = new Startseite();
+        Playlists playlistsState = new Playlists();
+        Downloader downloaderState = new Downloader();
+        MusicImporter musicImporterState = new MusicImporter();
+        Einstellungen einstellungenState = new Einstellungen();
+
         public MainWindow()
         {
             //Initialisiert und zeigt Startseite an
@@ -69,27 +75,32 @@ namespace Project.UI
         //Menü-Buttons
         private void StartseiteButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new Startseite();
+            startseiteState = DataContext is Startseite? new Startseite() : startseiteState;
+            DataContext = startseiteState;
         }
 
         private void PlaylistsButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new Playlists();
+            playlistsState = DataContext is Playlists ? new Playlists() : playlistsState;
+            DataContext = playlistsState;
         }
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new Downloader();
+            downloaderState = DataContext is Downloader ? new Downloader() : downloaderState;
+            DataContext = downloaderState;
         }
 
-        private void FileManagerButton_Click(object sender, RoutedEventArgs e)
+        private void MusicImporterButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new MusicImporter();
+            musicImporterState = DataContext is MusicImporter ? new MusicImporter() : musicImporterState;
+            DataContext = musicImporterState;
         }
 
         private void EinstellungenButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new Einstellungen();
+            einstellungenState = DataContext is Einstellungen ? new Einstellungen() : einstellungenState;
+            DataContext = einstellungenState;
         }
 
         public void FullscreenShow(bool show)

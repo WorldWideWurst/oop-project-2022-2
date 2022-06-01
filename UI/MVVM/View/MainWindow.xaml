@@ -125,9 +125,9 @@
                              Click="DownloaderButton_Click"
                              Content="Downloader"
                              Style="{StaticResource MenuButtonTheme}" Height="40" />
-                <RadioButton x:Name="FileManagerButton"
+                <RadioButton x:Name="MusicImporterButton"
                              GroupName="Menu"
-                             Click="FileManagerButton_Click"
+                             Click="MusicImporterButton_Click"
                              Content="Musik importieren"
                              Style="{StaticResource MenuButtonTheme}" Height="40" />
                 <RadioButton x:Name="EinstellungenButton"
