@@ -28,8 +28,17 @@ namespace Project.UI.MVVM.View
 
         private void ClearDatabaseButton_Click(object sender, RoutedEventArgs e)
         {
-            Database.Instance.ClearAll();
-            MessageBox.Show("Datenbank wurde geleert.");
+            MessageBoxResult result = MessageBox.Show("Willst du die Datenback leeren?" + Environment.NewLine + Environment.NewLine + "Dabei werden NICHT die Dateien auf deinem Rechner, sondern nur deren Eintrag in diesem Programm entfernt!", "Datenback leeren", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    Database.Instance.ClearAll();
+                    MessageBox.Show("Datenbank wurde geleert.");
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+
         }
     }
 }
