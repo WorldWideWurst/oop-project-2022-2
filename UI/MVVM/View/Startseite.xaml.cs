@@ -33,9 +33,7 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            folderBrowserDialog.ShowDialog();
-            MessageBox.Show(folderBrowserDialog.SelectedPath);
+
         }
     }
 }

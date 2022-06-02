@@ -25,38 +25,64 @@
                         Click="SelectMusicDir_Click"
                         Content="Ordner Auswählen" 
                         Margin="0,0,0,20"/>
-            <Expander x:Name="SuccessfulListExpander" 
-                      Header="Erfolgreich" 
+            <Expander x:Name="SuccessfulListExpander"
                       Foreground="Green"
                       Style="{StaticResource StandardExpanderTheme}">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Erfolgreich"/>
+                        <TextBlock Text=" ["/>
+                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
+                        <TextBlock Text="]"/>
+                    </StackPanel>
+                </Expander.Header>
                 <ListView x:Name="SuccessfulList"
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
             </Expander>
-            
-            <Expander Header="Fehlerhaft" 
-                      x:Name="ErrorListExpander" 
+
+            <Expander x:Name="ErrorListExpander" 
                       Foreground="Red"
+                      IsExpanded="True"
                       Style="{StaticResource StandardExpanderTheme}">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Fehlerhaft ["/>
+                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
+                        <TextBlock Text="]"/>
+                    </StackPanel>
+                </Expander.Header>
                 <ListView x:Name="ErrorList" 
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
             </Expander>
 
-            <Expander Header="Konvertiert" 
-                      x:Name="ConvertedListExpander" 
+            <Expander x:Name="ConvertedListExpander" 
                       Foreground="Yellow"
                       Style="{StaticResource StandardExpanderTheme}">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Konvertiert ["/>
+                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
+                        <TextBlock Text="]"/>
+                    </StackPanel>
+                </Expander.Header>
                 <ListView x:Name="ConvertedList" 
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
             </Expander>
 
-            <Expander  x:Name="AlreadyExistsListExpander" 
-                       Header="Schon Vorhanden" 
+            <Expander  x:Name="AlreadyExistsListExpander"
                        Expanded="AlreadyExistsExpander_Expand" 
                        Foreground="LightGray"
                        Style="{StaticResource StandardExpanderTheme}">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Schon vorhanden ["/>
+                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
+                        <TextBlock Text="]"/>
+                    </StackPanel>
+                </Expander.Header>
                 <ListView x:Name="AlreadyExistsList" 
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>

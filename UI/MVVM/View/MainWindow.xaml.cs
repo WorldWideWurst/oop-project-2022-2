@@ -38,6 +38,14 @@ namespace Project.UI
             //Initialisiert und zeigt Startseite an
             DataContext = new Startseite();
             InitializeComponent();
+
+            // welche lieder sind in einer Playlist?
+            // var musicListEntries = Database.Instance.GetMusicList(Guid.Empty).MusicEntries.ToList();
+            
+            // Die verknüpfte musik einer Musikdatei
+            // Database.Instance.GetMusic(Database.Instance.GetSource("asdfasdf").MusicId);
+
+
         }
 
         //Fügt bei Maximiertem Fenster einen Rand hinzu, damit das Fenster im angezeigten Bereich bleibt
