@@ -3,6 +3,7 @@
 
     <!-- Geschrieben von Janek Engel -->
     
+    <!-- Menü-Buttons -->
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
            TargetType="{x:Type RadioButton}"
            x:Key="MenuButtonTheme">
@@ -42,6 +43,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- SubMenü-Buttons -->
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
            TargetType="{x:Type RadioButton}"
            x:Key="DisplayButtonTheme">

@@ -10,7 +10,6 @@
         mc:Ignorable="d" 
         Background="Transparent"
         d:DesignHeight="450" d:DesignWidth="280">
-
     <UserControl.Resources>
         <DataTemplate x:Name="CurrentListDisplayTemplate" DataType="{x:Type views:CurrentListDisplay}">
             <views:CurrentListDisplay DataContext="{Binding}"/>
@@ -20,6 +19,7 @@
         </DataTemplate>
     </UserControl.Resources>
 
+    <!-- Untermenü, um die Tabs separat der anderen zu behandeln -->
     <Grid>
         <StackPanel Orientation="Horizontal" Height="24" VerticalAlignment="Top">
             <RadioButton    x:Name="PlaylistDisplayButton"

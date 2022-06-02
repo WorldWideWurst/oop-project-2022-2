@@ -112,7 +112,7 @@
         </Setter>
     </Style>
 
-    <!-- Repeat-Checkbox -->
+    <!-- Repeat-Checkbox, hat drei States -->
     <Style x:Key="RepeatCheckbox" TargetType="{x:Type CheckBox}">
         <Setter Property="Template">
             <Setter.Value>
