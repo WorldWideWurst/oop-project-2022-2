@@ -81,13 +81,21 @@ namespace Project.Data
             return null;
         }
 
-        public IEnumerable<Music> QueryMusic(string input, int? limit = null)
+        public IEnumerable<Music> GetMusic(string? input = null, Range? range = null)
         {
-            var titleQuery = "%" + input.Replace(' ', '%') + "%";
-            using var cmd = new SQLiteCommand("select id, title, album from music where title like @title", connection);
-            cmd.Parameters.AddWithValue("@title", titleQuery);
-            cmd.Prepare();
-
+            SQLiteCommand cmd = new SQLiteCommand(connection);
+            if(input == null)
+            {
+                cmd.CommandText = "select id, title, album from music";
+            }
+            else
+            {
+                var titleQuery = "%" + input.Replace(' ', '%') + "%";
+                cmd.CommandText = "select id, title, album from music where title like @title";
+                cmd.Parameters.AddWithValue("@title", titleQuery);
+                cmd.Prepare();
+            }
+            
             using var reader = cmd.ExecuteReader();
             while(reader.Read())
             {
@@ -157,6 +165,33 @@ namespace Project.Data
             return null;
         }
 
+        public IEnumerable<Source> GetSource(string? query = null, Range? range = null)
+        {
+            using var cmd = new SQLiteCommand(connection);
+            if (query == null)
+            {
+                cmd.CommandText = "select address, type, _source_of from source";
+            }
+            else
+            {
+                var addrQuery = "%" + query.Replace("%", "\\%").Replace("_", "\\_").Replace(" ", "%") + "%";
+                cmd.CommandText = "select address, type, _source_of from source where address like @query";
+                cmd.Parameters.AddWithValue("@query", addrQuery);
+                cmd.Prepare();
+            }
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                var address = reader.GetString(0);
+                var type = stringToSourceType(reader[1] as string ?? "");
+                var sourceOf = reader.GetGuid(2);
+                yield return new Source(address, sourceOf, type);
+            }
+        }
+
+
+
         internal void InsertSource(Source source)
         {
             using var cmd = new SQLiteCommand("insert or ignore into source(address, type, _source_of) values (@address, @type, @source_of)", connection); ;
@@ -184,6 +219,29 @@ namespace Project.Data
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Prepare();
             return (long)cmd.ExecuteScalar() > 0 ? new Artist(name) : null;
+        }
+
+        public IEnumerable<Artist> GetArtist(string? query, Range? range)
+        {
+            using var cmd = new SQLiteCommand(connection);
+            if(query == null)
+            {
+                cmd.CommandText = "select name from artist";
+            }
+            else
+            {
+                var nameQuery = "%" + query.Replace(" ", "%") + "%";
+                cmd.CommandText = "select name from artist where name = @query";
+                cmd.Parameters.AddWithValue("@query", nameQuery);
+                cmd.Prepare();
+
+            }
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                yield return new Artist(reader.GetString(0));
+            }
         }
 
         internal void InsertArtist(Artist artist)
@@ -343,23 +401,6 @@ namespace Project.Data
 
 
 
-
-
-
-        public Music RegisterMusicSource(string address, bool forceReload = false)
-        {
-            var source = GetSource(address);
-            if (source != null)
-            {
-                return GetMusic(source.MusicId) ?? throw new System.Data.ConstraintException();
-            }
-
-            // metadaten aus datei laden
-            MusicFileMeta meta = MetaLoader.Instance.Load(address);
-
-            return RegisterMusicSource(meta);
-        }
-
         public Music RegisterMusicSource(MusicFileMeta meta)
         {
             // musik-Eintrag hinzufügen
@@ -396,7 +437,7 @@ namespace Project.Data
             return music;
         }
 
-        public IEnumerable<object> StringQuery(string query)
+        public IEnumerable<IRecordView> StringQuery(string query)
         {
             throw new NotImplementedException();
         }
@@ -490,6 +531,5 @@ namespace Project.Data
         void Insert();
         void Save();
     }
-
 
 }
