@@ -19,9 +19,16 @@ using Project.UI.MVVM.View;
 
 namespace Project.UI.MVVM.View
 {
+    // globale Variable, um Tickspeed zu steuern
+    static class Tickspeed 
+    {
+        public static double tickspeed;
+    }
+
     // Verfasst von Janek Engel
     public partial class MediaController : UserControl
     {
+        private DispatcherTimer timer = new DispatcherTimer();
         private MediaPlayer mediaPlayer = new MediaPlayer();
 
         public MediaController()
@@ -120,8 +127,7 @@ namespace Project.UI.MVVM.View
                 mediaPlayer.Open(new Uri(openFileDialog.FileName));
                 PlayCheckbox.IsChecked = false;
 
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromSeconds(0.25);
+                timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
                 timer.Tick += timer_Tick;
                 timer.Start();
             }
@@ -133,7 +139,10 @@ namespace Project.UI.MVVM.View
             if (mediaPlayer.Source != null)
             {
                 lblStatus.Content = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
-                if(!SongSlider.IsMouseCaptureWithin)
+                if (TimeSpan.FromSeconds(Tickspeed.tickspeed) != timer.Interval)
+                    timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
+
+                if (!SongSlider.IsMouseCaptureWithin)
                     SongSlider.Value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
 
                 if (mediaPlayer.Position == mediaPlayer.NaturalDuration.TimeSpan)
