@@ -28,7 +28,7 @@ namespace Project.UI
     public partial class MainWindow : Window
     {
         Startseite startseiteState = new Startseite();
-        Playlists playlistsState = new Playlists();
+        Bibliothek bibliothekState = new Bibliothek();
         Downloader downloaderState = new Downloader();
         MusicImporter musicImporterState = new MusicImporter();
         Einstellungen einstellungenState = new Einstellungen();
@@ -87,10 +87,10 @@ namespace Project.UI
             DataContext = startseiteState;
         }
 
-        private void PlaylistsButton_Click(object sender, RoutedEventArgs e)
+        private void BibliothekButton_Click(object sender, RoutedEventArgs e)
         {
-            playlistsState = DataContext is Playlists ? new Playlists() : playlistsState;
-            DataContext = playlistsState;
+            bibliothekState = DataContext is Bibliothek ? new Bibliothek() : bibliothekState;
+            DataContext = bibliothekState;
         }
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)

@@ -30,8 +30,8 @@
         <DataTemplate x:Name="StartseiteTemplate" DataType="{x:Type views:Startseite}">
             <views:Startseite DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="PlaylistsTemplate" DataType="{x:Type views:Playlists}">
-            <views:Playlists DataContext="{Binding}"/>
+        <DataTemplate x:Name="BibliothekTemplate" DataType="{x:Type views:Bibliothek}">
+            <views:Bibliothek DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="DownloaderTemplate" DataType="{x:Type views:Downloader}">
             <views:Downloader DataContext="{Binding}"/>
@@ -115,10 +115,10 @@
                              Content="Startseite"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True" Height="40"/>
-                <RadioButton x:Name="PlaylistsButton"
+                <RadioButton x:Name="BibliothekButton"
                              GroupName="Menu"
-                             Click="PlaylistsButton_Click"
-                             Content="Playlists"
+                             Click="BibliothekButton_Click"
+                             Content="Bibliothek"
                              Style="{StaticResource MenuButtonTheme}" Height="40" />
                 <RadioButton x:Name="DownloaderButton"
                              GroupName="Menu"
