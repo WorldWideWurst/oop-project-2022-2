@@ -28,16 +28,12 @@ namespace Project.UI.MVVM.View
         public MusicImporter()
         {
             InitializeComponent();
-            SuccessfulListExpander.Header = 0;
-            ErrorListExpander.Header = 0;
-            ConvertedListExpander.Header = 0;
-            AlreadyExistsListExpander.Header = 0;
         }
 
         record struct ImportReportEntry(string File, string? ToolTip = null);
         record ReportListHeader(string Name, int Count);
 
-        private async void SelectMusicDir_Click(object sender, RoutedEventArgs e)
+        private void SelectMusicDir_Click(object sender, RoutedEventArgs e)
         {
             // Todo: das hier irgendwie auslagern
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -56,21 +52,35 @@ namespace Project.UI.MVVM.View
                 return;
             }
 
-            var beginTime = DateTime.Now;
-            int filesTried = 0;
-            foreach (var file in SimpleDiskIndexer.Instance.Index(dir))
-            {
-                Task.Run(() => 
-                {
-                    ImportFile(file, dir);
-                    Interlocked.Increment(ref filesTried);
-                });
-            }
+            SelectMusicDir.IsEnabled = false;
+            SelectMusicDir.Content = String.Format((string)Resources["SelectMusicDir_Busy"], System.IO.Path.GetDirectoryName(dir) ?? dir);
 
-            MessageBox.Show($"Import von {filesTried} Datei(n) abgeschlossen.\r\nBenötigte Zeit: {(beginTime - DateTime.Now)}");
+            var worker = new System.ComponentModel.BackgroundWorker();
+            var filesTried = 0;
+            var beginTime = DateTime.Now;
+
+            worker.DoWork += (sender, args) =>
+            {
+                foreach (var file in SimpleDiskIndexer.Instance.Index(dir))
+                {
+                    Application.Current.Dispatcher.Invoke(ImportFile(file, dir));
+                    filesTried++;
+                }
+            };
+            worker.RunWorkerCompleted += (sender, args) =>
+            {
+                MessageBox.Show(
+$@"Import von {filesTried} Datei(n) abgeschlossen.
+Benötigte Zeit: {(DateTime.Now - beginTime)}");
+                SelectMusicDir.IsEnabled = true;
+                SelectMusicDir.Content = (string)Resources["SelectMusicDir_Idle"];
+            };
+
+            worker.RunWorkerAsync();
+
         }
 
-        async void ImportFile(string file, string dir)
+        Action ImportFile(string file, string dir)
         {
             string? failureReason = null;
 
@@ -80,8 +90,9 @@ namespace Project.UI.MVVM.View
                 Source? source = Database.Instance.GetSource(file);
                 if (source != null)
                 {
-                    AddToList(AlreadyExistsList, AlreadyExistsListExpander, new ImportReportEntry(file[(dir.Length + 1)..]));
-                    return;
+                    
+                    return () => AddToList(AlreadyExistsList, AlreadyExistsListExpander, new ImportReportEntry(file[(dir.Length + 1)..]));
+                    
                 }
 
                 // Musik laden. Kann fehlschlagen
@@ -89,7 +100,7 @@ namespace Project.UI.MVVM.View
                 Music music = Database.Instance.RegisterMusicSource(meta);
 
                 // erfolg
-                AddToList(SuccessfulList, SuccessfulListExpander, new ImportReportEntry(file[(dir.Length + 1)..]));
+                return () => AddToList(SuccessfulList, SuccessfulListExpander, new ImportReportEntry(file[(dir.Length + 1)..]));
             }
             catch (Exception ex) when (
                 ex is UnknownMusicFileFormat ||
@@ -101,12 +112,13 @@ namespace Project.UI.MVVM.View
                 {
                     string? targetFile = System.IO.Path.ChangeExtension(file, ".mp3");
                     if (targetFile == null)
-                        return;
+                        return () => { };
 
                     try
                     {
-                        AddToList(ConvertedList, ConvertedListExpander, new ImportReportEntry(file[(dir.Length + 1)..]));
-                        return;
+                        Convert.Converter.Instance.Convert(file, targetFile);
+                        return () => AddToList(ConvertedList, ConvertedListExpander, new ImportReportEntry(file[(dir.Length + 1)..]));
+                        
                     }
                     catch (Convert.UnsupportedFileConversion)
                     {
@@ -133,25 +145,16 @@ namespace Project.UI.MVVM.View
                     failureReason = "Es gab Probleme beim Einlesen der Datei.";
                 }
 
-                ErrorList.Items.Add(new ImportReportEntry(file[(dir.Length + 1)..], failureReason));
-                return;
+                return () => AddToList(ErrorList, ErrorListExpander, new ImportReportEntry(file[(dir.Length + 1)..], failureReason));
             }
-        }
-
-        void ClearLists()
-        {
-            SuccessfulList.Items.Clear();
-            ErrorList.Items.Clear();
-            AlreadyExistsList.Items.Clear();
+            
         }
 
         void AddToList(ListView list, Expander expander, ImportReportEntry entry)
         {
-            lock(this)
-            {
-                list.Items.Add(entry);
-                expander.Header = ((int)expander.Header) + 1;
-            }
+            list.Items.Add(entry);
+            var header = (ImportLogHeader)expander.Header;
+            header.Counter.Text = list.Items.Count.ToString();
         }
 
         void AlreadyExistsExpander_Expand(object sender, RoutedEventArgs e)

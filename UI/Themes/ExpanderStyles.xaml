@@ -26,7 +26,7 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <WrapPanel MaxWidth="300px">
+                        <WrapPanel MaxWidth="500px">
                             <TextBlock Text="{Binding File}" 
                                        ToolTip="{Binding ToolTip}"/>
                         </WrapPanel>

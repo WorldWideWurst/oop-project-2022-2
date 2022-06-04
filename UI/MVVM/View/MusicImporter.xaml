@@ -6,13 +6,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
+             xmlns:clr="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="Control">
+    <UserControl.Resources>
+        <clr:String x:Key="SelectMusicDir_Idle">Ordner Auswählen</clr:String>
+        <clr:String x:Key="SelectMusicDir_Busy">Ordner {0} wird importiert...</clr:String>
+    </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Hidden"
                   VerticalScrollBarVisibility="Auto"
                   Background="Transparent"
-                  Padding="10px">
+                  Padding="10,0,10,0px">
         <StackPanel>
             <TextBlock Text="Musik importieren" 
                        Foreground="White" 
@@ -23,18 +28,13 @@
                         Height="50"
                         FontSize="20"
                         Click="SelectMusicDir_Click"
-                        Content="Ordner Auswählen" 
+                        Content="{StaticResource SelectMusicDir_Idle}" 
                         Margin="0,0,0,20"/>
             <Expander x:Name="SuccessfulListExpander"
                       Foreground="Green"
                       Style="{StaticResource StandardExpanderTheme}">
                 <Expander.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Erfolgreich"/>
-                        <TextBlock Text=" ["/>
-                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
-                        <TextBlock Text="]"/>
-                    </StackPanel>
+                    <local:ImportLogHeader HeaderText="Erfolgreich"/>
                 </Expander.Header>
                 <ListView x:Name="SuccessfulList"
                           MaxHeight="200px"
@@ -43,14 +43,9 @@
 
             <Expander x:Name="ErrorListExpander" 
                       Foreground="Red"
-                      IsExpanded="True"
                       Style="{StaticResource StandardExpanderTheme}">
                 <Expander.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Fehlerhaft ["/>
-                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
-                        <TextBlock Text="]"/>
-                    </StackPanel>
+                    <local:ImportLogHeader HeaderText="Fehlerhaft"/>
                 </Expander.Header>
                 <ListView x:Name="ErrorList" 
                           MaxHeight="200px"
@@ -61,11 +56,7 @@
                       Foreground="Yellow"
                       Style="{StaticResource StandardExpanderTheme}">
                 <Expander.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Konvertiert ["/>
-                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
-                        <TextBlock Text="]"/>
-                    </StackPanel>
+                    <local:ImportLogHeader HeaderText="Konvertiert"/>
                 </Expander.Header>
                 <ListView x:Name="ConvertedList" 
                           MaxHeight="200px"
@@ -77,11 +68,7 @@
                        Foreground="LightGray"
                        Style="{StaticResource StandardExpanderTheme}">
                 <Expander.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Schon vorhanden ["/>
-                        <TextBlock FontWeight="Bold" Text="{Binding}"/>
-                        <TextBlock Text="]"/>
-                    </StackPanel>
+                    <local:ImportLogHeader HeaderText="Schon Vorhanden"/>
                 </Expander.Header>
                 <ListView x:Name="AlreadyExistsList" 
                           MaxHeight="200px"
