@@ -16,13 +16,23 @@ using System.Windows.Shapes;
 namespace Project.UI.MVVM.View
 {
     /// <summary>
-    /// Interaktionslogik für Playlists.xaml
+    /// Interaktionslogik für Playlist.xaml
     /// </summary>
-    public partial class Playlists : UserControl
+    public partial class Playlist : UserControl
     {
-        public Playlists()
+        public Playlist()
         {
             InitializeComponent();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Collapsed;
+        }
+
+        private void SongButton_Click(object sender, RoutedEventArgs e)
+        {
+            Song1.Visibility = Visibility.Visible;
         }
     }
 }

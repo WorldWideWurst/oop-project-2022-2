@@ -12,7 +12,7 @@
         <StackPanel>
             <TextBlock Foreground="White"
                        Background="Transparent" 
-                       Text="Test&#xD;&#xA;TEst&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;test&#xD;&#xA;Test&#xD;&#xA;Test&#xD;&#xA;Letzteer Test&#xD;&#xA;&lt;3&#xD;&#xA;" />
+                       Text="Test&#xA;Katze&#xA;Neko&#xA;Gato&#xA;cat&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Letzter Test&#xA;Noch eine Katze :D&#xA;&lt;3&#xA;Das hier testet nur den Scroller" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>
