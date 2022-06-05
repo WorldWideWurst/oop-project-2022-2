@@ -16,6 +16,7 @@ using System.Windows.Threading;
 using Microsoft.Win32;
 using Project.UI;
 using Project.UI.MVVM.View;
+using Project.Player;
 
 namespace Project.UI.MVVM.View
 {
@@ -29,7 +30,7 @@ namespace Project.UI.MVVM.View
     public partial class MediaController : UserControl
     {
         private DispatcherTimer timer = new DispatcherTimer();
-        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private Player.Player mediaPlayer = new Player.Player();
 
         public MediaController()
         {
@@ -73,6 +74,7 @@ namespace Project.UI.MVVM.View
         private void RepeatCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Repeating this song!");
+            //Funktionalität ist im timer_Tick eingebaut
         }
         private void RepeatCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -153,6 +155,21 @@ namespace Project.UI.MVVM.View
             }
             else
                 lblStatus.Content = "Es ist kein Lied ausgewählt!";
+        }
+
+        //Aktualisiert die Lautstärke mit dem Slider-Wert
+        private void VolumeSlider_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            Slider VolumeSlider = VolumeButton.Template.FindName("ButtonSlider", VolumeButton) as Slider;
+            mediaPlayer.Volume = VolumeSlider.Value/100;
+        }
+
+        //Fügt dem Volume-Slider das ValueChanged-Event hinzu sobald das erste mal über den Button gehover wird
+        private void VolumeButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+
+            Slider VolumeSlider = VolumeButton.Template.FindName("ButtonSlider", VolumeButton) as Slider;
+            VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
         }
     }
 }

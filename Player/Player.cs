@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Project.Player
 {
-    public class Player
+    public class Player : MediaPlayer
     {
         public IList<Music>? CurrentList
         {

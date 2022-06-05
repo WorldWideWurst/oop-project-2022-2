@@ -94,6 +94,15 @@
                         Margin="180,0,0,35"
                         Panel.ZIndex="999" />
 
+            <Button x:Name="VolumeButton"
+                    MouseEnter="VolumeButton_MouseEnter"
+                    Style="{StaticResource VolumeButton}"
+                    Height="30" Width="85"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    Margin="340,0,0,35"  
+                    Panel.ZIndex="999" />
+
             <!-- Slider und Label zeigen aktuellen Fortschritt an, siehe MediaController.xaml.cs -->
             <Slider Name="SongSlider"
                     Minimum="0"
