@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Project.UI.MVVM.View.LibraryPages.PlaylistMiniature"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Project.UI.MVVM.View.LibraryPages"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="100"
+             Width="100"
+             MinHeight="150">
+    <StackPanel Margin="10px">
+        <Button Name="GotoPlaylist"
+                Click="GotoPlaylist_Click">
+            <Image Name="PlaylistArt"
+                   Source="/UI/Images/heart_active.png"
+                   />
+        </Button>
+        <TextBlock Name="PlaylistName"
+                   Text="Playlist"
+                   TextWrapping="Wrap"/>
+        <TextBlock Name="ArtistName"
+                   Text="Artist"
+                   TextTrimming="CharacterEllipsis"/>
+    </StackPanel>
+</UserControl>

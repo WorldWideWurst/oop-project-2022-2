@@ -28,7 +28,7 @@ namespace Project.UI
     public partial class MainWindow : Window
     {
         Homepage homepageState = new();
-        Library libraryState = new();
+        public Library LibraryTab { get; private set; } = new();
         Downloader downloaderState = new();
         MusicImporter musicImporterState = new();
         Settings settingsState = new();
@@ -89,8 +89,17 @@ namespace Project.UI
 
         private void BibliothekButton_Click(object sender, RoutedEventArgs e)
         {
-            libraryState = DataContext is Library ? new Library() : libraryState;
-            DataContext = libraryState;
+            OpenLibraryPage(null);
+        }
+
+        public void OpenLibraryPage(MVVM.View.LibraryPages.ILibraryPage? page)
+        {
+            LibraryTab = DataContext is Library ? new Library() : LibraryTab;
+
+            LibraryTab.ShowLibraryPage(page);
+
+            DataContext = LibraryTab;
+            
         }
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)

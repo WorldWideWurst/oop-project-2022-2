@@ -18,16 +18,11 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für Song.xaml
     /// </summary>
-    public partial class Song : UserControl
+    public partial class MusicOverview : UserControl
     {
-        public Song()
+        public MusicOverview()
         {
             InitializeComponent();
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Visibility = Visibility.Collapsed;
         }
     }
 }

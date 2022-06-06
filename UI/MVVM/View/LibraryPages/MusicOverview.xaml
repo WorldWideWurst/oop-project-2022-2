@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Project.UI.MVVM.View.Song"
+﻿<UserControl x:Class="Project.UI.MVVM.View.MusicOverview"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,12 +9,6 @@
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                   Background="#FF454545">
         <Grid>
-            <TextBlock Text="Song" Foreground="White" FontSize="40"/>
-            <Button Click="BackButton_Click"
-                    Content="Back"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Right"
-                    Width="40" Height="40" />
         </Grid>
     </ScrollViewer>
 </UserControl>

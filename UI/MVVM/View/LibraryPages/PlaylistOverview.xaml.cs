@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,21 +19,31 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für Playlist.xaml
     /// </summary>
-    public partial class Playlist : UserControl
+    public partial class PlaylistOverview : UserControl, LibraryPages.ILibraryPage
     {
-        public Playlist()
+
+        public readonly MusicList MusicList;
+
+        public PlaylistOverview(MusicList musicList)
         {
             InitializeComponent();
+            MusicList = musicList;
+
+            PlaylistName.Text = musicList.Name;
+            foreach(var entry in musicList.MusicEntries)
+            {
+                EntryList.Items.Add(entry.Title);
+            }
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        public void Overview()
         {
-            this.Visibility = Visibility.Collapsed;
+            throw new NotImplementedException();
         }
 
-        private void SongButton_Click(object sender, RoutedEventArgs e)
+        public void Search(string queryString)
         {
-            Song1.Visibility = Visibility.Visible;
+            throw new NotImplementedException();
         }
     }
 }
