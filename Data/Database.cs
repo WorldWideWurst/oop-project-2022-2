@@ -429,7 +429,7 @@ namespace Project.Data
             // ins album hinzufügen, falls albumdaten vorhanden
             if (music.Album != null)
             {
-                MusicList? album = GetMusicLists(music.Album).FirstOrDefault();
+                MusicList? album = GetMusicList(music.Album).FirstOrDefault();
                 if (album == null)
                 {
                     album = new MusicList(music.Album);
