@@ -18,9 +18,9 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für Bibliothek.xaml
     /// </summary>
-    public partial class Bibliothek : UserControl
+    public partial class Library : UserControl
     {
-        public Bibliothek()
+        public Library()
         {
             InitializeComponent();
         }

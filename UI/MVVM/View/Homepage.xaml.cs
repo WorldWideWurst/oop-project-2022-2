@@ -21,12 +21,12 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für Startseite.xaml
     /// </summary>
-    public partial class Startseite : UserControl
+    public partial class Homepage : UserControl
     {
 
         private MediaPlayer mediaPlayer = new MediaPlayer();
 
-        public Startseite()
+        public Homepage()
         {
             InitializeComponent();
         }

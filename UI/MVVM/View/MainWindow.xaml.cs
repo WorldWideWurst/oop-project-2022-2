@@ -27,17 +27,17 @@ namespace Project.UI
     // Verfasst von Janek Engel
     public partial class MainWindow : Window
     {
-        Startseite startseiteState = new Startseite();
-        Bibliothek bibliothekState = new Bibliothek();
-        Downloader downloaderState = new Downloader();
-        MusicImporter musicImporterState = new MusicImporter();
-        Einstellungen einstellungenState = new Einstellungen();
+        Homepage homepageState = new();
+        Library libraryState = new();
+        Downloader downloaderState = new();
+        MusicImporter musicImporterState = new();
+        Settings settingsState = new();
 
         public MainWindow()
         {
-            //Initialisiert und zeigt Startseite an
-            DataContext = new Startseite();
             InitializeComponent();
+            //Initialisiert und zeigt Startseite an
+            DataContext = new Homepage();
 
             // welche lieder sind in einer Playlist?
             // var musicListEntries = Database.Instance.GetMusicList(Guid.Empty).MusicEntries.ToList();
@@ -83,14 +83,14 @@ namespace Project.UI
         //Menü-Buttons
         private void StartseiteButton_Click(object sender, RoutedEventArgs e)
         {
-            startseiteState = DataContext is Startseite? new Startseite() : startseiteState;
-            DataContext = startseiteState;
+            homepageState = DataContext is Homepage? new Homepage() : homepageState;
+            DataContext = homepageState;
         }
 
         private void BibliothekButton_Click(object sender, RoutedEventArgs e)
         {
-            bibliothekState = DataContext is Bibliothek ? new Bibliothek() : bibliothekState;
-            DataContext = bibliothekState;
+            libraryState = DataContext is Library ? new Library() : libraryState;
+            DataContext = libraryState;
         }
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)
@@ -107,8 +107,8 @@ namespace Project.UI
 
         private void EinstellungenButton_Click(object sender, RoutedEventArgs e)
         {
-            einstellungenState = DataContext is Einstellungen ? new Einstellungen() : einstellungenState;
-            DataContext = einstellungenState;
+            settingsState = DataContext is Settings ? new Settings() : settingsState;
+            DataContext = settingsState;
         }
 
         public void FullscreenShow(bool show)

@@ -19,9 +19,9 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für Einstellungen.xaml
     /// </summary>
-    public partial class Einstellungen : UserControl
+    public partial class Settings : UserControl
     {
-        public Einstellungen()
+        public Settings()
         {
             InitializeComponent();
         }

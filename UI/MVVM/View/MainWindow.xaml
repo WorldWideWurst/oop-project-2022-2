@@ -26,11 +26,11 @@
 
     <!-- ermöglicht, dass die Views (Startseite, Einstellungen usw.) angezeigt werden -->
     <Window.Resources>
-        <DataTemplate x:Name="StartseiteTemplate" DataType="{x:Type views:Startseite}">
-            <views:Startseite DataContext="{Binding}"/>
+        <DataTemplate x:Name="StartseiteTemplate" DataType="{x:Type views:Homepage}">
+            <views:Homepage DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="BibliothekTemplate" DataType="{x:Type views:Bibliothek}">
-            <views:Bibliothek DataContext="{Binding}"/>
+        <DataTemplate x:Name="BibliothekTemplate" DataType="{x:Type views:Library}">
+            <views:Library DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="DownloaderTemplate" DataType="{x:Type views:Downloader}">
             <views:Downloader DataContext="{Binding}"/>
@@ -38,8 +38,8 @@
         <DataTemplate x:Name="FileManagerTemplate" DataType="{x:Type views:MusicImporter}">
             <views:MusicImporter DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="EinstellungenTemplate" DataType="{x:Type views:Einstellungen}">
-            <views:Einstellungen DataContext="{Binding}"/>
+        <DataTemplate x:Name="EinstellungenTemplate" DataType="{x:Type views:Settings}">
+            <views:Settings DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="CurrentListTemplate" DataType="{x:Type views:CurrentListDisplay}">
             <views:CurrentListDisplay DataContext="{Binding}"/>
