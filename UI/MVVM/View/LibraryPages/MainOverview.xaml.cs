@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Project.UI.MVVM.View
+namespace Project.UI.MVVM.View.LibraryPages
 {
     /// <summary>
-    /// Interaktionslogik für Bibliothek.xaml
+    /// Interaktionslogik für UserControl1.xaml
     /// </summary>
-    public partial class Library : UserControl
+    public partial class UserControl1 : UserControl
     {
-        public Library()
+        public UserControl1()
         {
             InitializeComponent();
         }
