@@ -297,20 +297,30 @@ namespace Project.Data
             return null;
         }
 
-        public IEnumerable<MusicList> GetMusicListsByName(string name)
+        public IEnumerable<MusicList> GetMusicList(string? query = null)
         {
-            using var cmd = new SQLiteCommand("select id, type, publish_date, _owned_by from music_list where name = @name", connection);
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Prepare();
+            using var cmd = new SQLiteCommand(connection);
+            if (query == null)
+            {
+                cmd.CommandText = "select id, name, type, publish_date, _owned_by from music_list";
+            }
+            else
+            {
+                query = "%" + query.Replace(" ", "%") + "%";
+                cmd.CommandText = "select id, name, type, publish_date, _owned_by from music_list where name like @name";
+                cmd.Parameters.AddWithValue("@name", query);
+                cmd.Prepare();
+            }
 
             using var reader = cmd.ExecuteReader();
             while(reader.Read())
             {
                 Guid id = reader.GetGuid(0);
-                MusicListType type = stringToMusicListType(reader[1] as string ?? string.Empty);
-                string? publishDateStr = reader[2] as string;
+                string name = reader.GetString(1);
+                MusicListType type = stringToMusicListType(reader[2] as string ?? string.Empty);
+                string? publishDateStr = reader[3] as string;
                 DateOnly? publishDate = publishDateStr != null ? DateOnly.FromDateTime(DateTime.Parse(publishDateStr)) : null;
-                string? owner = reader[3] as string;
+                string? owner = reader[4] as string;
                 yield return new MusicList(id, name, owner, publishDate, type);
             }
         }
@@ -419,7 +429,7 @@ namespace Project.Data
             // ins album hinzufügen, falls albumdaten vorhanden
             if (music.Album != null)
             {
-                MusicList? album = GetMusicListsByName(music.Album).FirstOrDefault();
+                MusicList? album = GetMusicLists(music.Album).FirstOrDefault();
                 if (album == null)
                 {
                     album = new MusicList(music.Album);
