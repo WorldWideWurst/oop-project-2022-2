@@ -25,6 +25,7 @@
                 <Button Name="GoBackButton"
                         Content="&lt;"
                         Grid.Column="0"
+                        Padding="10,0,10,0px"
                         Click="GoBackButton_Click"
                         Visibility="Hidden"/>
                 <TextBox Name="SearchBar" Margin="10,0,10,0px"

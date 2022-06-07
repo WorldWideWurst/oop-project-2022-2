@@ -29,8 +29,16 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         void RepopulatePlaylists()
         {
-            Container.Children.Clear();   
-            foreach(var list in Data.Database.Instance.GetMusicList())
+            Container.Children.Clear();
+
+            var virtualPlaylists = new Data.IMusicList[]
+            {
+                new Data.AllMusicList(),
+                new Data.UnregisteredMusicList(),
+            };
+            var allPlaylists = virtualPlaylists.Concat(Data.Database.Instance.GetMusicList());
+
+            foreach(var list in allPlaylists)
             {
                 var ctrl = new PlaylistMiniature(list)
                 {
