@@ -157,7 +157,7 @@
         </Rectangle>
 
         <!-- untere Leiste, die den Audio-Player beinhaltet-->
-        <views:MediaController />
+        <views:MediaController/>
 
         <views:Fullscreen   x:Name="FullscreenView"
                             Margin="0,30,0,100"

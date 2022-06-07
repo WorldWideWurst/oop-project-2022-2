@@ -112,7 +112,8 @@
                     VerticalAlignment="Top" 
                     Height="18" Width="400"
                     Margin="0,60,0,0"
-                    Panel.ZIndex="5000" />
+                    Panel.ZIndex="5000"
+                    x:FieldModifier="public"/>
 
             <Label     Name="lblStatus" 
                        FontSize="10"
@@ -121,7 +122,8 @@
                        VerticalContentAlignment="Top"
                        Margin="0,75,0,0" 
                        Foreground="White"
-                       Panel.ZIndex="4000"/>
+                       Panel.ZIndex="4000"
+                       x:FieldModifier="public"/>
 
         </Grid>
         

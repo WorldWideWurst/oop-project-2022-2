@@ -27,6 +27,7 @@ namespace Project.UI
     // Verfasst von Janek Engel
     public partial class MainWindow : Window
     {
+
         Homepage homepageState = new();
         public Library LibraryTab { get; private set; } = new();
         Downloader downloaderState = new();
