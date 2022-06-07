@@ -142,6 +142,9 @@ namespace Project.UI.MVVM.View
         //passiert bei jedem Tick 
         public void timer_Tick(object sender, EventArgs e)
         {
+            if (TimeSpan.FromSeconds(Tickspeed.tickspeed) != timer.Interval)
+                timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
+
             lblStatus.Content = mediaPlayer.GetLabel();
 
             if (!SongSlider.IsMouseCaptureWithin)

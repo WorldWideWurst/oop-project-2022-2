@@ -60,7 +60,7 @@ namespace Project.UI.MVVM.View
 
         private void UpdateGoBackVisibility()
         {
-            GoBackButton.Visibility = pageHistory.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+            GoBackButton.Visibility = pageHistory.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)

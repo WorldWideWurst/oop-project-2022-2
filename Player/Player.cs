@@ -107,7 +107,6 @@ namespace Project.Player
         }
 
 
-
         //Event tritt bei jedem Tick des Timers auf
         private void timer_Tick(object sender, EventArgs e)
         {

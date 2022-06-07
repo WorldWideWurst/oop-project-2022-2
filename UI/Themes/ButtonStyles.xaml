@@ -31,8 +31,7 @@
                                   HorizontalAlignment="Stretch">
                                 <TextBlock Text="{TemplateBinding Property=Content}" 
                                            VerticalAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Padding="10,0,0,0"/>
+                                           HorizontalAlignment="Center"/>
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -131,6 +130,25 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ButtonImage" Property="Source" Value="/UI/Images/forward_hover.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- BackMenu-Button -->
+    <Style x:Key="BackMenuButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="ButtonImage" Source="/UI/Images/backmenu.png" />
+                        <ContentPresenter />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/UI/Images/backmenu_hover.png"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

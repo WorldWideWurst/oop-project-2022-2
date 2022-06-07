@@ -52,7 +52,7 @@ namespace Project.UI.MVVM.View
 
         private void TickpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-                //Tickspeed.tickspeed = TickpeedSlider.Value;
+                Tickspeed.tickspeed = TickpeedSlider.Value;
         }
     }
 }
