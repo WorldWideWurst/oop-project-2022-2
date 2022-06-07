@@ -133,7 +133,7 @@ namespace Project.Data
         public void Save() { }
     }
 
-    public class MusicList : IRecordView
+    public class MusicList : IRecordView, IMusicList
     {
 
         public Guid Id { get; }
@@ -143,6 +143,9 @@ namespace Project.Data
         public DateOnly? PublishDate { get; set; }
         public IEnumerable<MusicInList> Entries => Database.Instance.GetMusicInList(this);
         public IEnumerable<Music> MusicEntries => Database.Instance.GetMusicInListDirect(this);
+
+        public string? CoverArtSource => "/UI/Images/heart_active.png";
+        IEnumerable<Music> IMusicList.Entries => MusicEntries;
 
         public MusicList(Guid id, string name, string? owner, DateOnly? publishDate, MusicListType type = MusicListType.Undefined)
         {

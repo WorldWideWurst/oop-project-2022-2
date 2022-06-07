@@ -16,20 +16,14 @@ using System.Windows.Shapes;
 namespace Project.UI.MVVM.View.LibraryPages
 {
     /// <summary>
-    /// Interaktionslogik für PlaylistMiniature.xaml
+    /// Interaktionslogik für UserControl1.xaml
     /// </summary>
-    public partial class PlaylistMiniature : UserControl
+    public partial class MusicRecord : UserControl
     {
-        public PlaylistMiniature(Data.IMusicList musicList)
+        public MusicRecord(Data.Music music)
         {
             InitializeComponent();
-            DataContext = musicList;
-        }
-
-        private void GotoPlaylist_Click(object sender, RoutedEventArgs e)
-        {
-            PlaylistOverview ctrl = new((Data.IMusicList)DataContext);
-            ((MainWindow)Application.Current.MainWindow).LibraryTab.ShowLibraryPage(ctrl);
+            DataContext = music;
         }
     }
 }
