@@ -9,6 +9,8 @@
     <StackPanel>
         <TextBlock Name="PlaylistName" 
                    Text="{Binding Name}"/>
-        <DataGrid Name="EntryTable"/>
+        <StackPanel Name="EntryTable">
+            
+        </StackPanel>
     </StackPanel>
 </UserControl>

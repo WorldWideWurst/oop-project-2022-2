@@ -34,7 +34,11 @@ namespace Project.UI.MVVM.View
 
         private void PlaylistOverview_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            EntryTable.ItemsSource = ((IMusicList)e.NewValue).Entries;
+            EntryTable.Children.Clear();
+            foreach(var music in ((IMusicList)e.NewValue).Entries)
+            {
+                EntryTable.Children.Add(new MusicRecord(music));
+            }
         }
 
         public void Overview()
@@ -47,9 +51,5 @@ namespace Project.UI.MVVM.View
             throw new NotImplementedException();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
