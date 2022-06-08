@@ -98,6 +98,14 @@ namespace Project.Player
             return status;
         }
 
+        public void OpenList(Data.MusicList list)
+        {
+            foreach (var music in list.Entries)
+            {
+                //CurrentList.Add(music);   ?? wie komme ich an Music statt MusicInList
+            }
+        }
+
         public void OpenSong(Data.Music music)
         {
             var source = music.Sources.First();
@@ -106,10 +114,7 @@ namespace Project.Player
             ((MainWindow)System.Windows.Application.Current.MainWindow).MediaControllerTab.PlayCheckbox.IsChecked = false;
         }
 
-        public void SetMusic(Music music)
-        {
-            // Source = music.Quelle
-        }
+
 
         public void ChangeVolume(double volume)
         {

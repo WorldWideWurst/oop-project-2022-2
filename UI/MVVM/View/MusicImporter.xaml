@@ -24,7 +24,7 @@
                        FontSize="40" 
                        Margin="0,0,0,20px"/>
             <Button     x:Name="SelectMusicDir" 
-                        Style="{StaticResource StandardButtonTheme}"
+                        Style="{StaticResource StandardRoundedButtonTheme}"
                         Height="50"
                         FontSize="20"
                         Click="SelectMusicDir_Click"

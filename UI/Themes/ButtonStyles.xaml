@@ -4,14 +4,12 @@
     <!-- geschrieben von Janek Engel -->
 
     <!-- Border-Style, der im folgenden Standard-Button genutzt wird -->
-    
+
     <Style TargetType="{x:Type Border}"
            x:Key="BorderTheme">
         <Style.Setters>
-            <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Background" Value="#FF323232" />
         </Style.Setters>
-
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#FF383838" />
@@ -41,7 +39,45 @@
             <Setter Property="Foreground" Value="White" />
         </Style.Setters>
     </Style>
-    
+
+    <!-- Border-Style, der im folgenden Standard-Button genutzt wird -->
+
+    <Style TargetType="{x:Type Border}"
+           x:Key="BorderRoundedTheme">
+        <Style.Setters>
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Background" Value="#FF323232" />
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF383838" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Standard-Buttons rounded -->
+    <Style TargetType="{x:Type Button}"
+           x:Key="StandardRoundedButtonTheme">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Style="{StaticResource BorderRoundedTheme}">
+                            <Grid VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch">
+                                <TextBlock Text="{TemplateBinding Property=Content}" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Foreground" Value="White" />
+        </Style.Setters>
+    </Style>
+
     <!-- Close-Button -->
     <Style x:Key="CloseButton" TargetType="Button">
         <Setter Property="Template">

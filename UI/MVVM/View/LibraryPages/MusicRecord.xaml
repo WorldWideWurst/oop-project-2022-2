@@ -9,24 +9,27 @@
     
     <StackPanel Orientation="Horizontal">
         <Button Name="PlayButton"
+                Style="{DynamicResource PlayButton}"
                 Width="{Binding ElementName=PlayButton, Path=ActualHeight}"
-                Content="Play"
                 FontSize="15"
                 VerticalContentAlignment="Center"
                 Click="PlayButton_Click"/>
+        <Line X1="2.5" Y1="0" 
+              X2="2.5" Y2="40"
+              Width="5" Stroke="#FF454545" StrokeThickness="1"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Name="AddToFrontButton" 
-                    Content="F"
+                    Style="{DynamicResource AddToFrontButton}"
                     Width="{Binding ElementName=AddToFrontButton, Path=ActualHeight}"
                     Click="AddToFrontButton_Click"
                     Grid.Row="0" />
             <Button Name="AddToBackButton"
+                    Style="{DynamicResource AddToBackButton}"
                     Width="{Binding ElementName=AddToBackButton, Path=ActualHeight}"
-                    Content="B" 
                     Click="AddToBackButton_Click"
                     Grid.Row="1"/>
         </Grid>

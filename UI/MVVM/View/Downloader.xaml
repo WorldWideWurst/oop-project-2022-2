@@ -27,14 +27,12 @@
                      HorizontalAlignment="Stretch"/>
 
             <Button Content="Herunterladen"
-                    Foreground="White" 
+                    Style="{DynamicResource StandardButtonTheme}"
                     Click="DownloaderButton_Click" 
                     Margin="0,20,0,0" 
-                    Height="40" Width="216"
+                    Height="40" Width="220"
                     HorizontalAlignment="Center" 
-                    VerticalAlignment="Top" 
-                    Background="#FF323232" 
-                    BorderBrush="{x:Null}" />
+                    VerticalAlignment="Top"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>
