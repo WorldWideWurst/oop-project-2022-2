@@ -24,6 +24,8 @@ namespace Project.UI.MVVM.View.LibraryPages
         {
             InitializeComponent();
             DataContext = musicList;
+            ArtistName.Text = musicList.Owner;
+            EntryCount.Text = musicList.Count.ToString();
         }
 
         private void GotoPlaylist_Click(object sender, RoutedEventArgs e)

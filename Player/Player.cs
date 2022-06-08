@@ -113,7 +113,7 @@ namespace Project.Player
         {
             if (mediaPlayer.Source != null)
             {
-                if (TimeSpan.FromSeconds(Tickspeed.tickspeed) != timer.Interval)
+                if (timer.Interval != TimeSpan.FromSeconds(Tickspeed.tickspeed))
                     timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
             }
         }

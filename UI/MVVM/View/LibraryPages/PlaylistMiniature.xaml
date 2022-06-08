@@ -19,6 +19,7 @@
         <TextBlock Name="ArtistName"
                    Text="{Binding Owner}"
                    TextTrimming="CharacterEllipsis"/>
-        <TextBlock Text="{Binding Count, StringFormat=Lieder: {0}}"/>
+        <TextBlock Name="EntryCount"
+                   Text="{Binding Count, StringFormat=Lieder: {0}}"/>
     </StackPanel>
 </UserControl>
