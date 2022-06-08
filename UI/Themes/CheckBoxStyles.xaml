@@ -9,7 +9,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel>
-                        <Image x:Name="checkboxImage" Source="/UI/Images/heart.png" />
+                        <Image x:Name="checkboxImage" Source="/UI/Images/heart.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
 
@@ -45,7 +46,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel>
-                        <Image x:Name="checkboxImage" Source="/UI/Images/shuffle.png" />
+                        <Image x:Name="checkboxImage" Source="/UI/Images/shuffle.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
 
@@ -81,7 +83,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel>
-                        <Image x:Name="checkboxImage" Source="/UI/Images/play.png" />
+                        <Image x:Name="checkboxImage" Source="/UI/Images/play.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
 
@@ -118,7 +121,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel>
-                        <Image x:Name="checkboxImage" Source="/UI/Images/loop.png" />
+                        <Image x:Name="checkboxImage" Source="/UI/Images/loop.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
 
@@ -166,7 +170,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
                     <StackPanel>
-                        <Image x:Name="checkboxImage" Source="/UI/Images/fullscreen.png" />
+                        <Image x:Name="checkboxImage" Source="/UI/Images/fullscreen.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
 
