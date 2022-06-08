@@ -48,7 +48,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <StackPanel>
-                        <Image x:Name="ButtonImage" Source="/UI/Images/close.png" />
+                        <Image x:Name="ButtonImage" Source="/UI/Images/close.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -67,7 +68,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <StackPanel>
-                        <Image x:Name="ButtonImage" Source="/UI/Images/mm.png" />
+                        <Image x:Name="ButtonImage" Source="/UI/Images/mm.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -86,7 +88,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <StackPanel>
-                        <Image x:Name="ButtonImage" Source="/UI/Images/maxm.png"/>
+                        <Image x:Name="ButtonImage" Source="/UI/Images/maxm.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -105,7 +108,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <StackPanel>
-                        <Image x:Name="ButtonImage" Source="/UI/Images/back.png" />
+                        <Image x:Name="ButtonImage" Source="/UI/Images/back.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -124,7 +128,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <StackPanel>
-                        <Image x:Name="ButtonImage" Source="/UI/Images/forward.png" />
+                        <Image x:Name="ButtonImage" Source="/UI/Images/forward.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -143,7 +148,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <StackPanel>
-                        <Image x:Name="ButtonImage" Source="/UI/Images/backmenu.png" Style="{DynamicResource Image}" />
+                        <Image x:Name="ButtonImage" Source="/UI/Images/backmenu.png" 
+                               RenderOptions.BitmapScalingMode="HighQuality" />
                         <ContentPresenter />
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -154,10 +160,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Style x:Key="Image" TargetType="Image">
-        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
     </Style>
 
     <!-- Volume-Button mit integriertem Slider zur Lautstärke-Kontrolle -->
@@ -173,8 +175,8 @@
                             </Grid.ColumnDefinitions>
                             <Image x:Name="ButtonImage" Source="/UI/Images/volume.png" 
                                    Margin="0,0,5,0" 
-                                   Style="{DynamicResource Image}"
-                                   Grid.Column="0"/>
+                                   Grid.Column="0"
+                                   RenderOptions.BitmapScalingMode="HighQuality"/>
                             <Slider x:Name="ButtonSlider" 
                                     Value="50"
                                     VerticalAlignment="Center" 
