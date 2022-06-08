@@ -19,9 +19,11 @@
                        Text="Ziel hier eingeben"
                        HorizontalAlignment="Center"/>
             <TextBox Name="URLInput"
-                     Height="60" 
                      Margin="100,20,100,0"
                      MinWidth="200"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     VerticalAlignment="Stretch"
                      HorizontalAlignment="Stretch"/>
 
             <Button Content="Herunterladen"

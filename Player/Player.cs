@@ -8,6 +8,7 @@ using Project.UI.MVVM.View;
 using Project.UI;
 using System.Windows.Controls;
 using System.Windows;
+using System.Linq;
 
 namespace Project.Player
 {
@@ -99,9 +100,9 @@ namespace Project.Player
 
         public void OpenSong(Data.Music music)
         {
-            var source = music.Sources;
-            System.Windows.MessageBox.Show(source.ToString());
-            mediaPlayer.Open(new Uri(source.ToString()));
+            var source = music.Sources.First();
+            System.Windows.MessageBox.Show(source.Address);
+            mediaPlayer.Open(new Uri(source.Address));
         }
 
         public void SetMusic(Music music)
