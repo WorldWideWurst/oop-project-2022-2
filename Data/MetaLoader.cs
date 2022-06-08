@@ -125,6 +125,8 @@ namespace Project.Data
     /// * Matrosca
     /// 
     /// Tag-Conversion-Tabelle: https://wiki.hydrogenaud.io/index.php?title=Tag_Mapping
+    /// 
+    /// Der eine Wilde Converter: https://exiftool.org/
     /// </summary>
     public class MetaLoader : IMetaLoader
     {
