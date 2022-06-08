@@ -6,33 +6,29 @@ using Project.Index;
 
 // als Singelton umbauen
 //Interface Implementieren
-namespace Project
+namespace Project.Download
 {
     public class DownloadFile
     {
-        public static bool Download(string URL, string fileName)
+        public static bool Download(string src, string target)
         {
             //fileName: "Name"
             //fileType: "." + "fileType" 
 
             WebClient webclient = new WebClient();
-            var split = URL.Split(".");
-            string fileType = "." + split[split.Length - 1];
 
             try
             {
                 Console.WriteLine("Download wurde gestartet!");
-                File.WriteAllBytes("temp\\" + fileName + fileType, webclient.DownloadData(URL));
-
+                File.WriteAllBytes(target, webclient.DownloadData(src));
             }
-
             catch
             {
                 Console.WriteLine("Es ist etwas beim Download schiefgelaufen!");
                 return false;
             }
 
-            Console.WriteLine("Die Datei: " + fileName + fileType + " wurde erfolgreich heruntergeladen!");
+            Console.WriteLine("Die Datei: " + Path.GetFileName(src) + " wurde erfolgreich heruntergeladen!");
             return true;
         }
 
@@ -72,15 +68,9 @@ namespace Project
                     {
                         jpg = "####";
                     }
-                    if (jpg != "####")
-                    {
-                        Download(URL + jpg, "temp" + new Random().Next());
-                    }
                     jpg = "";
                 }
             }
-
-            File.WriteAllText("temp\\html.html", htmlstring);
 
             return temp.Split(";");
         }

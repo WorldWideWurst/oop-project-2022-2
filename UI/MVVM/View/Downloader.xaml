@@ -9,45 +9,30 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer CanContentScroll="True"
-                  HorizontalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollBarVisibility="Auto">
-        <Grid>
+        <StackPanel>
             <TextBlock Text="Downloader" 
                        Foreground="White" 
                        FontSize="40"/>
-
-
             <TextBlock Foreground="White" 
                        Text="Ziel hier eingeben"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top" 
-                       Margin="0,130,0,0"/>
-            <TextBox Name="Target"
-                     Height="60" Width="400" 
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Top" 
-                     Margin="0,150,0,0"/>
+                       HorizontalAlignment="Center"/>
+            <TextBox Name="URLInput"
+                     Height="60" 
+                     Margin="100,20,100,0"
+                     MinWidth="200"
+                     HorizontalAlignment="Stretch"/>
 
-            <Button Content="OK"
+            <Button Content="Herunterladen"
                     Foreground="White" 
                     Click="DownloaderButton_Click" 
-                    Margin="0,250,0,0" 
+                    Margin="0,20,0,0" 
                     Height="40" Width="216"
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 
                     Background="#FF323232" 
                     BorderBrush="{x:Null}" />
-
-            <TextBlock Foreground="White" 
-                       Text="URL hier eingeben"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top" 
-                       Margin="0,310,0,0"/>
-            <TextBox Name="URL"
-                     Height="60" Width="400" 
-                     HorizontalAlignment="Center" 
-                     VerticalAlignment="Top" 
-                     Margin="0,330,0,0"/>
-        </Grid>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

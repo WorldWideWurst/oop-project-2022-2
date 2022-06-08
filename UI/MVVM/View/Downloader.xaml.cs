@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,11 +28,58 @@ namespace Project.UI.MVVM.View
             InitializeComponent();
         }
 
-          private void DownloaderButton_Click(object sender, RoutedEventArgs e)
+        private void DownloaderButton_Click(object sender, RoutedEventArgs e)
         {
-            DownloadFile.ParseForDownloadables(URL.Text);
+            var targetDir = ((App)Application.Current).DefaultDownloadFolder;
+            foreach(var uriStr in URLInput.Text.Split('\n').Select(s => s.Trim()))
+            {
+                var uri = new Uri(uriStr);
+                var tempPath = System.IO.Path.GetTempFileName();
+                if(!Download.DownloadFile.Download(uriStr, tempPath))
+                {
+                    MessageBox.Show("Fehler beim Herunterladen von URI " + uri);
+                    return;
+                }
+                
+
+                string[] innerURIs = Download.DownloadFile.ParseForDownloadables(uriStr);
+                var anySuccessfulURIs = false;
+                foreach(var innerURIString in innerURIs) { 
+                    try
+                    {
+                        var innerURI = new Uri(innerURIString);
+                        if(Download.DownloadFile.Download(innerURIString, System.IO.Path.Combine(targetDir, fileNameForURI(innerURI))))
+                        {
+                            anySuccessfulURIs = true;
+                        }
+                    }
+                    catch(UriFormatException)
+                    {
+                        
+                    }
+                }
+
+                if(!anySuccessfulURIs)
+                {
+                    File.Move(tempPath, System.IO.Path.Combine(targetDir, fileNameForURI(uri)));
+                }
+            }
+
+            URLInput.Text = "";
         }
 
+        private static string fileNameForURI(Uri uri)
+        {
+            var name = System.IO.Path.GetFileName(uri.AbsolutePath);
+            if (name != null && name.Length > 0)
+            {
+                return name;
+            }
+            else
+            {
+                return $"download_{Math.Abs(uri.ToString().GetHashCode())}";
+            }
+        }
 
     }
 }
