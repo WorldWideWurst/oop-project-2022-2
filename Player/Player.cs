@@ -137,7 +137,7 @@ namespace Project.Player
         public string GetLabel()
         {
             string text;
-            if (mediaPlayer.Source != null)
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
                 text = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
             else
                 text = "Es wurde kein Lied ausgewählt!";
@@ -148,7 +148,7 @@ namespace Project.Player
         {
             double value = 0;
 
-            if (mediaPlayer.Source != null)
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
                 value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
             return value;
         }
