@@ -7,7 +7,8 @@
              xmlns:libPages="clr-namespace:Project.UI.MVVM.View.LibraryPages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
                   Background="#FF454545">
         <DockPanel>
             <TextBlock Text="Bibliothek" 
