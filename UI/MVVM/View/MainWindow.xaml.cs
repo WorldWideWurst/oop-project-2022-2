@@ -36,7 +36,7 @@ namespace Project.UI
         Settings settingsState = new();
 
         //Instanziiert eine globale Instanz der Player-Klasse
-        public static readonly Player.Player playerInstance = new Player.Player();
+        public static readonly Player.Player PlayerInstance = new();
 
         public MainWindow()
         {

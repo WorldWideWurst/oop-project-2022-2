@@ -55,7 +55,7 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.playerInstance.OpenSong((Data.Music)DataContext);
+            MainWindow.PlayerInstance.OpenSong((Data.Music)DataContext);
         }
 
         private void AddToFrontButton_Click(object sender, RoutedEventArgs e)

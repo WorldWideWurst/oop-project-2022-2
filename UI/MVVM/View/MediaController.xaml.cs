@@ -47,11 +47,11 @@ namespace Project.UI.MVVM.View
         //ruft den Player auf und passt den Playbutton an das Ergebnis an
         private void PlayCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            PlayCheckbox.IsChecked = MainWindow.playerInstance.PlaySong() == true ? true : false;
+            PlayCheckbox.IsChecked = MainWindow.PlayerInstance.PlaySong() == true ? true : false;
         }
         private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MainWindow.playerInstance.PauseSong();
+            MainWindow.PlayerInstance.PauseSong();
         }
 
         //noch nicht implementiert
@@ -106,13 +106,13 @@ namespace Project.UI.MVVM.View
         //Skippt zur stelle im Lied, die mit dem Slider-Wert übereinstimmt
         private void Changed_Slider_Value(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.playerInstance.ChangedSliderValue(SongSlider.Value);
+            MainWindow.PlayerInstance.ChangedSliderValue(SongSlider.Value);
         }
 
         //Startet den MediaPlayer (nach Songauswahl) und legt die Ticklänge fest
         private void ChooseSong_Click(object sender, RoutedEventArgs e)
         {
-            PlayCheckbox.IsChecked = MainWindow.playerInstance.ChooseSource() == true ? true : false;
+            PlayCheckbox.IsChecked = MainWindow.PlayerInstance.ChooseSource() == true ? true : false;
         }
 
 
@@ -128,7 +128,7 @@ namespace Project.UI.MVVM.View
         private void VolumeSlider_ValueChanged(object sender, RoutedEventArgs e)
         {
             Slider VolumeSlider = VolumeButton.Template.FindName("ButtonSlider", VolumeButton) as Slider;
-            MainWindow.playerInstance.ChangeVolume(VolumeSlider.Value / 100);
+            MainWindow.PlayerInstance.ChangeVolume(VolumeSlider.Value / 100);
         }
 
 
@@ -138,10 +138,10 @@ namespace Project.UI.MVVM.View
             if (TimeSpan.FromSeconds(Tickspeed.tickspeed) != timer.Interval)
                 timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
 
-            lblStatus.Content = MainWindow.playerInstance.GetLabel();
+            lblStatus.Content = MainWindow.PlayerInstance.GetLabel();
 
             if (!SongSlider.IsMouseCaptureWithin)
-                SongSlider.Value = MainWindow.playerInstance.GetSlider();
+                SongSlider.Value = MainWindow.PlayerInstance.GetSlider();
         }
     }
 }
