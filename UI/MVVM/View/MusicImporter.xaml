@@ -14,7 +14,7 @@
         <clr:String x:Key="SelectMusicDir_Idle">Ordner Auswählen</clr:String>
         <clr:String x:Key="SelectMusicDir_Busy">Ordner {0} wird importiert...</clr:String>
     </UserControl.Resources>
-    <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollBarVisibility="Auto"
                   Background="Transparent"
                   Padding="10,0,10,0px">

@@ -46,8 +46,8 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         private void OpenPageButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Page");
-            Player.Player.Instance.Play()
+            var page = new MusicOverview((Data.Music)DataContext);
+            ((MainWindow)Application.Current.MainWindow).LibraryTab.ShowLibraryPage(page);
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -57,12 +57,12 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         private void AddToFrontButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Vorne in die Warteschlange");
         }
 
         private void AddToBackButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Hinten in die Warteschlange");
         }
     }
 }

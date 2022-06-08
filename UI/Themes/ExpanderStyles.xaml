@@ -26,14 +26,11 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <WrapPanel MaxWidth="500px">
-                            <TextBlock Text="{Binding File}" 
-                                       ToolTip="{Binding ToolTip}"/>
-                        </WrapPanel>
+                        <TextBlock Text="{Binding File}" 
+                                   ToolTip="{Binding ToolTip}"/>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Visible"/>
         </Style.Setters>
     </Style>
 </ResourceDictionary>
