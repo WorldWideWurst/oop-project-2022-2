@@ -16,6 +16,8 @@ namespace Project.Player
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private DispatcherTimer timer = new DispatcherTimer();
 
+        public static readonly Player Instance = new Player();
+
         public IList<Music>? CurrentList
         {
             get => _musicList;
@@ -91,6 +93,11 @@ namespace Project.Player
             else
                 status = false;
             return status;
+        }
+
+        public void SetMusic(Music music)
+        {
+            // Source = music.Quelle
         }
 
         public void ChangeVolume(double volume)
