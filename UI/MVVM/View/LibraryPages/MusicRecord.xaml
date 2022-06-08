@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Project.UI.MVVM.View.LibraryPages"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="500">
+             d:DesignHeight="40" d:DesignWidth="500">
     
     <StackPanel Orientation="Horizontal">
         <Button Name="PlayButton"
+                Width="{Binding ElementName=PlayButton, Path=ActualHeight}"
                 Content="Play"
-                FontSize="10"
+                FontSize="15"
                 VerticalContentAlignment="Center"
                 Click="PlayButton_Click"/>
         <Grid>
@@ -20,9 +21,11 @@
             </Grid.RowDefinitions>
             <Button Name="AddToFrontButton" 
                     Content="F"
+                    Width="{Binding ElementName=AddToFrontButton, Path=ActualHeight}"
                     Click="AddToFrontButton_Click"
                     Grid.Row="0" />
             <Button Name="AddToBackButton"
+                    Width="{Binding ElementName=AddToBackButton, Path=ActualHeight}"
                     Content="B" 
                     Click="AddToBackButton_Click"
                     Grid.Row="1"/>

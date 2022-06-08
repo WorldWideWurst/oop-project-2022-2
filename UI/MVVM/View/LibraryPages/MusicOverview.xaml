@@ -9,9 +9,9 @@
 
     <StackPanel>
         <TextBlock Text="{Binding Title}"/>
-        <Grid>
+        <Grid Margin="5,0,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>

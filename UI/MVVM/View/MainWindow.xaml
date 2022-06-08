@@ -140,7 +140,7 @@
         <ContentControl x:Name="ContentViewer"
                         Margin="280,30,0,100"
                         Content="{Binding }"/>
-        
+
         <!-- rein visueller Schatten -->
         <Rectangle  Margin="0,0,0,100" 
                     Panel.ZIndex="1000" 
@@ -156,12 +156,14 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <!-- untere Leiste, die den Audio-Player beinhaltet-->
-        <views:MediaController x:Name="MediaController"/>
-
         <views:Fullscreen   x:Name="FullscreenView"
                             Margin="0,30,0,100"
                             Visibility="Collapsed" 
                             Panel.ZIndex="9000"/>
+
+        <!-- untere Leiste, die den Audio-Player beinhaltet-->
+        <ContentControl x:Name="MediaControllerViewer"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"/>
     </Grid>
 </Window>

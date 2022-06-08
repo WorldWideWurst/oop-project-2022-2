@@ -30,15 +30,20 @@ namespace Project.UI
 
         Homepage homepageState = new();
         public Library LibraryTab { get; private set; } = new();
+        public MediaController MediaControllerTab { get; private set; } = new();
         Downloader downloaderState = new();
         MusicImporter musicImporterState = new();
         Settings settingsState = new();
+
+        //Instanziiert eine globale Instanz der Player-Klasse
+        public static readonly Player.Player playerInstance = new Player.Player();
 
         public MainWindow()
         {
             InitializeComponent();
             //Initialisiert und zeigt Startseite an
             DataContext = new Homepage();
+            MediaControllerViewer.Content = MediaControllerTab;
 
             // welche lieder sind in einer Playlist?
             // var musicListEntries = Database.Instance.GetMusicList(Guid.Empty).MusicEntries.ToList();

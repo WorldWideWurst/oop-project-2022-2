@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Project.UI;
+using Project.Player;
+using Project.Data;
 
 namespace Project.UI.MVVM.View.LibraryPages
 {
@@ -52,7 +55,7 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Play");
+            MainWindow.playerInstance.OpenSong((Data.Music)DataContext);
         }
 
         private void AddToFrontButton_Click(object sender, RoutedEventArgs e)

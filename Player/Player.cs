@@ -16,7 +16,12 @@ namespace Project.Player
         private MediaPlayer mediaPlayer = new MediaPlayer();
         private DispatcherTimer timer = new DispatcherTimer();
 
-        public static readonly Player Instance = new Player();
+        public Player()
+        {
+            timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
+            timer.Tick += timer_Tick;
+            timer.Start();
+        }
 
         public IList<Music>? CurrentList
         {
@@ -85,14 +90,18 @@ namespace Project.Player
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 mediaPlayer.Open(new Uri(openFileDialog.FileName));
-                timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
-                timer.Tick += timer_Tick;
-                timer.Start();
                 status = true;
             }
             else
                 status = false;
             return status;
+        }
+
+        public void OpenSong(Data.Music music)
+        {
+            var source = music.Sources;
+            System.Windows.MessageBox.Show(source.ToString());
+            mediaPlayer.Open(new Uri(source.ToString()));
         }
 
         public void SetMusic(Music music)

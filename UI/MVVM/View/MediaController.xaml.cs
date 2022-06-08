@@ -23,18 +23,11 @@ namespace Project.UI.MVVM.View
     // Verfasst von Janek Engel
     public partial class MediaController : UserControl
     {
-
-        private Player.Player mediaPlayer = new Player.Player();
         private DispatcherTimer timer = new DispatcherTimer();
 
         public MediaController()
         {
             InitializeComponent();
-            OnInitializing();
-        }
-
-        private void OnInitializing()
-        {
             timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
             timer.Tick += timer_Tick;
             timer.Start();
@@ -54,11 +47,11 @@ namespace Project.UI.MVVM.View
         //ruft den Player auf und passt den Playbutton an das Ergebnis an
         private void PlayCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            PlayCheckbox.IsChecked = mediaPlayer.PlaySong() == true ? true : false;
+            PlayCheckbox.IsChecked = MainWindow.playerInstance.PlaySong() == true ? true : false;
         }
         private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.PauseSong();
+            MainWindow.playerInstance.PauseSong();
         }
 
         //noch nicht implementiert
@@ -113,13 +106,13 @@ namespace Project.UI.MVVM.View
         //Skippt zur stelle im Lied, die mit dem Slider-Wert übereinstimmt
         private void Changed_Slider_Value(object sender, MouseButtonEventArgs e)
         {
-            mediaPlayer.ChangedSliderValue(SongSlider.Value);
+            MainWindow.playerInstance.ChangedSliderValue(SongSlider.Value);
         }
 
         //Startet den MediaPlayer (nach Songauswahl) und legt die Ticklänge fest
         private void ChooseSong_Click(object sender, RoutedEventArgs e)
         {
-            PlayCheckbox.IsChecked = mediaPlayer.ChooseSource() == true ? true : false;
+            PlayCheckbox.IsChecked = MainWindow.playerInstance.ChooseSource() == true ? true : false;
         }
 
 
@@ -135,7 +128,7 @@ namespace Project.UI.MVVM.View
         private void VolumeSlider_ValueChanged(object sender, RoutedEventArgs e)
         {
             Slider VolumeSlider = VolumeButton.Template.FindName("ButtonSlider", VolumeButton) as Slider;
-            mediaPlayer.ChangeVolume(VolumeSlider.Value / 100);
+            MainWindow.playerInstance.ChangeVolume(VolumeSlider.Value / 100);
         }
 
 
@@ -145,10 +138,10 @@ namespace Project.UI.MVVM.View
             if (TimeSpan.FromSeconds(Tickspeed.tickspeed) != timer.Interval)
                 timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
 
-            lblStatus.Content = mediaPlayer.GetLabel();
+            lblStatus.Content = MainWindow.playerInstance.GetLabel();
 
             if (!SongSlider.IsMouseCaptureWithin)
-                SongSlider.Value = mediaPlayer.GetSlider();
+                SongSlider.Value = MainWindow.playerInstance.GetSlider();
         }
     }
 }
