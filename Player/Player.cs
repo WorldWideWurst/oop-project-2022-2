@@ -103,6 +103,7 @@ namespace Project.Player
             var source = music.Sources.First();
             System.Windows.MessageBox.Show(source.Address);
             mediaPlayer.Open(new Uri(source.Address));
+            ((MainWindow)System.Windows.Application.Current.MainWindow).MediaControllerTab.PlayCheckbox.IsChecked = false;
         }
 
         public void SetMusic(Music music)
