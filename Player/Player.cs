@@ -22,6 +22,7 @@ namespace Project.Player
             timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
             timer.Tick += timer_Tick;
             timer.Start();
+            
         }
 
         public IList<Music>? CurrentList
@@ -100,7 +101,7 @@ namespace Project.Player
 
         public void OpenList(Data.MusicList list)
         {
-            foreach (var music in list.Entries)
+            foreach (var music in list.MusicEntries)
             {
                 //CurrentList.Add(music);   ?? wie komme ich an Music statt MusicInList
             }
