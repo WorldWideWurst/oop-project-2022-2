@@ -171,6 +171,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite" Version="1.0.115.5" />
+    <PackageReference Include="Xabe.FFmpeg" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>

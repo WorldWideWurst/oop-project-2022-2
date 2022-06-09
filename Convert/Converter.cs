@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xabe.FFmpeg;
 using System.Threading.Tasks;
 
 namespace Project.Convert
@@ -16,12 +18,26 @@ namespace Project.Convert
 
     public class Converter : IConverter
     {
+       
+        
 
         public static readonly Converter Instance = new();
 
+        
+
         public void Convert(string source, string target)
         {
-            throw new NotImplementedException();
+            static async Task RunConversion(Queue filesToConvert)
+            {
+                while (filesToConvert.TryDequeue(out FileInfo fileToConvert))
+                {
+                    //Save file to the same location with changed extension
+                    string outputFileName = Path.ChangeExtension(fileToConvert.FullName, ".mp4");
+                    await Conversion.ToMp4(fileToConvert.FullName, outputFileName).Start();
+                    await Console.Out.WriteLineAsync($"Finished converion file [{fileToConvert.Name}]");
+                }
+            }
+
         }
 
         public bool SupportsConversion(string sourceExtension, string targetExtension)
