@@ -2,11 +2,29 @@
 using System.Windows.Media;
 using Project.Data;
 using System.Collections.Generic;
+using System.Windows.Threading;
+using System.Windows.Forms;
+using Project.UI.MVVM.View;
+using Project.UI;
+using System.Windows.Controls;
+using System.Windows;
+using System.Linq;
 
 namespace Project.Player
 {
     public class Player : MediaPlayer
     {
+        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private DispatcherTimer timer = new DispatcherTimer();
+
+        public Player()
+        {
+            timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
+            timer.Tick += timer_Tick;
+            timer.Start();
+            
+        }
+
         public IList<Music>? CurrentList
         {
             get => _musicList;
@@ -31,10 +49,22 @@ namespace Project.Player
 
         public int? CurrentIndex { get; set; }
 
-        public bool Play
+        public bool PlaySong()
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            bool status;
+            if (mediaPlayer.Source != null)
+            {
+                mediaPlayer.Play();
+                status = true;
+            }
+            else
+                status = false;
+            return status;
+        }
+
+        public void PauseSong()
+        {
+            mediaPlayer.Pause();
         }
 
         public bool Shuffle
@@ -52,6 +82,82 @@ namespace Project.Player
         public void PlayPrevious()
         {
             throw new NotImplementedException();
+        }
+
+        public bool ChooseSource()
+        {
+            bool status;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                mediaPlayer.Open(new Uri(openFileDialog.FileName));
+                status = true;
+            }
+            else
+                status = false;
+            return status;
+        }
+
+        public void OpenList(Data.MusicList list)
+        {
+            foreach (var music in list.MusicEntries)
+            {
+                //CurrentList.Add(music);   ?? wie komme ich an Music statt MusicInList
+            }
+        }
+
+        public void OpenSong(Data.Music music)
+        {
+            var source = music.Sources.First();
+            System.Windows.MessageBox.Show(source.Address);
+            mediaPlayer.Open(new Uri(source.Address));
+            ((MainWindow)System.Windows.Application.Current.MainWindow).MediaControllerTab.PlayCheckbox.IsChecked = false;
+        }
+
+
+
+        public void ChangeVolume(double volume)
+        {
+            mediaPlayer.Volume = volume;
+        }
+
+        public void ChangedSliderValue(double value)
+        {
+            if (mediaPlayer.Source != null)
+            {
+                mediaPlayer.Position = (value * mediaPlayer.NaturalDuration.TimeSpan) / 100;
+            }
+        }
+
+
+        //Event tritt bei jedem Tick des Timers auf
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            if (mediaPlayer.Source != null)
+            {
+                if (timer.Interval != TimeSpan.FromSeconds(Tickspeed.tickspeed))
+                    timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
+            }
+        }
+
+        public string GetLabel()
+        {
+            string text;
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                text = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
+            else
+                text = "Es wurde kein Lied ausgewählt!";
+            return text;
+        }
+
+        public double GetSlider()
+        {
+            double value = 0;
+
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
+                value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
+            return value;
         }
     }
 }

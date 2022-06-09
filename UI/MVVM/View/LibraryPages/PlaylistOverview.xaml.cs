@@ -1,4 +1,5 @@
 ﻿using Project.Data;
+using Project.UI.MVVM.View.LibraryPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,17 +23,21 @@ namespace Project.UI.MVVM.View
     public partial class PlaylistOverview : UserControl, LibraryPages.ILibraryPage
     {
 
-        public readonly MusicList MusicList;
-
-        public PlaylistOverview(MusicList musicList)
+        public PlaylistOverview(IMusicList musicList)
         {
             InitializeComponent();
-            MusicList = musicList;
 
-            PlaylistName.Text = musicList.Name;
-            foreach(var entry in musicList.MusicEntries)
+            DataContextChanged += PlaylistOverview_DataContextChanged;
+
+            DataContext = musicList;
+        }
+
+        private void PlaylistOverview_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            EntryTable.Children.Clear();
+            foreach(var music in ((IMusicList)e.NewValue).Entries)
             {
-                EntryList.Items.Add(entry.Title);
+                EntryTable.Children.Add(new MusicRecord(music));
             }
         }
 
@@ -45,5 +50,6 @@ namespace Project.UI.MVVM.View
         {
             throw new NotImplementedException();
         }
+
     }
 }

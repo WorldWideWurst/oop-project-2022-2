@@ -125,6 +125,8 @@ namespace Project.Data
     /// * Matrosca
     /// 
     /// Tag-Conversion-Tabelle: https://wiki.hydrogenaud.io/index.php?title=Tag_Mapping
+    /// 
+    /// Der eine Wilde Converter: https://exiftool.org/
     /// </summary>
     public class MetaLoader : IMetaLoader
     {
@@ -135,6 +137,7 @@ namespace Project.Data
         {
             Instance.Loaders.Add(ID3v2MetaLoader.Instance);
             Instance.Loaders.Add(MP3MetaLoader.Instance);
+            Instance.Loaders.Add(WAVAccepter.Instance);
         }
 
         public IList<IMetaLoader> Loaders { get; } = new List<IMetaLoader>();
@@ -419,7 +422,23 @@ namespace Project.Data
             return str;
         }
     }
-    
+
+    public class WAVAccepter : IMetaLoader
+    {
+
+        public static readonly WAVAccepter Instance = new WAVAccepter();
+
+        public MusicFileMeta Load(string path)
+        {
+            return new MusicFileMeta(path);
+        }
+
+        public bool SupportsExtension(string extension)
+        {
+            return extension == "wav";
+        }
+    }
+
     public class UnknownMusicFileFormat : Exception
     {
         // <3

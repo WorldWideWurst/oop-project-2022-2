@@ -27,17 +27,23 @@ namespace Project.UI
     // Verfasst von Janek Engel
     public partial class MainWindow : Window
     {
+
         Homepage homepageState = new();
         public Library LibraryTab { get; private set; } = new();
+        public MediaController MediaControllerTab { get; private set; } = new();
         Downloader downloaderState = new();
         MusicImporter musicImporterState = new();
         Settings settingsState = new();
+
+        //Instanziiert eine globale Instanz der Player-Klasse
+        public static readonly Player.Player PlayerInstance = new();
 
         public MainWindow()
         {
             InitializeComponent();
             //Initialisiert und zeigt Startseite an
             DataContext = new Homepage();
+            MediaControllerViewer.Content = MediaControllerTab;
 
             // welche lieder sind in einer Playlist?
             // var musicListEntries = Database.Instance.GetMusicList(Guid.Empty).MusicEntries.ToList();

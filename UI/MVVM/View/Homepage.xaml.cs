@@ -33,7 +33,10 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show(
+            Download.DownloadFile.Download("https://www.codeproject.com/Questions/5248986/Make-a-WPF-text-box-accept-the-enter-key", ((Project.App)Application.Current).DefaultDownloadFolder)
+                .ToString()
+                );
         }
     }
 }

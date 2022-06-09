@@ -13,10 +13,6 @@ namespace Project.Data
     public class Database : IDisposable
     {
 
-        public class Test
-        {
-        }
-
         public const string Version = "0.2";
         
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
@@ -83,7 +79,7 @@ namespace Project.Data
 
         public IEnumerable<Music> GetMusic(string? input = null, Range? range = null)
         {
-            SQLiteCommand cmd = new SQLiteCommand(connection);
+            using var cmd = new SQLiteCommand(connection);
             if(input == null)
             {
                 cmd.CommandText = "select id, title, album from music";
@@ -103,9 +99,24 @@ namespace Project.Data
             }
         }
 
+        public IEnumerable<Music> GetMusicWithoutAlbum()
+        {
+            using var cmd = new SQLiteCommand(connection);
+            cmd.CommandText =
+                @"select m.id, m.title, m.album from music m
+                left join _music_in_list ml on m.id = ml._music
+				where ml._list is null";
+
+            using var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                yield return new Music(reader.GetGuid(0), reader[1] as string, reader[2] as string);
+            }
+        }
+
         internal void InsertMusic(Music music)
         {
-            using SQLiteCommand cmd = new SQLiteCommand("insert into music (id, title, album) values (@id, @title, @album)", connection);
+            using SQLiteCommand cmd = new("insert into music (id, title, album) values (@id, @title, @album)", connection);
             cmd.Parameters.AddWithValue("@id", music.Id);
             cmd.Parameters.AddWithValue("@title", music.Title);
             cmd.Parameters.AddWithValue("@album", music.Album);

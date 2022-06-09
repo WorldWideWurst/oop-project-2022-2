@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace oop_project_2022_2
+namespace Project
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -14,7 +14,23 @@ namespace oop_project_2022_2
     public partial class App : Application
     {
 
+        public string DefaultDownloadFolder
+        {
+            get
+            {
+                if(defaultDownloadFolder != null)
+                {
+                    return defaultDownloadFolder;
+                }
 
+                var dialog = new System.Windows.Forms.FolderBrowserDialog();
+                dialog.ShowDialog();
+
+                defaultDownloadFolder = dialog.SelectedPath;
+                return defaultDownloadFolder;
+            }
+        }
+        string? defaultDownloadFolder;
         
     }
 }

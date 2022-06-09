@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Project.UI.MVVM.View.LibraryPages.MusicRecord"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Project.UI.MVVM.View.LibraryPages"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="500">
+    
+    <StackPanel Orientation="Horizontal">
+        <Button Name="PlayButton"
+                Style="{DynamicResource PlayButton}"
+                Width="{Binding ElementName=PlayButton, Path=ActualHeight}"
+                FontSize="15"
+                VerticalContentAlignment="Center"
+                Click="PlayButton_Click"/>
+        <Line X1="2.5" Y1="0" 
+              X2="2.5" Y2="40"
+              Width="5" Stroke="#FF454545" StrokeThickness="1"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Name="AddToFrontButton" 
+                    Style="{DynamicResource AddToFrontButton}"
+                    Width="{Binding ElementName=AddToFrontButton, Path=ActualHeight}"
+                    Click="AddToFrontButton_Click"
+                    Grid.Row="0" />
+            <Button Name="AddToBackButton"
+                    Style="{DynamicResource AddToBackButton}"
+                    Width="{Binding ElementName=AddToBackButton, Path=ActualHeight}"
+                    Click="AddToBackButton_Click"
+                    Grid.Row="1"/>
+        </Grid>
+        <Button Name="OpenPageButton"
+            HorizontalContentAlignment="Left"
+            Click="OpenPageButton_Click">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="Title"
+                        Text="{Binding Title}"
+                        Width="200"
+                        TextTrimming="CharacterEllipsis"/>
+                <TextBlock Name="Album"
+                        Text="{Binding Album}"
+                        Width="100"
+                        TextTrimming="CharacterEllipsis"/>
+                <WrapPanel Name="Artists" Width="200"
+                        MaxHeight="50">
+
+                </WrapPanel>
+            </StackPanel>
+        </Button>
+    </StackPanel>
+</UserControl>

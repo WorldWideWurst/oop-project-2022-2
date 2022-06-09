@@ -7,7 +7,8 @@
              xmlns:libPages="clr-namespace:Project.UI.MVVM.View.LibraryPages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto"
                   Background="#FF454545">
         <DockPanel>
             <TextBlock Text="Bibliothek" 
@@ -16,24 +17,33 @@
                        DockPanel.Dock="Top"/>
             <Grid DockPanel.Dock="Top"
                   HorizontalAlignment="Stretch"
-                  VerticalAlignment="Top">
+                  VerticalAlignment="Top"
+                  Height="30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Button Name="GoBackButton"
-                        Content="&lt;"
+                        Style="{DynamicResource BackMenuButton}"
+                        Width="30"
+                        Height="30"
                         Grid.Column="0"
+                        Margin="10,0,0,0"
                         Click="GoBackButton_Click"
-                        Visibility="Hidden"/>
-                <TextBox Name="SearchBar" Margin="10,0,10,0px"
+                        Visibility="Collapsed"/>
+                <TextBox Name="SearchBar" Margin="10,0,10,0"
+                         FontSize="16"
+                         VerticalContentAlignment="Center"
                          Grid.Column="1"
                          HorizontalAlignment="Stretch" TextChanged="SearchBar_TextChanged">
                 </TextBox>
                 <Button Name="OpenFiltersButton" 
+                        Style="{DynamicResource StandardButtonTheme}"
                         Content="Filtern"
-                        Grid.Column="2"/>
+                        Margin="0,0,10,0"
+                        Grid.Column="2"
+                        Width="60"/>
             </Grid>
             <ContentControl x:Name="LibraryContent">
                 <libPages:Main/>

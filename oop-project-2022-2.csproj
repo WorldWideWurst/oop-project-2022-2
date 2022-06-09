@@ -13,6 +13,8 @@
   <ItemGroup>
     <None Remove="Data\empty_musicdb_template.sqlite3.sql" />
     <None Remove="UI\Images\back.png" />
+    <None Remove="UI\Images\backmenu.png" />
+    <None Remove="UI\Images\backmenu_hover.png" />
     <None Remove="UI\Images\back_hover.png" />
     <None Remove="UI\Images\close.png" />
     <None Remove="UI\Images\close_hover.png" />
@@ -26,6 +28,8 @@
     <None Remove="UI\Images\heart_active.png" />
     <None Remove="UI\Images\heart_active_hover.png" />
     <None Remove="UI\Images\heart_hover.png" />
+    <None Remove="UI\Images\help.png" />
+    <None Remove="UI\Images\help_hover.png" />
     <None Remove="UI\Images\loop.png" />
     <None Remove="UI\Images\loop_hover.png" />
     <None Remove="UI\Images\loop_list.png" />
@@ -62,6 +66,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\backmenu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\backmenu_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\back_hover.png">
@@ -101,6 +111,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\heart_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\help.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\help_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\loop.png">

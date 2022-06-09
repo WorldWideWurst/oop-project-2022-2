@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.UI.MVVM.View.LibraryPages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,23 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für Song.xaml
     /// </summary>
-    public partial class MusicOverview : UserControl
+    public partial class MusicOverview : UserControl, ILibraryPage
     {
-        public MusicOverview()
+        public MusicOverview(Data.Music music)
         {
             InitializeComponent();
+
+            DataContext = music;
+        }
+
+        public void Overview()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Search(string queryString)
+        {
+            throw new NotImplementedException();
         }
     }
 }

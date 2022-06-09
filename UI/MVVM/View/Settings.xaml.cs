@@ -13,17 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Project.Data;
+using Project.Player;
 
 namespace Project.UI.MVVM.View
 {
     /// <summary>
     /// Interaktionslogik für Einstellungen.xaml
     /// </summary>
+    // globale Variable, um Tickspeed zu steuern
+    static class Tickspeed
+    {
+        public static double tickspeed;
+    }
+
     public partial class Settings : UserControl
     {
+
         public Settings()
         {
             InitializeComponent();
+            Tickspeed.tickspeed = 0.5;
         }
 
         private void ClearDatabaseButton_Click(object sender, RoutedEventArgs e)
@@ -43,7 +52,7 @@ namespace Project.UI.MVVM.View
 
         private void TickpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Tickspeed.tickspeed = TickpeedSlider.Value;
+                Tickspeed.tickspeed = TickpeedSlider.Value;
         }
     }
 }
