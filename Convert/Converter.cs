@@ -27,7 +27,7 @@ namespace Project.Convert
 
         public void Convert(string source, string target)
         {
-            static async Task RunConversion(Queue filesToConvert)
+           /* static async Task RunConversion(Queue filesToConvert)
             {
                 while (filesToConvert.TryDequeue(out FileInfo fileToConvert))
                 {
@@ -36,7 +36,7 @@ namespace Project.Convert
                     await Conversion.ToMp4(fileToConvert.FullName, outputFileName).Start();
                     await Console.Out.WriteLineAsync($"Finished converion file [{fileToConvert.Name}]");
                 }
-            }
+            }*/
 
         }
 
