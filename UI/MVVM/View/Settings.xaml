@@ -16,27 +16,47 @@
                        FontSize="40"
                        Margin="0,0,0,10"/>
             <Button x:Name="ClearDatabaseButton"
-                    Style="{StaticResource StandardButtonTheme}"
+                    Style="{StaticResource StandardRoundedButtonTheme}"
                     Click="ClearDatabaseButton_Click"
                     Content="Datenbank leeren"
                     Height="20"
-                    Margin="0,0,0,20"/>
+                    Margin="5,0,5,20"/>
             <Label Content="Intervall der Updates der Wiedergabeleiste in Sekunden" 
-                   Foreground="White"/>
-            <DockPanel>
+                   Foreground="White"
+                   Margin="5,0,0,0"/>
+            <DockPanel Margin="0,0,0,20">
                 <TextBox Text="{Binding ElementName=TickpeedSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                          DockPanel.Dock="Right"
                          TextAlignment="Right"
-                         Width="40"/>
+                         Width="40"
+                         Margin="5,0,5,0"/>
                 <Slider x:Name="TickpeedSlider"
                         HorizontalAlignment="Stretch"
                         ValueChanged="TickpeedSlider_ValueChanged"
+                        Margin="5,0,0,0"
                         Value="0.25"
                         Minimum="0.1"
                         Maximum="2"
                         TickFrequency="0.05"
                         IsSnapToTickEnabled="True"/>
             </DockPanel>
+            <Label Content="Beim Shufflen schon gespielte Songs ignorieren?"
+                   Foreground="White"
+                   Margin="5,0,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton Content="Yes" 
+                             Style="{DynamicResource StandardRadioButtonTheme}"
+                             GroupName="ShuffleExclude"
+                             IsChecked="True"
+                             Margin="0,0,30,0"
+                             Padding="20,10,20,10"
+                             Width="50" Height="30"/>
+                <RadioButton Content="No"
+                             Style="{DynamicResource StandardRadioButtonTheme}"
+                             GroupName="ShuffleExclude"
+                             Margin="50,0,0,0"
+                             Width="50" Height="30"/>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
     
