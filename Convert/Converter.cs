@@ -5,9 +5,14 @@ using System.Linq;
 using System.Text;
 using Xabe.FFmpeg;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Net;
+using System.ComponentModel;
+using System.Data;
 
 namespace Project.Convert
 {
+
     public interface IConverter
     {
 
@@ -23,21 +28,46 @@ namespace Project.Convert
 
         public static readonly Converter Instance = new();
 
-        
+
+        public void Convert(string[] args, string source, string target)
+        {
+            
+                //var source = args[0] + ".mp4";
+                //var target = args[1] + ".mp3";
+               
+            //Source Dateipfad
+                var inputFile = @"C:\Videos\Allein.mp4"; 
+            //Output Dateipfad
+                var outputFile = @"C:\Videos\output.mp3";
+                var mp3out = "";
+               
+                var ffmpegProcess = new Process();
+            //Einstellungen 
+                ffmpegProcess.StartInfo.UseShellExecute = false;
+                ffmpegProcess.StartInfo.RedirectStandardInput = true;
+                ffmpegProcess.StartInfo.RedirectStandardOutput = true;
+                ffmpegProcess.StartInfo.RedirectStandardError = true;
+                ffmpegProcess.StartInfo.CreateNoWindow = true;
+            //ffmpeg.exe Pfad
+                ffmpegProcess.StartInfo.FileName = @"C:\ffmpeg.exe";
+            //ffmpeq konvertierungs command
+                ffmpegProcess.StartInfo.Arguments = " -i " + inputFile + " -vn -f mp3 -ab 320k " + outputFile;  //source & target
+                ffmpegProcess.Start();
+                ffmpegProcess.StandardOutput.ReadToEnd();
+                mp3out = ffmpegProcess.StandardError.ReadToEnd();
+                ffmpegProcess.WaitForExit();
+            //ffmpeg schließen nach Prozessende
+                if (!ffmpegProcess.HasExited)
+                {
+                    ffmpegProcess.Kill();
+                }
+               // Console.WriteLine(mp3out);
+
+        }
 
         public void Convert(string source, string target)
         {
-           /* static async Task RunConversion(Queue filesToConvert)
-            {
-                while (filesToConvert.TryDequeue(out FileInfo fileToConvert))
-                {
-                    //Save file to the same location with changed extension
-                    string outputFileName = Path.ChangeExtension(fileToConvert.FullName, ".mp4");
-                    await Conversion.ToMp4(fileToConvert.FullName, outputFileName).Start();
-                    await Console.Out.WriteLineAsync($"Finished converion file [{fileToConvert.Name}]");
-                }
-            }*/
-
+            throw new NotImplementedException();
         }
 
         public bool SupportsConversion(string sourceExtension, string targetExtension)
