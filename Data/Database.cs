@@ -18,6 +18,8 @@ namespace Project.Data
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
         public static readonly string EmptyDBSQLLoc = "Data\\empty_musicdb_template.sqlite3.sql";
 
+        public static readonly Guid FavouritesPlaylistId = new Guid("{7330F811-F47F-41BC-A4FF-E792D073F41F}");
+
         internal void DeleteSource(Source source)
         {
             throw new NotImplementedException();
@@ -233,7 +235,7 @@ namespace Project.Data
             return (long)cmd.ExecuteScalar() > 0 ? new Artist(name) : null;
         }
 
-        public IEnumerable<Artist> GetArtist(string? query, Range? range)
+        public IEnumerable<Artist> GetArtist(string? query = null, Range? range = null)
         {
             using var cmd = new SQLiteCommand(connection);
             if(query == null)
