@@ -13,7 +13,7 @@ namespace Project.Data
     public class Database : IDisposable
     {
 
-        public const string Version = "0.2";
+        public const string Version = "0.3.2";
         
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
         public static readonly string EmptyDBSQLLoc = "Data\\empty_musicdb_template.sqlite3.sql";
@@ -116,10 +116,11 @@ namespace Project.Data
 
         internal void InsertMusic(Music music)
         {
-            using SQLiteCommand cmd = new("insert into music (id, title, album) values (@id, @title, @album)", connection);
+            using SQLiteCommand cmd = new("insert into music (id, title, album, first_registered) values (@id, @title, @album, @first_registered)", connection);
             cmd.Parameters.AddWithValue("@id", music.Id);
             cmd.Parameters.AddWithValue("@title", music.Title);
             cmd.Parameters.AddWithValue("@album", music.Album);
+            cmd.Parameters.AddWithValue("@first_registered", DateTime.Now.ToString("s"));
             cmd.Prepare();
             cmd.ExecuteNonQuery();
         }
