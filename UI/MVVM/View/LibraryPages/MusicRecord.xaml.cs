@@ -49,23 +49,23 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         private void OpenPageButton_Click(object sender, RoutedEventArgs e)
         {
-            var page = new MusicOverview((Data.Music)DataContext);
+            var page = new MusicOverview((Music)DataContext);
             ((MainWindow)Application.Current.MainWindow).LibraryTab.ShowLibraryPage(page);
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.PlayerInstance.OpenSong((Data.Music)DataContext);
+            Player.Player.Instance.PlayImmediately((Music)DataContext);
         }
 
         private void AddToFrontButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Vorne in die Warteschlange");
+            Player.Player.Instance.PrependMusic((Music)DataContext);
         }
 
         private void AddToBackButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Hinten in die Warteschlange");
+            Player.Player.Instance.AppendMusic((Music)DataContext);
         }
     }
 }

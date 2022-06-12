@@ -36,22 +36,29 @@ namespace Project.UI.MVVM.View
         //Audio-Player-Buttons, noch nicht implementiert
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Went to last song");
+            if (Player.Player.Instance.Position < new TimeSpan(0, 0, 5))
+            {
+                Player.Player.Instance.PlayPrevious();
+            }
+            else
+            {
+                Player.Player.Instance.RestartMusic();
+            }
         }
 
         private void SkipButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Skipped song");
+            Player.Player.Instance.PlayNext();
         }
 
         //ruft den Player auf und passt den Playbutton an das Ergebnis an
         private void PlayCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            PlayCheckbox.IsChecked = MainWindow.PlayerInstance.PlaySong() == true ? true : false;
+            Player.Player.Instance.Playing = true;
         }
         private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MainWindow.PlayerInstance.PauseSong();
+            Player.Player.Instance.Playing = false;
         }
 
         //noch nicht implementiert
@@ -106,13 +113,13 @@ namespace Project.UI.MVVM.View
         //Skippt zur stelle im Lied, die mit dem Slider-Wert übereinstimmt
         private void Changed_Slider_Value(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.PlayerInstance.ChangedSliderValue(SongSlider.Value);
+            Player.Player.Instance.ChangedSliderValue(SongSlider.Value / 100);
         }
 
         //Startet den MediaPlayer (nach Songauswahl) und legt die Ticklänge fest
         private void ChooseSong_Click(object sender, RoutedEventArgs e)
         {
-            PlayCheckbox.IsChecked = MainWindow.PlayerInstance.ChooseSource() == true ? true : false;
+            PlayCheckbox.IsChecked = Player.Player.Instance.ChooseSource() == true ? true : false;
         }
 
 
@@ -128,7 +135,7 @@ namespace Project.UI.MVVM.View
         private void VolumeSlider_ValueChanged(object sender, RoutedEventArgs e)
         {
             Slider VolumeSlider = VolumeButton.Template.FindName("ButtonSlider", VolumeButton) as Slider;
-            MainWindow.PlayerInstance.ChangeVolume(VolumeSlider.Value / 100);
+            Player.Player.Instance.ChangeVolume(VolumeSlider.Value / 100);
         }
 
 
@@ -138,10 +145,10 @@ namespace Project.UI.MVVM.View
             if (TimeSpan.FromSeconds(Tickspeed.tickspeed) != timer.Interval)
                 timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
 
-            lblStatus.Content = MainWindow.PlayerInstance.GetLabel();
+            lblStatus.Content = Player.Player.Instance.GetLabel();
 
             if (!SongSlider.IsMouseCaptureWithin)
-                SongSlider.Value = MainWindow.PlayerInstance.GetSlider();
+                SongSlider.Value = Player.Player.Instance.GetSlider() * 100;
         }
     }
 }

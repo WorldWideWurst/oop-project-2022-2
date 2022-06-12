@@ -35,9 +35,6 @@ namespace Project.UI
         MusicImporter musicImporterState = new();
         Settings settingsState = new();
 
-        //Instanziiert eine globale Instanz der Player-Klasse
-        public static readonly Player.Player PlayerInstance = new();
-
         public MainWindow()
         {
             InitializeComponent();

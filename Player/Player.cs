@@ -12,60 +12,108 @@ using System.Linq;
 
 namespace Project.Player
 {
-    public class Player : MediaPlayer
+    public class Player
     {
-        private MediaPlayer mediaPlayer = new MediaPlayer();
+
+        private MediaPlayer player = new MediaPlayer();
         private DispatcherTimer timer = new DispatcherTimer();
+
+
+        public static readonly Player Instance = new Player();
 
         public Player()
         {
             timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
             timer.Tick += timer_Tick;
             timer.Start();
-            
+            player.MediaOpened += Player_MediaOpened;
+            player.MediaEnded += Player_MediaEnded;
         }
 
-        public IList<Music>? CurrentList
+        public IList<Music> CurrentList { get; } = new List<Music>();
+
+        public int CurrentIndex
         {
-            get => _musicList;
+            get
+            {
+                return currentIndex;
+            }
             set
             {
-                if(value == null)
+
+                if (value < 0)
                 {
-                    // player stoppen
-                    _musicList = null;
-                    CurrentIndex = null;
-                } 
+                    value = 0;
+                }
+
+                if (value < CurrentList.Count)
+                {
+                    currentIndex = value;
+                    LoadMusic(CurrentMusic);
+                }
                 else
-                {   
-                    // neue liste wird abgespielt
-                    _musicList = value;
-                    CurrentIndex = 0;
+                {
+                    currentIndex = CurrentList.Count;
+                    Idle();
                 }
             }
         }
 
-        private IList<Music>? _musicList;
+        private int currentIndex;
 
-        public int? CurrentIndex { get; set; }
+        public bool IsIdle => CurrentIndex == CurrentList.Count;
 
-        public bool PlaySong()
+
+        public Music? CurrentMusic => IsIdle ? null : CurrentList[CurrentIndex];
+
+        public bool Playing
         {
-            bool status;
-            if (mediaPlayer.Source != null)
+            get => playing;
+            set
             {
-                mediaPlayer.Play();
-                status = true;
+                playing = value;
+                if(value)
+                {
+                    if(!IsIdle)
+                    {
+                        player.Play();
+                    }
+                }
+                else
+                {
+                    if(!IsIdle)
+                    {
+                        player.Pause();
+                    }
+                }
             }
-            else
-                status = false;
-            return status;
         }
 
-        public void PauseSong()
+        private bool playing = false;
+
+        public double PositionRatio => IsIdle ? 0.0 : player.NaturalDuration.HasTimeSpan ? player.Position / player.NaturalDuration.TimeSpan : 0;
+        public TimeSpan Position => IsIdle ? TimeSpan.Zero : player.Position;
+        public TimeSpan Duration => IsIdle ? TimeSpan.Zero : player.NaturalDuration.HasTimeSpan ? player.NaturalDuration.TimeSpan : player.Position;
+
+
+        public void Play() => Playing = true;
+        public void Pause() => Playing = false;
+
+        private void LoadMusic(Music music)
         {
-            mediaPlayer.Pause();
+            var source = music.Sources.First();
+            mediaLoaded = false;
+            player.Open(new Uri(source.Address));
         }
+
+        private void Idle()
+        {
+            player.Stop();
+        }
+
+
+        private bool mediaLoaded = false;
+
 
         public bool Shuffle
         {
@@ -74,14 +122,30 @@ namespace Project.Player
         }
 
 
+        public event EventHandler CurrentListChanged;
+
+
+
+
+
+
+
+
+
+
         public void PlayNext()
         {
-            throw new NotImplementedException();
+            CurrentIndex++;
         }
 
         public void PlayPrevious()
         {
-            throw new NotImplementedException();
+            CurrentIndex--;
+        }
+
+        public void RestartMusic()
+        {
+            player.Position = TimeSpan.Zero;
         }
 
         public bool ChooseSource()
@@ -91,7 +155,7 @@ namespace Project.Player
             openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                mediaPlayer.Open(new Uri(openFileDialog.FileName));
+                player.Open(new Uri(openFileDialog.FileName));
                 status = true;
             }
             else
@@ -99,34 +163,80 @@ namespace Project.Player
             return status;
         }
 
-        public void OpenList(Data.MusicList list)
+        public void AppendMusicList(Data.MusicList list)
         {
+            var wasIdle = IsIdle;
             foreach (var music in list.MusicEntries)
             {
-                //CurrentList.Add(music);   ?? wie komme ich an Music statt MusicInList
+                CurrentList.Add(music);
+            }
+            if(CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
+            if (player.Source == null)
+            {
+                LoadMusic(CurrentMusic);
             }
         }
 
-        public void OpenSong(Data.Music music)
+        public void PrependMusicList(MusicList list)
         {
-            var source = music.Sources.First();
-            System.Windows.MessageBox.Show(source.Address);
-            mediaPlayer.Open(new Uri(source.Address));
-            ((MainWindow)System.Windows.Application.Current.MainWindow).MediaControllerTab.PlayCheckbox.IsChecked = false;
+            var entries = list.MusicEntries.ToList();
+            int extra = CurrentIndex == CurrentList.Count ? 0 : 1;
+            for (int i = 0; i < entries.Count; i++)
+            {
+                CurrentList.Insert(CurrentIndex + i + extra, entries[i]);
+            }
+            if (CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
+            if (player.Source == null)
+            {
+                LoadMusic(CurrentMusic);
+            }
         }
 
+        public void PrependMusic(Music music)
+        {
+            int extra = CurrentIndex == CurrentList.Count ? 0 : 1;
+            CurrentList.Insert(CurrentIndex + extra, music);
+            if (CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
+            if (player.Source == null)
+            {
+                LoadMusic(CurrentMusic);
+            }
+        }
+
+        public void AppendMusic(Music music)
+        {
+            CurrentList.Add(music);
+            if (CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
+            if(player.Source == null)
+            {
+                LoadMusic(CurrentMusic);
+            }
+        }
+
+        public void PlayImmediately(Music music)
+        {
+            if(IsIdle)
+            {
+                AppendMusic(music);
+            }
+            else
+            {
+                PrependMusic(music);
+                PlayNext();
+            }
+        }
 
 
         public void ChangeVolume(double volume)
         {
-            mediaPlayer.Volume = volume;
+            player.Volume = volume;
         }
 
         public void ChangedSliderValue(double value)
         {
-            if (mediaPlayer.Source != null)
+            if (!IsIdle)
             {
-                mediaPlayer.Position = (value * mediaPlayer.NaturalDuration.TimeSpan) / 100;
+                player.Position = value * Duration;
             }
         }
 
@@ -134,30 +244,64 @@ namespace Project.Player
         //Event tritt bei jedem Tick des Timers auf
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (mediaPlayer.Source != null)
+            if (!IsIdle)
             {
                 if (timer.Interval != TimeSpan.FromSeconds(Tickspeed.tickspeed))
                     timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
             }
         }
 
-        public string GetLabel()
+        private void Player_MediaEnded(object? sender, EventArgs e)
         {
-            string text;
-            if (mediaPlayer.NaturalDuration.HasTimeSpan)
-                text = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
+            PlayNext();
+        }
+
+        private void Player_MediaOpened(object? sender, EventArgs e)
+        {
+            mediaLoaded = true;
+            if (Playing)
+            {
+                player.Play();
+            }
             else
-                text = "Es wurde kein Lied ausgewählt!";
-            return text;
+            {
+                player.Pause();
+            }
         }
 
-        public double GetSlider()
-        {
-            double value = 0;
+        public string GetLabel()
+         {
+             string text;
+             if(IsIdle)
+             {
+                 text = "Es wurde keine Musik ausgewählt!";
+             }
+             else if(!mediaLoaded)
+             {
+                 text = "Musik wird geladen...";
+             }
+             else
+             {
+                 string format;
+                 if(Duration >= new TimeSpan(1, 0, 0))
+                 {
+                     format = @"hh\:mm\:ss";
+                 }
+                 else if(Duration >= new TimeSpan(0, 1, 0))
+                 {
+                     format = @"mm\:ss";
+                 }
+                 else
+                 {
+                     format = @"'00:'ss\.fff";
+                 }
+                 var dur = Duration.ToString(format);
+                 var pos = Position.ToString(format);
+                 text = $"{pos} / {dur}";
+             }
+             return text;
+         }
 
-            if (mediaPlayer.NaturalDuration.HasTimeSpan)
-                value = mediaPlayer.Position / mediaPlayer.NaturalDuration.TimeSpan * 100;
-            return value;
-        }
+         public double GetSlider() => PositionRatio;
     }
 }
