@@ -13,7 +13,7 @@ namespace Project.Data
     public class Database : IDisposable
     {
 
-        public const string Version = "0.3.2";
+        public const string Version = "0.4";
         
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
         public static readonly string EmptyDBSQLLoc = "Data\\empty_musicdb_template.sqlite3.sql";
