@@ -109,6 +109,7 @@ namespace Project.Player
         private void Idle()
         {
             player.Stop();
+            mediaLoaded = false;
         }
 
 
@@ -224,6 +225,7 @@ namespace Project.Player
                 PrependMusic(music);
                 PlayNext();
             }
+            Playing = true;
         }
 
 
