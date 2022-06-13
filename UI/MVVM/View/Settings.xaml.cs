@@ -54,5 +54,25 @@ namespace Project.UI.MVVM.View
         {
                 Tickspeed.tickspeed = TickpeedSlider.Value;
         }
+
+        private void HelpButtonDeleteDB_MouseEnter(object sender, RoutedEventArgs e)
+        {
+            HelpDeleteDB.Visibility = Visibility.Visible;
+        }
+
+        private void HelpButtonDeleteDB_MouseLeave(object sender, RoutedEventArgs e)
+        {
+            HelpDeleteDB.Visibility = Visibility.Collapsed;
+        }
+
+        private void HelpButtonTickSpeed_MouseEnter(object sender, RoutedEventArgs e)
+        {
+            HelpTickSpeed.Visibility = Visibility.Visible;
+        }
+
+        private void HelpButtonTickSpeed_MouseLeave(object sender, RoutedEventArgs e)
+        {
+            HelpTickSpeed.Visibility = Visibility.Collapsed;
+        }
     }
 }

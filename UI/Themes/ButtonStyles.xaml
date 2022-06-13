@@ -198,6 +198,26 @@
         </Setter>
     </Style>
 
+    <!-- Help-Button -->
+    <Style x:Key="HelpButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="ButtonImage" Source="/UI/Images/help.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <ContentPresenter />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/UI/Images/help_hover.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Volume-Button mit integriertem Slider zur Lautstärke-Kontrolle -->
     <Style x:Key="VolumeButton" TargetType="Button">
         <Setter Property="Template">
