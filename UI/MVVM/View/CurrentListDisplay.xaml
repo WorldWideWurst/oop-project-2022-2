@@ -6,11 +6,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
-             mc:Ignorable="d" 
+             xmlns:data="clr-namespace:Project.Data" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="280">
-    <ScrollViewer>
-        <StackPanel>
-            <TextBlock Foreground="White" Background="Transparent" ><Run Text="Anderer Test&#xA;&lt;3&#xA;Katze&#xA;Neko&#xA;Gato&#xA;cat&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Letzter Test&#xA;Noch eine Katze :D&#xA;&lt;3&#xA;Das hier testet nur den Scroller"/></TextBlock>
-        </StackPanel>
-    </ScrollViewer>
+
+    <ListBox x:Name="List"
+              ItemsSource="{Binding}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <RadioButton GroupName="List">
+                    <TextBlock Text="{Binding Title}"
+                               TextWrapping="Wrap"/>
+                </RadioButton>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </UserControl>

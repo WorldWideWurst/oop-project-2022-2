@@ -9,28 +9,51 @@ using Project.UI;
 using System.Windows.Controls;
 using System.Windows;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Project.Player
 {
+
+    public enum PlayerState
+    {
+        Idle,
+        Loading,
+        Loaded
+    }
+
     public class Player
     {
 
-        private MediaPlayer player = new MediaPlayer();
-        private DispatcherTimer timer = new DispatcherTimer();
+        private readonly MediaPlayer player = new();
+        private readonly DispatcherTimer timer = new();
 
 
-        public static readonly Player Instance = new Player();
+        public static readonly Player Instance = new();
 
-        public Player()
+
+        private Player()
         {
-            timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
-            timer.Start();
+
             player.MediaOpened += Player_MediaOpened;
             player.MediaEnded += Player_MediaEnded;
+
+            CurrentList.CollectionChanged += (sender, e) =>
+            {
+                switch (e.Action)
+                {
+                    case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                        if(IsIdle)
+                        {
+                            LoadMusic((Music)e.NewItems[0]);
+                        }
+                        break;
+                }
+            };
         }
 
-        public IList<Music> CurrentList { get; } = new List<Music>();
+        public ObservableCollection<Music> CurrentList { get; } = new ObservableCollection<Music>();
 
         public int CurrentIndex
         {
@@ -61,7 +84,17 @@ namespace Project.Player
 
         private int currentIndex;
 
-        public bool IsIdle => CurrentIndex == CurrentList.Count;
+        public bool IsIdle => CurrentState == PlayerState.Idle;
+
+        public PlayerState CurrentState
+        {
+            get => currentState;
+            set
+            {
+                currentState = value;
+            }
+        }
+        PlayerState currentState = PlayerState.Idle;
 
 
         public Music? CurrentMusic => IsIdle ? null : CurrentList[CurrentIndex];
@@ -102,31 +135,37 @@ namespace Project.Player
         private void LoadMusic(Music music)
         {
             var source = music.Sources.First();
-            mediaLoaded = false;
+            CurrentState = PlayerState.Loading;
             player.Open(new Uri(source.Address));
+            timer.Start();
+            CurrentMusicChanged?.Invoke(music, CurrentIndex);
+            PlayerTickUpdate?.Invoke();
         }
 
         private void Idle()
         {
             player.Stop();
-            mediaLoaded = false;
+            timer.Stop();
+            CurrentState = PlayerState.Idle;
+            WentIdle?.Invoke();
+            PlayerTickUpdate?.Invoke();
         }
 
 
-        private bool mediaLoaded = false;
+        public bool Shuffle { get; set; }
 
 
-        public bool Shuffle
+        public TimeSpan Tickspeed
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => timer.Interval;
+            set => timer.Interval = value;
         }
 
 
-        public event EventHandler CurrentListChanged;
 
-
-
+        public event Action PlayerTickUpdate;
+        public event Action<Music, int> CurrentMusicChanged;
+        public event Action WentIdle;
 
 
 
@@ -152,7 +191,7 @@ namespace Project.Player
         public bool ChooseSource()
         {
             bool status;
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            OpenFileDialog openFileDialog = new();
             openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -164,54 +203,44 @@ namespace Project.Player
             return status;
         }
 
+        private static T[] reorderRandom<T>(T[] list)
+        {
+            var r = new Random();
+            return list.OrderBy(e => r.Next()).ToArray();
+        }
+
         public void AppendMusicList(Data.MusicList list)
         {
-            var wasIdle = IsIdle;
-            foreach (var music in list.MusicEntries)
+            var entries = list.MusicEntries.ToArray();
+            if(Shuffle) entries = reorderRandom(entries);
+            
+            foreach (var music in entries)
             {
                 CurrentList.Add(music);
-            }
-            if(CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
-            if (player.Source == null)
-            {
-                LoadMusic(CurrentMusic);
             }
         }
 
         public void PrependMusicList(MusicList list)
         {
-            var entries = list.MusicEntries.ToList();
-            int extra = CurrentIndex == CurrentList.Count ? 0 : 1;
-            for (int i = 0; i < entries.Count; i++)
+            var entries = list.MusicEntries.ToArray();
+            if(Shuffle) entries = reorderRandom(entries);
+            int offset = CurrentIndex + (IsIdle ? 0 : 1);
+
+            for (int i = 0; i < entries.Length; i++)
             {
-                CurrentList.Insert(CurrentIndex + i + extra, entries[i]);
-            }
-            if (CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
-            if (player.Source == null)
-            {
-                LoadMusic(CurrentMusic);
+                CurrentList.Insert(offset + i, entries[i]);
             }
         }
 
         public void PrependMusic(Music music)
         {
-            int extra = CurrentIndex == CurrentList.Count ? 0 : 1;
-            CurrentList.Insert(CurrentIndex + extra, music);
-            if (CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
-            if (player.Source == null)
-            {
-                LoadMusic(CurrentMusic);
-            }
+            int offset = CurrentIndex + (IsIdle ? 0 : 1);
+            CurrentList.Insert(offset, music);
         }
 
         public void AppendMusic(Music music)
         {
             CurrentList.Add(music);
-            if (CurrentListChanged != null) CurrentListChanged(this, EventArgs.Empty);
-            if(player.Source == null)
-            {
-                LoadMusic(CurrentMusic);
-            }
         }
 
         public void PlayImmediately(Music music)
@@ -239,6 +268,7 @@ namespace Project.Player
             if (!IsIdle)
             {
                 player.Position = value * Duration;
+                PlayerTickUpdate?.Invoke();
             }
         }
 
@@ -246,11 +276,7 @@ namespace Project.Player
         //Event tritt bei jedem Tick des Timers auf
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (!IsIdle)
-            {
-                if (timer.Interval != TimeSpan.FromSeconds(Tickspeed.tickspeed))
-                    timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
-            }
+            PlayerTickUpdate?.Invoke();
         }
 
         private void Player_MediaEnded(object? sender, EventArgs e)
@@ -260,7 +286,7 @@ namespace Project.Player
 
         private void Player_MediaOpened(object? sender, EventArgs e)
         {
-            mediaLoaded = true;
+            CurrentState = PlayerState.Loaded;
             if (Playing)
             {
                 player.Play();
@@ -269,16 +295,17 @@ namespace Project.Player
             {
                 player.Pause();
             }
+            PlayerTickUpdate?.Invoke();
         }
 
         public string GetLabel()
          {
              string text;
-             if(IsIdle)
+             if(CurrentState == PlayerState.Idle)
              {
                  text = "Es wurde keine Musik ausgewählt!";
              }
-             else if(!mediaLoaded)
+             else if(CurrentState == PlayerState.Loading)
              {
                  text = "Musik wird geladen...";
              }

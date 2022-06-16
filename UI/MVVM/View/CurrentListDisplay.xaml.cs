@@ -15,14 +15,21 @@ using System.Windows.Shapes;
 
 namespace Project.UI.MVVM.View
 {
-    /// <summary>
-    /// Interaktionslogik für CurrentListDisplay.xaml
-    /// </summary>
-    public partial class CurrentListDisplay : UserControl
+
+	/// <summary>
+	/// Interaktionslogik für CurrentListDisplay.xaml
+	/// </summary>
+	public partial class CurrentListDisplay : UserControl
     {
         public CurrentListDisplay()
         {
             InitializeComponent();
+            DataContext = Player.Player.Instance.CurrentList;
+
+            Player.Player.Instance.CurrentMusicChanged += (music, index) =>
+            {
+                MessageBox.Show("Scheiß Microsoft");
+            };
         }
     }
 }

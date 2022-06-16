@@ -34,7 +34,7 @@
                         HorizontalAlignment="Stretch"
                         ValueChanged="TickpeedSlider_ValueChanged"
                         Margin="5,0,0,0"
-                        Value="0.25"
+                        Value="1"
                         Minimum="0.1"
                         Maximum="2"
                         TickFrequency="0.05"

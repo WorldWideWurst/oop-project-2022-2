@@ -23,14 +23,11 @@ namespace Project.UI.MVVM.View
     // Verfasst von Janek Engel
     public partial class MediaController : UserControl
     {
-        private DispatcherTimer timer = new DispatcherTimer();
 
         public MediaController()
         {
             InitializeComponent();
-            timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
-            timer.Tick += timer_Tick;
-            timer.Start();
+            Player.Player.Instance.PlayerTickUpdate += timer_Tick;
         }
 
         //Audio-Player-Buttons, noch nicht implementiert
@@ -55,10 +52,13 @@ namespace Project.UI.MVVM.View
         private void PlayCheckbox_Checked(object sender, RoutedEventArgs e)
         {
             Player.Player.Instance.Playing = true;
+            PlayCheckbox.IsChecked = Player.Player.Instance.Playing;
+
         }
         private void PlayCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
             Player.Player.Instance.Playing = false;
+            PlayCheckbox.IsChecked = Player.Player.Instance.Playing;
         }
 
         //noch nicht implementiert
@@ -140,15 +140,15 @@ namespace Project.UI.MVVM.View
 
 
         //passiert bei jedem Tick 
-        public void timer_Tick(object sender, EventArgs e)
+        public void timer_Tick()
         {
-            if (TimeSpan.FromSeconds(Tickspeed.tickspeed) != timer.Interval)
-                timer.Interval = TimeSpan.FromSeconds(Tickspeed.tickspeed);
-
             lblStatus.Content = Player.Player.Instance.GetLabel();
 
             if (!SongSlider.IsMouseCaptureWithin)
                 SongSlider.Value = Player.Player.Instance.GetSlider() * 100;
+
+            PlayCheckbox.IsChecked = Player.Player.Instance.Playing;
+            RandomizeCheckbox.IsChecked = Player.Player.Instance.Shuffle;
         }
     }
 }

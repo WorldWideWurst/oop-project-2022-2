@@ -20,11 +20,6 @@ namespace Project.UI.MVVM.View
     /// <summary>
     /// Interaktionslogik für Einstellungen.xaml
     /// </summary>
-    // globale Variable, um Tickspeed zu steuern
-    static class Tickspeed
-    {
-        public static double tickspeed;
-    }
 
     public partial class Settings : UserControl
     {
@@ -32,7 +27,6 @@ namespace Project.UI.MVVM.View
         public Settings()
         {
             InitializeComponent();
-            Tickspeed.tickspeed = 0.5;
         }
 
         private void ClearDatabaseButton_Click(object sender, RoutedEventArgs e)
@@ -52,7 +46,7 @@ namespace Project.UI.MVVM.View
 
         private void TickpeedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-                Tickspeed.tickspeed = TickpeedSlider.Value;
+                Player.Player.Instance.Tickspeed = TimeSpan.FromSeconds(e.NewValue);
         }
     }
 }
