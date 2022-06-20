@@ -13,24 +13,23 @@ namespace Project.Data
     public class Database : IDisposable
     {
 
-        public const string Version = "0.4";
+        public const string Version = "0.4.1";
         
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
         public static readonly string EmptyDBSQLLoc = "Data\\empty_musicdb_template.sqlite3.sql";
 
         public static readonly Guid FavouritesPlaylistId = new Guid("{7330F811-F47F-41BC-A4FF-E792D073F41F}");
 
-        internal void DeleteSource(Source source)
-        {
-            throw new NotImplementedException();
-        }
+
+
+
 
         public static readonly Database Instance = new();
 
 
         private SQLiteConnection connection;
 
-        public Database(string path)
+        private Database(string path)
         {
             // Datenbank kreieren falls nicht existent
             if(!File.Exists(path))
@@ -130,7 +129,7 @@ namespace Project.Data
 
         internal void SaveMusic(Music music)
         {
-            using SQLiteCommand cmd = new SQLiteCommand("update music set title = @title, album = @album where id = @id", connection);
+            using var cmd = new SQLiteCommand("update music set title = @title, album = @album where id = @id", connection);
             cmd.Parameters.AddWithValue("@id", music.Id.ToByteArray());
             cmd.Parameters.AddWithValue("@title", music.Title);
             cmd.Parameters.AddWithValue("@album", music.Album);

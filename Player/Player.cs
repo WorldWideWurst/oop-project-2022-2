@@ -251,8 +251,15 @@ namespace Project.Player
             }
             else
             {
-                PrependMusic(music);
-                PlayNext();
+                if(CurrentMusic.Id == music.Id)
+                {
+                    RestartMusic();
+                }
+                else
+                {
+                    PrependMusic(music);
+                    PlayNext();
+                }
             }
             Playing = true;
         }

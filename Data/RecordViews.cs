@@ -21,6 +21,7 @@ namespace Project.Data
         public string Address { get; }
         public SourceType SourceType { get; set; } = SourceType.Audio;
         public Guid MusicId { get; set; }
+        public ulong Checksum { get; set; }
 
 
         public Source(string address, Guid musicId, SourceType sourceType = SourceType.Audio) { 
@@ -28,6 +29,7 @@ namespace Project.Data
             SourceType = sourceType;
             MusicId = musicId;
         }
+
 
         public void Delete()
         {
@@ -61,15 +63,48 @@ namespace Project.Data
         public void Save() { }
     }
 
+    public enum MusicType
+    {
+        Song,
+        Audiobook,
+        Sound,
+        Mixtape,
+        BackgroundMusic,
+    }
+
     public class Music : IRecordView
     {
         public Guid Id { get; }
         public string? Title { get; set; }
         public string? Album { get; set; }
+        public Guid? AlbumId { get; set; }
+        public DateTime? LastPlayed { get; set; }
+        public DateTime FirstRegistered { get; set; }
+        public string? Art { get; set; }
+        public TimeSpan? Duration { get; set; }
+        public MusicType? Type { get; set; }
+        public uint PlayCount { get; set; } = 0;
 
         public IEnumerable<MusicByArtist> Artists => Database.Instance.GetMusicArtists(this);
-
         public IEnumerable<Source> Sources => Database.Instance.GetMusicSources(this);
+        public bool IsCurrentlyPlaying
+        {
+            get => Player.Player.Instance.CurrentMusic?.Id == Id;
+            set
+            {
+                Player.Player.Instance.PlayImmediately(this);
+            }
+        }
+
+        public Music(Guid id)
+        {
+            Id = id;
+        }
+
+        public Music()
+        {
+            Id = Guid.NewGuid();
+        }
 
         public Music(Guid id, string? title, string? album) {
             Id = id;
@@ -101,6 +136,27 @@ namespace Project.Data
         public void Save() => Database.Instance.SaveArtist(this);
     }
 
+    public class Art : IRecordView
+    {
+        public string Address { get; }
+        public ulong Checksum { get; set; }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public enum MusicListType
     {
         Album,
@@ -119,6 +175,8 @@ namespace Project.Data
     {
         public Guid MusicId { get; }
         public Guid ListId { get; }
+        public int? Position { get; set; } = null;
+        public DateTime? DateAdded { get; set; } = null;
 
         public MusicInList(Guid musicId, Guid listId)
         {
@@ -141,11 +199,21 @@ namespace Project.Data
         public string? Owner { get; set; }
         public MusicListType Type { get; set; }
         public DateOnly? PublishDate { get; set; }
+        public string? Art { get; set; }
+        public bool IsDeletable { get; }
+
         public IEnumerable<MusicInList> Entries => Database.Instance.GetMusicInList(this);
         public IEnumerable<Music> MusicEntries => Database.Instance.GetMusicInListDirect(this);
 
         public string? CoverArtSource => "/UI/Images/heart_active.png";
         IEnumerable<Music> IMusicList.Entries => MusicEntries;
+
+        public MusicList(Guid id)
+        {
+            Id = id;
+        }
+
+        public MusicList() : this(Guid.NewGuid()) {  }
 
         public MusicList(Guid id, string name, string? owner, DateOnly? publishDate, MusicListType type = MusicListType.Undefined)
         {
