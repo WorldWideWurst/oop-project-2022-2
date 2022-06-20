@@ -65,6 +65,7 @@ namespace Project.Convert
 
         }
 
+
         public void Convert(string source, string target)
         {
             throw new NotImplementedException();
@@ -76,11 +77,17 @@ namespace Project.Convert
         }
     }
 
+    /// <summary>
+    /// Wenn das zu mp3 zu konvertierende Format nicht unterstützt wird.
+    /// </summary>
     public class UnsupportedFileConversion : Exception
     {
 
     }
 
+    /// <summary>
+    /// Wenn bei der Konvertierung irgendwas schief lief.
+    /// </summary>
     public class ConversionException : Exception
     {
 
