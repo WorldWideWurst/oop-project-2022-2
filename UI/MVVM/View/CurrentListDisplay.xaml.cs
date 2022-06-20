@@ -28,7 +28,7 @@ namespace Project.UI.MVVM.View
 
             Player.Player.Instance.CurrentMusicChanged += (music, index) =>
             {
-                MessageBox.Show("Scheiß Microsoft");
+                List.Items.Refresh();
             };
         }
     }
