@@ -72,7 +72,7 @@ namespace Project.Player
                 if (value < CurrentList.Count)
                 {
                     currentIndex = value;
-                    LoadMusic(CurrentMusic);
+                    LoadMusic(CurrentList[value]);
                 }
                 else
                 {
@@ -89,10 +89,7 @@ namespace Project.Player
         public PlayerState CurrentState
         {
             get => currentState;
-            set
-            {
-                currentState = value;
-            }
+            set => currentState = value;
         }
         PlayerState currentState = PlayerState.Idle;
 
