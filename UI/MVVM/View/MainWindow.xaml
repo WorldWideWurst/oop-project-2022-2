@@ -132,7 +132,7 @@
                 <RadioButton x:Name="EinstellungenButton"
                              GroupName="Menu"
                              Click="EinstellungenButton_Click"
-                             Content="Einstellungen"
+                             Content="Einstellungen und Hilfe"
                              Style="{StaticResource MenuButtonTheme}" Height="40" />
             </StackPanel>
             <views:SubMenu Margin="0,200,0,0" />

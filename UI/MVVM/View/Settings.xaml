@@ -11,39 +11,43 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <Grid>
-            <TextBlock Text="Einstellungen" 
+            <StackPanel>
+                <TextBlock Text="Einstellungen und Hilfe" 
                        Foreground="White" 
                        FontSize="40"
                        Margin="0,0,0,10"/>
-            <Grid VerticalAlignment="Top"
-                  Margin="5,70,5,0"
-                  Height="30">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="ClearDatabaseButton"
-                        Style="{StaticResource StandardRoundedButtonTheme}"
-                        Click="ClearDatabaseButton_Click"
-                        Content="Datenbank leeren"
-                        Height="20"
-                        Grid.Column="0"/>
-                <Button x:Name="HelpDeleteDBButton"
-                        MouseEnter="HelpButtonDeleteDB_MouseEnter"
-                        MouseLeave="HelpButtonDeleteDB_MouseLeave" 
-                        Style="{StaticResource HelpButton}"
-                        Height="30" Width="30"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Grid.Column="1"
-                        Margin="5,0,0,0"/>
-            </Grid>
-            <StackPanel Margin="0,110,0,0">
-                <Grid Margin="5,0,5,0">
+                <Grid VerticalAlignment="Top"
+                      Margin="5,0,5,20"
+                      Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="ClearDatabaseButton"
+                            Style="{StaticResource StandardRoundedButtonTheme}"
+                            Click="ClearDatabaseButton_Click"
+                            Content="Datenbank leeren"
+                            Height="20"
+                            Grid.Column="0"/>
+                    <Button x:Name="HelpDeleteDBButton"
+                            MouseEnter="HelpButtonDeleteDB_MouseEnter"
+                            MouseLeave="HelpButtonDeleteDB_MouseLeave" 
+                            Style="{StaticResource HelpButton}"
+                            Height="30" Width="30"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Grid.Column="1"
+                            Margin="5,0,0,0"/>
+                </Grid>
+                <Grid Margin="5,0,5,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <Label Content="Intervall der Updates der Wiedergabeleiste in Sekunden" 
                            Foreground="White"
                            Grid.Column="0"/>
@@ -55,14 +59,14 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left"
                             Grid.Column="1"/>
-                </Grid>
-                <DockPanel Margin="0,0,0,20">
-                    <TextBox Text="{Binding ElementName=TickpeedSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                    <DockPanel Grid.Row="1"
+                               Grid.ColumnSpan="2">
+                        <TextBox Text="{Binding ElementName=TickpeedSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                              DockPanel.Dock="Right"
                              TextAlignment="Right"
                              Width="40"
                              Margin="5,0,5,0"/>
-                    <Slider x:Name="TickpeedSlider"
+                        <Slider x:Name="TickpeedSlider"
                             HorizontalAlignment="Stretch"
                             ValueChanged="TickpeedSlider_ValueChanged"
                             Margin="5,0,0,0"
@@ -71,24 +75,33 @@
                             Maximum="2"
                             TickFrequency="0.05"
                             IsSnapToTickEnabled="True"/>
-                </DockPanel>
-                <Label Content="Beim Shufflen schon gespielte Songs ignorieren?"
+                    </DockPanel>
+                </Grid>
+                <Grid Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Label Content="Beim Shufflen schon gespielte Songs ignorieren?"
                        Foreground="White"
                        Margin="5,0,0,0"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <RadioButton Content="Yes" 
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center"
+                                Grid.Row="1">
+                        <RadioButton Content="Yes" 
                                  Style="{DynamicResource StandardRadioButtonTheme}"
                                  GroupName="ShuffleExclude"
                                  IsChecked="True"
                                  Margin="0,0,30,0"
                                  Padding="20,10,20,10"
                                  Width="50" Height="30"/>
-                    <RadioButton Content="No"
+                        <RadioButton Content="No"
                                  Style="{DynamicResource StandardRadioButtonTheme}"
                                  GroupName="ShuffleExclude"
                                  Margin="50,0,0,0"
                                  Width="50" Height="30"/>
-                </StackPanel>
+                    </StackPanel>
+                </Grid>
             </StackPanel>
             <Grid>
                 <Grid.RowDefinitions>
@@ -98,7 +111,7 @@
                            Visibility="Collapsed"
                            MouseEnter="HelpButtonDeleteDB_MouseEnter"
                            MouseLeave="HelpButtonDeleteDB_MouseLeave" 
-                           Margin="5,100,5,0"
+                           Margin="5,90,5,0"
                            Padding="10"
                            Grid.Row="1"
                            Background="#FF323232"
