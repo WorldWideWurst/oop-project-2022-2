@@ -116,13 +116,6 @@ namespace Project.UI.MVVM.View
             Player.Player.Instance.ChangedSliderValue(SongSlider.Value / 100);
         }
 
-        //Startet den MediaPlayer (nach Songauswahl) und legt die Ticklänge fest
-        private void ChooseSong_Click(object sender, RoutedEventArgs e)
-        {
-            PlayCheckbox.IsChecked = Player.Player.Instance.ChooseSource() == true ? true : false;
-        }
-
-
         //Fügt dem Volume-Slider das ValueChanged-Event hinzu sobald das erste mal über den Button gehover wird
         private void VolumeButton_MouseEnter(object sender, MouseEventArgs e)
         {

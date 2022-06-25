@@ -8,23 +8,29 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="800">
-    
+
     <Grid   x:Name="BottomBar"
             Background="#FF323232" 
             Height="100" 
             VerticalAlignment="Bottom" 
             Panel.ZIndex="900">
-        
-        <!-- nur temporär zu Testzwecken -->
-        <Button x:Name="ChooseSong"
-                Click="ChooseSong_Click"
-                Content="Choose Song (Temporär)" 
-                Margin="50,30,0,30" 
-                HorizontalAlignment="Left" />
-        
+
+        <Grid HorizontalAlignment="Left"
+              VerticalAlignment="Center"
+              Margin="25,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Image x:Name="Thumbnail" />
+        </Grid>
+
         <!-- eigentlicher Audio-Player -->
         <Grid   x:Name="PlayerInterface"
-                Background="Transparent" 
+                Background="#FF323232" 
                 Height="100" 
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
