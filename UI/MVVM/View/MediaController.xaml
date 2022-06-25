@@ -23,9 +23,15 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="15" />
+                <RowDefinition Height="10" />
             </Grid.RowDefinitions>
-            <Image x:Name="Thumbnail" />
+            <Image x:Name="Thumbnail" 
+                   Grid.RowSpan="3"/>
+            <TextBlock />
+            <TextBlock />
+            <TextBlock />
         </Grid>
 
         <!-- eigentlicher Audio-Player -->

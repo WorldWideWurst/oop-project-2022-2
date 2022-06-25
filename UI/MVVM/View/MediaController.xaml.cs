@@ -18,6 +18,8 @@ using Project.UI;
 using Project.UI.MVVM.View;
 using Project.Player;
 
+
+
 namespace Project.UI.MVVM.View
 {
     // Verfasst von Janek Engel
@@ -28,6 +30,8 @@ namespace Project.UI.MVVM.View
         {
             InitializeComponent();
             Player.Player.Instance.PlayerTickUpdate += timer_Tick;
+            Player.Player.Instance.CurrentMusicChanged += Player_MusicChanged;
+            Player.Player.Instance.WentIdle += Player_WentIdle;
         }
 
         //Audio-Player-Buttons, noch nicht implementiert
@@ -142,6 +146,19 @@ namespace Project.UI.MVVM.View
 
             PlayCheckbox.IsChecked = Player.Player.Instance.Playing;
             RandomizeCheckbox.IsChecked = Player.Player.Instance.Shuffle;
+        }
+
+        //passiert wenn der Song geändert wird 
+        public void Player_MusicChanged(Data.Music Lied, int Index)
+        {
+            if (Player.Player.Instance.CurrentMusic.Art != null) Thumbnail.Source = new BitmapImage(new Uri(Player.Player.Instance.CurrentMusic.Art));
+
+        }
+
+        //passiert wenn der Player Idle geht
+        public void Player_WentIdle()
+        {
+
         }
     }
 }
