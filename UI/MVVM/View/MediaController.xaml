@@ -17,21 +17,35 @@
 
         <Grid HorizontalAlignment="Left"
               VerticalAlignment="Center"
-              Margin="25,0,0,0">
+              Margin="25,0,0,0"
+              MaxWidth="500">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
                 <RowDefinition Height="25" />
-                <RowDefinition Height="15" />
-                <RowDefinition Height="10" />
+                <RowDefinition Height="20" />
             </Grid.RowDefinitions>
-            <Image x:Name="Thumbnail" 
+            <Image x:Name="Thumbnail"
+                   Height="50"
                    Grid.RowSpan="3"/>
-            <TextBlock />
-            <TextBlock />
-            <TextBlock />
+            <TextBlock x:Name="SongNameText"
+                       Grid.Row="0"
+                       Grid.Column="1" 
+                       Foreground="White"
+                       FontSize="20"/>
+            <TextBlock x:Name="ArtistText"
+                       Grid.Row="1"
+                       Grid.Column="1" 
+                       Foreground="White"
+                       FontSize="15"/>
+            <TextBlock x:Name="AlbumText"
+                       Grid.Row="2"
+                       Grid.Column="1" 
+                       Foreground="White"
+                       FontSize="10"/>
         </Grid>
 
         <!-- eigentlicher Audio-Player -->

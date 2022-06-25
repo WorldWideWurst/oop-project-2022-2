@@ -152,13 +152,19 @@ namespace Project.UI.MVVM.View
         public void Player_MusicChanged(Data.Music Lied, int Index)
         {
             if (Player.Player.Instance.CurrentMusic.Art != null) Thumbnail.Source = new BitmapImage(new Uri(Player.Player.Instance.CurrentMusic.Art));
-
+            if (Player.Player.Instance.CurrentMusic.Title != null) SongNameText.Text = Player.Player.Instance.CurrentMusic.Title;
+            else if (Player.Player.Instance.CurrentMusic.Sources.First() != null) SongNameText.Text = Player.Player.Instance.CurrentMusic.Sources.First().Address.Split("\\").Last().Split(".").First();
+            if (Player.Player.Instance.CurrentMusic.Artists != null) ArtistText.Text = Player.Player.Instance.CurrentMusic.Artists.ToString();
+            if (Player.Player.Instance.CurrentMusic.Album != null) ArtistText.Text = Player.Player.Instance.CurrentMusic.Album;
         }
 
         //passiert wenn der Player Idle geht
         public void Player_WentIdle()
         {
-
+            Thumbnail.Source = null;
+            SongNameText.Text = null;
+            ArtistText.Text = null;
+            ArtistText.Text = null;
         }
     }
 }
