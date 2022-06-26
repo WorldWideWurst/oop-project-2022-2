@@ -9,15 +9,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Padding="10,0,10,0">
         <Grid>
             <StackPanel>
-                <TextBlock Text="Einstellungen und Hilfe" 
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="55" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Einstellungen und Hilfe" 
                        Foreground="White" 
-                       FontSize="40"
-                       Margin="0,0,0,10"/>
+                       FontSize="40"/>
+                    <Button x:Name="HelpButton"
+                            MouseEnter="HelpButton_MouseEnter"
+                            MouseLeave="HelpButton_MouseLeave" 
+                            Style="{StaticResource HelpButton}"
+                            Height="55" Width="55"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Grid.Column="1"
+                            Margin="0,0,0,0"/>
+                </Grid>
                 <Grid VerticalAlignment="Top"
-                      Margin="5,0,5,20"
+                      Margin="0,0,0,20"
                       Height="30">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -39,7 +56,7 @@
                             Grid.Column="1"
                             Margin="5,0,0,0"/>
                 </Grid>
-                <Grid Margin="5,0,5,20">
+                <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
@@ -82,9 +99,8 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Content="Beim Shufflen schon gespielte Songs ignorieren?"
-                       Foreground="White"
-                       Margin="5,0,0,0"/>
+                    <Label Content="Beim Shufflen schon gespielte Songs ignorieren? (dieses feature funktioniert noch nicht)"
+                       Foreground="White"/>
                     <StackPanel Orientation="Horizontal" 
                                 HorizontalAlignment="Center"
                                 Grid.Row="1">
@@ -93,7 +109,6 @@
                                  GroupName="ShuffleExclude"
                                  IsChecked="True"
                                  Margin="0,0,30,0"
-                                 Padding="20,10,20,10"
                                  Width="50" Height="30"/>
                         <RadioButton Content="No"
                                  Style="{DynamicResource StandardRadioButtonTheme}"
@@ -103,6 +118,40 @@
                     </StackPanel>
                 </Grid>
             </StackPanel>
+
+            <!-- Dynamisch eingeblendete Hilfs-Menüs -->
+            <Grid   VerticalAlignment="Stretch"
+                    x:Name="Help"
+                    Visibility="Collapsed"
+                    MouseEnter="HelpButton_MouseEnter"
+                    MouseLeave="HelpButton_MouseLeave"
+                    Margin="0,55,0,0"
+                    Background="#FF454545">
+                <StackPanel Margin="0,10,0,10">
+                    <TextBlock Text="Allgemeine Erklärung der Anwendung"
+                               FontSize="18"
+                               TextAlignment="Center"
+                               Foreground="White"
+                               Margin="0,0,0,10"/>
+                    <TextBlock Text="Diese Anwendung dient als Musik-Player, gleichzeitig aber auch zur Verwaltung der Musik. Außerdem ermöglicht sie dem Nutzer, aus dem Internet Musik herunterzuladen. Sie befindet sich noch in der Entwicklung."
+                               FontSize="15"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Foreground="White"
+                               Margin="0,0,0,25"/>
+                    <TextBlock Text="Bla Bla"
+                               FontSize="18"
+                               TextAlignment="Center"
+                               Foreground="White"
+                               Margin="0,0,0,10"/>
+                    <TextBlock Text="Bla Blub Katze Katze haha"
+                               FontSize="15"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Foreground="White"
+                               Margin="0,0,0,25"/>
+                </StackPanel>
+            </Grid>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -111,9 +160,8 @@
                            Visibility="Collapsed"
                            MouseEnter="HelpButtonDeleteDB_MouseEnter"
                            MouseLeave="HelpButtonDeleteDB_MouseLeave" 
-                           Margin="5,90,5,0"
+                           Margin="0,90,0,0"
                            Padding="10"
-                           Grid.Row="1"
                            Background="#FF323232"
                            Text="Dieser Knopf ermöglicht es dir, die Datenbank zu leeren. Damit werden nicht die Lieder von deiner Festplatte gelöscht, sondern nur deren Eintrag in diesem Programm. Falls du sie dann erneut im Programm haben möchtest, musst du sie über den Reiter &quot;Musik importieren&quot; erneut importieren!"
                            FontSize="15"
@@ -129,9 +177,8 @@
                            Visibility="Collapsed"
                            MouseEnter="HelpButtonTickSpeed_MouseEnter"
                            MouseLeave="HelpButtonTickSpeed_MouseLeave" 
-                           Margin="5,140,5,0"
+                           Margin="0,140,0,0"
                            Padding="10"
-                           Grid.Row="1"
                            Background="#FF323232"
                            Text="Dieser Slider ermöglicht es dir, den Tickspeed des MediaPlayer zu regulieren. Das beinhaltet die Update-Rate des Sliders und der Zeit-Daten in der unteren Leiste."
                            FontSize="15"

@@ -8,7 +8,9 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+                  VerticalScrollBarVisibility="Auto"
+                  Padding="10,0,10,0">
         <Grid>
             <TextBlock Text="Startseite" Foreground="White" FontSize="40"/>
 

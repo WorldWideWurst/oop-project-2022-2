@@ -11,10 +11,13 @@
              d:DesignHeight="450" d:DesignWidth="280">
 
     <ListBox x:Name="List"
-              ItemsSource="{Binding}">
+             ItemsSource="{Binding}"
+             Background="#ff323232"
+             BorderThickness="0">
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <RadioButton GroupName="List">
+                <RadioButton GroupName="List"
+                             Style="{DynamicResource StandardRadioButtonTheme}">
                     <TextBlock Text="{Binding Title}"
                                TextWrapping="Wrap"/>
                 </RadioButton>
