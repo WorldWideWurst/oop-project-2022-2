@@ -63,12 +63,10 @@ namespace Project.Data
 
         public static readonly Guid FavouritesPlaylistId = new Guid("{7330F811-F47F-41BC-A4FF-E792D073F41F}");
 
-
-
-
-
         public static readonly Database Instance = new();
 
+
+        public event Action<Type, object?> DatabaseChanged;
 
         private SQLiteConnection connection;
 
@@ -102,6 +100,7 @@ namespace Project.Data
 
         public string? SQLiteVersion => new SQLiteCommand("SELECT SQLITE_VERSION()", connection)?.ExecuteScalar().ToString();
 
+        #region ConversionTables
 
         static ConversionTable<Music> MusicConversionTable = new()
         {
@@ -245,6 +244,8 @@ namespace Project.Data
             return query.ToString();
         }
 
+        #endregion
+
         #region RecordView from Parser
 
         static Music parseMusic(DbDataReader reader)
@@ -329,6 +330,8 @@ namespace Project.Data
 
         #endregion
 
+        #region Getters, Queries, Inserters, Savers, Deleters
+
         public Music? GetMusic(Guid id)
         {
             using var cmd = new SQLiteCommand("select * from music where id = @id", connection);
@@ -373,6 +376,7 @@ namespace Project.Data
             AddAllParams(MusicConversionTable, cmd, music);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+            DatabaseChanged?.Invoke(typeof(Music), music.Id);
         }
 
 
@@ -382,6 +386,8 @@ namespace Project.Data
             AddAllParams(MusicConversionTable, cmd, music);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(Music), music.Id);
         }
 
         internal IEnumerable<MusicByArtist> GetMusicArtists(Music music)
@@ -439,6 +445,8 @@ namespace Project.Data
             AddAllParams(SourceConversionTable, cmd, source);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(Source), source.Address);
         }
 
         internal void SaveSource(Source source)
@@ -447,6 +455,8 @@ namespace Project.Data
             AddAllParams(SourceConversionTable, cmd, source);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(Source), source.Address);
         }
 
 
@@ -483,11 +493,13 @@ namespace Project.Data
             AddAllParams(ArtistConversionTable, cmd, artist);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(Artist), artist.Name);
         }
 
         internal void SaveArtist(Artist artist)
         {
-
+            DatabaseChanged?.Invoke(typeof(Artist), artist.Name);
         }
 
 
@@ -497,6 +509,8 @@ namespace Project.Data
             AddAllParams(MusicByArtistConversionTable, cmd, rel);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(MusicByArtist), (rel.MusicId, rel.ArtistId));
         }
 
         internal void DeleteMusicByArtist(MusicByArtist rel)
@@ -505,6 +519,8 @@ namespace Project.Data
             AddPrimaryParams(MusicByArtistConversionTable, cmd, rel);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(MusicByArtist), (rel.MusicId, rel.ArtistId));
         }
 
 
@@ -543,6 +559,8 @@ namespace Project.Data
             AddAllParams(MusicListConversionTable, cmd, musicList);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(MusicList), musicList.Id);
         }
 
         internal void SaveMusicList(MusicList musicList)
@@ -551,6 +569,8 @@ namespace Project.Data
             AddAllParams(MusicListConversionTable, cmd, musicList);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(MusicList), musicList.Id);
         }
 
         internal void DeleteMusicList(MusicList musicList)
@@ -559,6 +579,8 @@ namespace Project.Data
             cmd.Parameters.AddWithValue("@id", musicList.Id);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(MusicList), musicList.Id);
         }
 
         internal IEnumerable<MusicInList> GetMusicInList(MusicList musicList)
@@ -576,6 +598,8 @@ namespace Project.Data
             AddAllParams(MusicInListConversionTable, cmd, musicInList);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(MusicInList), (musicInList.MusicId, musicInList.ListId));
         }
 
         internal void DeleteMusicInList(MusicInList musicInList)
@@ -584,6 +608,8 @@ namespace Project.Data
             AddPrimaryParams(MusicInListConversionTable, cmd, musicInList);
             cmd.Prepare();
             cmd.ExecuteNonQuery();
+
+            DatabaseChanged?.Invoke(typeof(MusicInList), (musicInList.MusicId, musicInList.ListId));
         }
 
         internal IEnumerable<Music> GetMusicInListDirect(MusicList musicList)
@@ -643,7 +669,8 @@ namespace Project.Data
                 new Source(meta.File)
                 {
                     MusicId = music.Id,
-                }.Insert();
+                }
+                .Insert();
             }
 
             return music;
@@ -672,7 +699,17 @@ namespace Project.Data
                 using var cmd = new SQLiteCommand($"delete from {table}", connection);
                 cmd.ExecuteNonQuery();
             }
+
+            DatabaseChanged?.Invoke(typeof(Source), null);
+            DatabaseChanged?.Invoke(typeof(Music), null);
+            DatabaseChanged?.Invoke(typeof(MusicInList), null);
+            DatabaseChanged?.Invoke(typeof(MusicList), null);
+            DatabaseChanged?.Invoke(typeof(Art), null);
+            DatabaseChanged?.Invoke(typeof(Artist), null);
+            DatabaseChanged?.Invoke(typeof(MusicByArtist), null);
         }
+
+        #endregion
 
         public void Dispose()
         {
