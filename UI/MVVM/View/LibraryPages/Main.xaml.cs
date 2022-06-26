@@ -24,12 +24,17 @@ namespace Project.UI.MVVM.View.LibraryPages
         {
             InitializeComponent();
             RepopulatePlaylists();
+            Data.Database.Instance.DatabaseChanged += (type, _) => 
+            { 
+                if (type == typeof(Data.MusicInList) || type == typeof(Data.MusicList)) 
+                    Application.Current.Dispatcher.Invoke(() => RepopulatePlaylists()); 
+            };
         }
 
 
         void RepopulatePlaylists()
         {
-            Container.Children.Clear();
+            Items.Items.Clear();
 
             var virtualPlaylists = new Data.IMusicList[]
             {
@@ -44,7 +49,7 @@ namespace Project.UI.MVVM.View.LibraryPages
                 {
                     Margin = new Thickness(0)
                 };
-                Container.Children.Add(ctrl);
+                Items.Items.Add(ctrl);
             }
         }
         public void Search(string queryString)

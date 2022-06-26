@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View.LibraryPages"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <WrapPanel Name="Container">
-
-    </WrapPanel>
+    <ListView Name="Items">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ListView>
 </UserControl>
