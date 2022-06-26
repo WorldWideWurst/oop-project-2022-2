@@ -49,6 +49,16 @@ namespace Project.UI.MVVM.View
                 Player.Player.Instance.Tickspeed = TimeSpan.FromSeconds(e.NewValue);
         }
 
+        private void HelpButton_MouseEnter(object sender, RoutedEventArgs e)
+        {
+            Help.Visibility = Visibility.Visible;
+        }
+
+        private void HelpButton_MouseLeave(object sender, RoutedEventArgs e)
+        {
+            Help.Visibility = Visibility.Collapsed;
+        }
+
         private void HelpButtonDeleteDB_MouseEnter(object sender, RoutedEventArgs e)
         {
             HelpDeleteDB.Visibility = Visibility.Visible;
