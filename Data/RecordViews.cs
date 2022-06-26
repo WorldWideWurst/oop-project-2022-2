@@ -10,41 +10,27 @@ namespace Project.Data
 
     public enum SourceType 
     {
-        Audio,
-        AlbumCover,
-        Image,
+        Local,
+        Stream,
     }
 
 
     public class Source : IRecordView
     {
         public string Address { get; }
-        public SourceType SourceType { get; set; } = SourceType.Audio;
+        public SourceType SourceType { get; set; } = SourceType.Local;
         public Guid MusicId { get; set; }
-        public ulong Checksum { get; set; }
+        public ulong? Checksum { get; set; }
 
 
-        public Source(string address, Guid musicId, SourceType sourceType = SourceType.Audio) { 
+        public Source(string address)
+        {
             Address = address;
-            SourceType = sourceType;
-            MusicId = musicId;
         }
 
-
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert()
-        {
-            Database.Instance.InsertSource(this);
-        }
-
-        public void Save()
-        {
-            Database.Instance.SaveSource(this);
-        }
+        public void Delete() => throw new NotImplementedException();
+        public void Insert() => Database.Instance.InsertSource(this);
+        public void Save() => Database.Instance.SaveSource(this);
     }
 
     public struct MusicByArtist : IRecordView
@@ -65,6 +51,7 @@ namespace Project.Data
 
     public enum MusicType
     {
+        Undefined,
         Song,
         Audiobook,
         Sound,
@@ -82,7 +69,7 @@ namespace Project.Data
         public DateTime FirstRegistered { get; set; }
         public string? Art { get; set; }
         public TimeSpan? Duration { get; set; }
-        public MusicType? Type { get; set; }
+        public MusicType Type { get; set; } = MusicType.Undefined;
         public uint PlayCount { get; set; } = 0;
 
         public IEnumerable<MusicByArtist> Artists => Database.Instance.GetMusicArtists(this);
@@ -105,15 +92,6 @@ namespace Project.Data
         {
             Id = Guid.NewGuid();
         }
-
-        public Music(Guid id, string? title, string? album) {
-            Id = id;
-            Title = title;
-            Album = album;
-        }
-
-        public Music(string? title, string? album) : this(Guid.NewGuid(), title, album) { }
-
 
         public void Delete() => throw new NotImplementedException();
         public void Insert() => Database.Instance.InsertMusic(this);
@@ -139,7 +117,12 @@ namespace Project.Data
     public class Art : IRecordView
     {
         public string Address { get; }
-        public ulong Checksum { get; set; }
+        public ulong? Checksum { get; set; }
+
+        public Art(string address)
+        {
+            Address = address;
+        }
 
         public void Delete()
         {
@@ -159,6 +142,7 @@ namespace Project.Data
 
     public enum MusicListType
     {
+        Undefined,
         Album,
         ConceptAlbum,
         Single,
@@ -167,7 +151,6 @@ namespace Project.Data
         Playlist,
         Queue,
         Compilation,
-        Undefined,
     }
 
 
@@ -197,10 +180,10 @@ namespace Project.Data
         public Guid Id { get; }
         public string Name { get; set; }
         public string? Owner { get; set; }
-        public MusicListType Type { get; set; }
-        public DateOnly? PublishDate { get; set; }
+        public MusicListType Type { get; set; } = MusicListType.Undefined;
+        public DateTime? PublishDate { get; set; }
         public string? Art { get; set; }
-        public bool IsDeletable { get; }
+        public bool IsDeletable { get; set; }
 
         public IEnumerable<MusicInList> Entries => Database.Instance.GetMusicInList(this);
         public IEnumerable<Music> MusicEntries => Database.Instance.GetMusicInListDirect(this);
@@ -208,23 +191,9 @@ namespace Project.Data
         public string? CoverArtSource => "/UI/Images/heart_active.png";
         IEnumerable<Music> IMusicList.Entries => MusicEntries;
 
-        public MusicList(Guid id)
-        {
-            Id = id;
-        }
+        public MusicList(Guid id) { Id = id; }
 
         public MusicList() : this(Guid.NewGuid()) {  }
-
-        public MusicList(Guid id, string name, string? owner, DateOnly? publishDate, MusicListType type = MusicListType.Undefined)
-        {
-            Id = id;
-            Name = name;
-            Owner = owner;
-            PublishDate = publishDate;
-            Type = type;
-        }
-
-        public MusicList(string name) : this(Guid.NewGuid(), name, null, DateOnly.FromDateTime(DateTime.Now)) { }
 
         public void Delete() => Database.Instance.DeleteMusicList(this);
         public void Insert() => Database.Instance.InsertMusicList(this);
