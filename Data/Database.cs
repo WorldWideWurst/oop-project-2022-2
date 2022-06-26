@@ -674,51 +674,6 @@ namespace Project.Data
             }
         }
 
-
-        private static SourceType stringToSourceType(string value)
-        {
-            return SourceType.Local;
-        }
-
-        private static string sourceTypeToString(SourceType sourceType)
-        {
-            return "local";
-        }
-
-        private static MusicListType stringToMusicListType(string? value)
-        {
-            switch(value)
-            {
-                case "album": return MusicListType.Album;
-                case "concept_album": return MusicListType.ConceptAlbum;
-                case "single": return MusicListType.Single;
-                case "live_album": return MusicListType.LiveAlbum;
-                case "ep": return MusicListType.EP;
-                case "playlist": return MusicListType.Playlist;
-                case "queue": return MusicListType.Queue;
-                case "compilation": return MusicListType.Compilation;
-                case "undefined": return MusicListType.Undefined;
-                default: return MusicListType.Undefined;
-            }
-        }
-
-        private static string musicListTypeToString(MusicListType value)
-        {
-            switch (value)
-            {
-                case MusicListType.Album: return "album";
-                case MusicListType.ConceptAlbum: return "concept_album";
-                case MusicListType.Single: return "single";
-                case MusicListType.LiveAlbum: return "live_album";
-                case MusicListType.EP: return "ep";
-                case MusicListType.Playlist: return "playlist";
-                case MusicListType.Queue: return "queue";
-                case MusicListType.Undefined: return "undefined";
-                case MusicListType.Compilation: return "compilation";
-                default: return "undefined";
-            }
-        }
-
         public void Dispose()
         {
             connection.Dispose();
