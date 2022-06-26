@@ -149,13 +149,13 @@ namespace Project.UI.MVVM.View
         }
 
         //passiert wenn der Song geändert wird 
-        public void Player_MusicChanged(Data.Music Lied, int Index)
+        public void Player_MusicChanged(Data.Music music, int index)
         {
-            if (Player.Player.Instance.CurrentMusic.Art != null) Thumbnail.Source = new BitmapImage(new Uri(Player.Player.Instance.CurrentMusic.Art));
-            if (Player.Player.Instance.CurrentMusic.Title != null) SongNameText.Text = Player.Player.Instance.CurrentMusic.Title;
-            else if (Player.Player.Instance.CurrentMusic.Sources.First() != null) SongNameText.Text = Player.Player.Instance.CurrentMusic.Sources.First().Address.Split("\\").Last().Split(".").First();
-            if (Player.Player.Instance.CurrentMusic.Artists != null) ArtistText.Text = Player.Player.Instance.CurrentMusic.Artists.ToString();
-            if (Player.Player.Instance.CurrentMusic.Album != null) ArtistText.Text = Player.Player.Instance.CurrentMusic.Album;
+            if (music.Art != null) Thumbnail.Source = new BitmapImage(new Uri(music.Art));
+            if (music.Title != null) SongNameText.Text = music.Title;
+            else if (music.Sources.First() != null) SongNameText.Text = music.Sources.First().Address.Split("\\").Last().Split(".").First();
+            if (music.Artists != null) ArtistText.Text = music.Artists.ToString();
+            if (music.Album != null) ArtistText.Text = music.Album;
         }
 
         //passiert wenn der Player Idle geht
