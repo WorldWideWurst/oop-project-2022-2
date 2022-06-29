@@ -8,6 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <StackPanel>
+        <Image Source="{Binding Art}"
+               MinHeight="20"/>
         <TextBlock Text="{Binding Title}"/>
         <Grid Margin="5,0,0,0">
             <Grid.ColumnDefinitions>
@@ -16,6 +18,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -24,6 +30,7 @@
 
             <Label Grid.Column="0" Grid.Row="0" Content="Album:"/>
             <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Album}"/>
+            
             <Label Grid.Column="0" Grid.Row="1">Künstler:</Label>
             <ListView ItemsSource="{Binding Artists}" Grid.Column="2" Grid.Row="1">
                 <ListView.ItemTemplate>
@@ -32,16 +39,54 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
             <Label Grid.Column="0" Grid.Row="2">Quellen:</Label>
             <ListView ItemsSource="{Binding Sources}" Grid.Column="2" Grid.Row="2"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Address}"
+                        <DockPanel HorizontalAlignment="Stretch">
+                            <Button DockPanel.Dock="Right"
+                                    Click="ViewSource_Click">Lookie</Button>
+                            <TextBlock Text="{Binding Address}"
                                        TextWrapping="Wrap"/>
+                        </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <Label Content="Zuletzt abgespielt:"
+                   Grid.Column="0"
+                   Grid.Row="3"/>
+            <TextBlock Text="{Binding LastPlayed}"
+                       Grid.Column="2"
+                       Grid.Row="3"/>
+
+            <Label Content="Importiert am:"
+                   Grid.Column="0"
+                   Grid.Row="4"/>
+            <TextBlock Text="{Binding FirstRegistered}"
+                       Grid.Column="2"
+                       Grid.Row="4"/>
+
+            <Label Content="Länge:"
+                   Grid.Column="0"
+                   Grid.Row="5"/>
+            <TextBlock Text="{Binding Duration, StringFormat={}}"
+                       Grid.Column="2"
+                       Grid.Row="5"/>
+
+            <Label Content="Typ: "
+                   Grid.Column="0"
+                   Grid.Row="6"/>
+            <TextBlock Text="{Binding MusicType}"
+                       Grid.Column="2"
+                       Grid.Row="6"/>
+
+            <TextBlock Grid.Column="0"
+                       Grid.Row="7"
+                       Grid.RowSpan="3" 
+                       Text="{Binding PlayCount, StringFormat=Schon {0} mal angehört!}"/>
         </Grid>
     </StackPanel>
 </UserControl>

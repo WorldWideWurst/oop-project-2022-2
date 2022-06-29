@@ -37,5 +37,11 @@ namespace Project.UI.MVVM.View
         {
             throw new NotImplementedException();
         }
+
+        private void ViewSource_Click(object sender, RoutedEventArgs e)
+        {
+            var ctrl = new SourceOverview((Data.Source)(((Button)sender).DataContext));
+            ((MainWindow)Application.Current.MainWindow).LibraryTab.ShowLibraryPage(ctrl);
+        }
     }
 }
