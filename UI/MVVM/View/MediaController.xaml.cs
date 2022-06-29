@@ -153,9 +153,9 @@ namespace Project.UI.MVVM.View
         {
             if (music.Art != null) Thumbnail.Source = new BitmapImage(new Uri(music.Art));
             if (music.Title != null) SongNameText.Text = music.Title;
-            else if (music.Sources.First() != null) SongNameText.Text = music.Sources.First().Address.Split("\\").Last().Split(".").First();
-            if (music.Artists != null) ArtistText.Text = music.Artists.ToString();
-            if (music.Album != null) ArtistText.Text = music.Album;
+            else if (music.Sources.FirstOrDefault() != null) SongNameText.Text = music.Sources.First().Address.Split("\\").Last().Split(".").First();
+            ArtistText.Text = music.Artists.Any() ? new StringBuilder().AppendJoin(", ", music.Artists.Select(mba => mba.ArtistId)).ToString() : "<unknown>";
+            AlbumText.Text = music.Album ?? "<unknown>";
         }
 
         //passiert wenn der Player Idle geht
@@ -164,7 +164,7 @@ namespace Project.UI.MVVM.View
             Thumbnail.Source = null;
             SongNameText.Text = null;
             ArtistText.Text = null;
-            ArtistText.Text = null;
+            AlbumText.Text = null;
         }
     }
 }
