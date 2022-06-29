@@ -115,7 +115,7 @@ namespace Project.Data
                 new("first_registered", m => m.FirstRegistered.ToString("s")),
                 new("_art", m => m.Art),
                 new("duration", m => m.Duration),
-                new("type", m => m.Type),
+                new("type", m => m.MusicType),
                 new("play_count", m => m.PlayCount),
             },
             PrimaryKeys = 1,
@@ -259,7 +259,7 @@ namespace Project.Data
                 FirstRegistered = DateTime.Parse((string)reader[5]),
                 Art = reader[6] as string,
                 Duration = reader[7] is DBNull ? null : TimeSpan.FromSeconds(reader.GetDouble(7)),
-                Type = MusicType.Song,
+                MusicType = MusicType.Song,
                 PlayCount = reader[9] is DBNull ? 0 : (uint)reader.GetInt32(9),
             };
         }

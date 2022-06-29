@@ -69,7 +69,7 @@ namespace Project.Data
         public DateTime FirstRegistered { get; set; }
         public string? Art { get; set; }
         public TimeSpan? Duration { get; set; }
-        public MusicType Type { get; set; } = MusicType.Undefined;
+        public MusicType MusicType { get; set; } = MusicType.Undefined;
         public uint PlayCount { get; set; } = 0;
 
         public IEnumerable<MusicByArtist> Artists => Database.Instance.GetMusicArtists(this);
