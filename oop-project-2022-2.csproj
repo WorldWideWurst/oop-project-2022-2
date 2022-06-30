@@ -183,6 +183,7 @@
 
   <ItemGroup>
     <Folder Include="extern\ffmpeg\doc\doxy\" />
+    <Folder Include="temp\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

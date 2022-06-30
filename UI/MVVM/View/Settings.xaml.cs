@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Project.Data;
 using Project.Player;
+using System.Text.RegularExpressions;
 
 namespace Project.UI.MVVM.View
 {
@@ -78,5 +79,16 @@ namespace Project.UI.MVVM.View
         {
             HelpTickSpeed.Visibility = Visibility.Collapsed;
         }
-    }
+
+        private void DownloadSpeedLimit_Click(object sender, RoutedEventArgs e)
+        {
+            LimitDownloadSpeed.Visibility = DownloadSpeedLimitedButton.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+            {
+                Regex regex = new Regex("[^0-9]+");
+                e.Handled = regex.IsMatch(e.Text);
+            }
+}
 }

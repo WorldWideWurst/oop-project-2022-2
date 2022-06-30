@@ -30,6 +30,7 @@ namespace Project.UI.MVVM.View
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)
         {
+            Results.Items.Clear();
             var targetDir = ((App)Application.Current).DefaultDownloadFolder;
             foreach(var uriStr in URLInput.Text.Split('\n').Select(s => s.Trim()))
             {
@@ -63,8 +64,8 @@ namespace Project.UI.MVVM.View
                 {
                     File.Move(tempPath, System.IO.Path.Combine(targetDir, fileNameForURI(uri)));
                 }
+                ShowResult(uriStr);
             }
-
             URLInput.Text = "";
         }
 
@@ -81,5 +82,9 @@ namespace Project.UI.MVVM.View
             }
         }
 
+        private void ShowResult(string uriStr)
+        {
+            
+        }
     }
 }

@@ -14,7 +14,6 @@
             Height="100" 
             VerticalAlignment="Bottom" 
             Panel.ZIndex="900">
-
         <Grid HorizontalAlignment="Left"
               VerticalAlignment="Center"
               Margin="25,0,0,0"
@@ -163,6 +162,10 @@
                     HorizontalAlignment="Right" 
                     Margin="0,0,32.5,0"
                     Panel.ZIndex="10000" />
-
+        <Rectangle Height="1"
+                   Width="Auto"
+                   VerticalAlignment="Top"
+                   Fill="Gray"
+                   Panel.ZIndex="2000"/>
     </Grid>
 </UserControl>
