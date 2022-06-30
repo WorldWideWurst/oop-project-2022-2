@@ -36,7 +36,7 @@ namespace Project.UI.MVVM.View.LibraryPages
         {
             var music = (Data.Music)e.NewValue;
             
-            var artists = music.Artists;
+            var artists = music.Artists.Target;
             Artists.Children.Clear();
             foreach (var artist in artists)
             {

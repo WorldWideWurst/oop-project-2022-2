@@ -8,6 +8,79 @@ using System.Threading.Tasks;
 namespace Project.Data
 {
 
+    public interface IRecordRelation<T>
+    {
+        T? Target { get; }
+        void ForceReload();
+    }
+
+    public struct Link<K, T> : IRecordRelation<T>
+    {
+        public K? Key
+        {
+            get => key;
+            set { key = value; loaded = false; }
+        }
+        K? key = default;
+
+        public T? Target
+        {
+            get
+            {
+                if(!loaded)
+                {
+                    target = GetTarget(Key);
+                    loaded = true;
+                }
+                return target;
+            }
+        }
+        T? target = default;
+        bool loaded = false;
+
+        public Func<K?, T?> GetTarget { get; set; }
+
+
+        public Link(K? key, Func<K?, T?> targetGetter)
+        {
+            this.key = key;
+            this.GetTarget = targetGetter;
+        }
+
+        public void ForceReload() => loaded = false;
+    }
+
+    public struct Rel<T> : IRecordRelation<T>
+    {
+        public T? Target
+        {
+            get
+            {
+                if(!loaded)
+                {
+                    target = GetTarget();
+                    loaded = true;
+                }
+                return target;
+            }
+        }
+        T? target = default;
+        bool loaded = false;
+
+        public Func<T?> GetTarget { get; set; }
+
+        public Rel(Func<T?> targetGetter)
+        {
+            GetTarget = targetGetter;
+        }
+
+        public void ForceReload() => loaded = false;
+
+
+    }
+
+
+
     public enum SourceType 
     {
         Local,
@@ -19,13 +92,18 @@ namespace Project.Data
     {
         public string Address { get; }
         public SourceType SourceType { get; set; } = SourceType.Local;
-        public Guid MusicId { get; set; }
+        public Guid MusicId
+        {
+            get => Music.Key;
+            set => Music.Key = value;
+        }
+        public Link<Guid, Music> Music = new(default, id => Database.Instance.GetMusic(id));
         public ulong? Checksum { get; set; }
 
-
-        public Source(string address)
+        public Source(string address, Guid musicId)
         {
             Address = address;
+            MusicId = musicId;
         }
 
         public void Delete() => throw new NotImplementedException();
@@ -63,35 +141,41 @@ namespace Project.Data
     {
         public Guid Id { get; }
         public string? Title { get; set; }
-        public string? Album { get; set; }
-        public Guid? AlbumId { get; set; }
+        public string? AlbumName { get; set; }
+        public Guid? AlbumId 
+        {
+            get => Album.Key;
+            set => Album.Key = value;
+        }
+        public Link<Guid?, MusicList> Album;
         public DateTime? LastPlayed { get; set; }
         public DateTime FirstRegistered { get; set; }
-        public string? Art { get; set; }
+        public string? ArtAddress
+        {
+            get => Art.Key;
+            set => Art.Key = value;
+        }
+        public Link<string?, Art?> Art;
         public TimeSpan? Duration { get; set; }
         public MusicType MusicType { get; set; } = MusicType.Undefined;
         public uint PlayCount { get; set; } = 0;
 
-        public IEnumerable<MusicByArtist> Artists => Database.Instance.GetMusicArtists(this);
-        public IEnumerable<Source> Sources => Database.Instance.GetMusicSources(this);
-        public bool IsCurrentlyPlaying
-        {
-            get => Player.Player.Instance.CurrentMusic?.Id == Id;
-            set
-            {
-                Player.Player.Instance.PlayImmediately(this);
-            }
-        }
+        public Rel<MusicByArtist[]> Artists;
 
+        public Rel<Source[]> Sources;
+
+        public Art? AlbumArt => Album.Target?.Art.Target;
+       
         public Music(Guid id)
         {
             Id = id;
+            Art = new(default, adr => adr != null ? Database.Instance.GetArt(adr) : null);
+            Album = new(default, id => id != null ? Database.Instance.GetMusicList(id.Value) : null);
+            Artists = new(() => Database.Instance.GetMusicArtists(this).ToArray());
+            Sources = new(() => Database.Instance.GetMusicSources(this).ToArray());
         }
 
-        public Music()
-        {
-            Id = Guid.NewGuid();
-        }
+        public Music() : this(Guid.NewGuid()) { }
 
         public void Delete() => throw new NotImplementedException();
         public void Insert() => Database.Instance.InsertMusic(this);
@@ -179,10 +263,20 @@ namespace Project.Data
 
         public Guid Id { get; }
         public string Name { get; set; }
-        public string? Owner { get; set; }
+        public string? OwnerName 
+        {
+            get => Owner.Key;
+            set => Owner.Key = value;
+        }
+        public Link<string?, Artist?> Owner;
         public MusicListType Type { get; set; } = MusicListType.Undefined;
         public DateTime? PublishDate { get; set; }
-        public string? Art { get; set; }
+        public string? ArtAddress 
+        {
+            get => Art.Key;
+            set => Art.Key = value;
+        }
+        public Link<string?, Art?> Art;
         public bool IsDeletable { get; set; }
 
         public IEnumerable<MusicInList> Entries => Database.Instance.GetMusicInList(this);
@@ -191,7 +285,12 @@ namespace Project.Data
         public string? CoverArtSource => "/UI/Images/heart_active.png";
         IEnumerable<Music> IMusicList.Entries => MusicEntries;
 
-        public MusicList(Guid id) { Id = id; }
+        public MusicList(Guid id)
+        {
+            Id = id;
+            Owner = new(null, o => o != null ? Database.Instance.GetArtist(o) : null);
+            Art = new(null, a => a != null? Database.Instance.GetArt(a) : null);
+        }
 
         public MusicList() : this(Guid.NewGuid()) {  }
 

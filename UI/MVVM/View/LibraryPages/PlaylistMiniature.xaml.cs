@@ -24,7 +24,7 @@ namespace Project.UI.MVVM.View.LibraryPages
         {
             InitializeComponent();
             DataContext = musicList;
-            ArtistName.Text = musicList.Owner;
+            ArtistName.Text = musicList.OwnerName;
             EntryCount.Text = musicList.Count.ToString();
         }
 

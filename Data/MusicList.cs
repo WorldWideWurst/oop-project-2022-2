@@ -10,7 +10,7 @@ namespace Project.Data
     {
         string Name { get; }
         string? CoverArtSource { get; }
-        string? Owner { get; }
+        string? OwnerName { get; }
         IEnumerable<Music> Entries { get; }
 
         int Count => Entries.Count();
@@ -21,7 +21,7 @@ namespace Project.Data
         public string Name => "Nicht eingeordnet";
         public string? CoverArtSource => "/UI/Images/heart_hover.png";
 
-        public string? Owner => null;
+        public string? OwnerName => null;
 
         public IEnumerable<Music> Entries => Database.Instance.GetMusicWithoutAlbum();
         
@@ -32,7 +32,7 @@ namespace Project.Data
         public string Name => "Alle Lieder";
         public string? CoverArtSource => "/UI/Images/heart_hover.png";
 
-        public string? Owner => null;
+        public string? OwnerName => null;
 
         public IEnumerable<Music> Entries => Database.Instance.GetMusic();
 

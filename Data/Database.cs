@@ -100,6 +100,7 @@ namespace Project.Data
 
         public string? SQLiteVersion => new SQLiteCommand("SELECT SQLITE_VERSION()", connection)?.ExecuteScalar().ToString();
 
+
         #region ConversionTables
 
         static ConversionTable<Music> MusicConversionTable = new()
@@ -109,11 +110,11 @@ namespace Project.Data
             {
                 new("id", m => m.Id),
                 new("title", m => m.Title),
-                new("album", m => m.Album),
+                new("album", m => m.AlbumName),
                 new("_album", m => m.AlbumId),
                 new("last_played", m => m.LastPlayed?.ToString("s")),
                 new("first_registered", m => m.FirstRegistered.ToString("s")),
-                new("_art", m => m.Art),
+                new("_art", m => m.ArtAddress),
                 new("duration", m => m.Duration),
                 new("type", m => m.MusicType),
                 new("play_count", m => m.PlayCount),
@@ -143,8 +144,8 @@ namespace Project.Data
                 new("name", l => l.Name),
                 new("type", l => l.Type),
                 new("publish_date", l => l.PublishDate?.ToString("s")),
-                new("_owned_by", l => l.Owner),
-                new("_art", l => l.Art),
+                new("_owned_by", l => l.OwnerName),
+                new("_art", l => l.ArtAddress),
                 new("is_deletable", l => l.IsDeletable),
             },
             PrimaryKeys = 1,
@@ -253,11 +254,11 @@ namespace Project.Data
             return new Music(reader.GetGuid(0))
             {
                 Title = reader[1] as string,
-                Album = reader[2] as string,
+                AlbumName = reader[2] as string,
                 AlbumId = reader[3] is DBNull ? null : reader.GetGuid(3),
                 LastPlayed = reader[4] is DBNull ? null : DateTime.Parse((string)reader[4]),
                 FirstRegistered = DateTime.Parse((string)reader[5]),
-                Art = reader[6] as string,
+                ArtAddress = reader[6] as string,
                 Duration = reader[7] is DBNull ? null : TimeSpan.FromSeconds(reader.GetDouble(7)),
                 MusicType = MusicType.Song,
                 PlayCount = reader[9] is DBNull ? 0 : (uint)reader.GetInt32(9),
@@ -271,18 +272,17 @@ namespace Project.Data
                 Name = (string)reader[1],
                 Type = (MusicListType)(long)reader[2],
                 PublishDate = reader[3] is DBNull ? null : DateTime.Parse((string) reader[3]),
-                Owner = reader[4] as string,
-                Art = reader[5] as string,
+                OwnerName = reader[4] as string,
+                ArtAddress = reader[5] as string,
                 IsDeletable = reader.GetBoolean(6),
             };
         }
 
         static Source parseSource(DbDataReader reader)
         {
-            return new Source(reader.GetString(0))
+            return new Source(reader.GetString(0), reader.GetGuid(2))
             {
                 SourceType = (SourceType)(long)reader[1],
-                MusicId = reader.GetGuid(2),
                 Checksum = reader[3] is DBNull ? null : (ulong)reader[3],
             };
         }
@@ -626,6 +626,14 @@ namespace Project.Data
             return parseAll(cmd.ExecuteReader(), parseMusic);
         }
 
+        internal Art? GetArt(string adr)
+        {
+            using var cmd = new SQLiteCommand("select * from art where address = @address", connection);
+            cmd.Parameters.AddWithValue("@address", adr);
+            cmd.Prepare();
+            return parseAll(cmd.ExecuteReader(), parseArt).FirstOrDefault();
+        }
+
 
 
 
@@ -636,7 +644,7 @@ namespace Project.Data
             Music music = new Music()
             {
                 Title = meta.Title,
-                Album = meta.Album,
+                AlbumName = meta.Album,
             };
             music.Insert();
 
@@ -649,14 +657,14 @@ namespace Project.Data
             }
 
             // ins album hinzufügen, falls albumdaten vorhanden
-            if (music.Album != null)
+            if (music.AlbumName != null)
             {
-                MusicList? album = GetMusicList(music.Album).FirstOrDefault();
+                MusicList? album = GetMusicList(music.AlbumName).FirstOrDefault();
                 if (album == null)
                 {
                     album = new MusicList()
                     {
-                        Name = music.Album,
+                        Name = music.AlbumName,
                     };
                     album.Insert();
                 }
@@ -666,11 +674,7 @@ namespace Project.Data
             // quellenangabe hinzufügen
             if(meta.File != null)
             {
-                new Source(meta.File)
-                {
-                    MusicId = music.Id,
-                }
-                .Insert();
+                new Source(meta.File, music.Id).Insert();
             }
 
             return music;

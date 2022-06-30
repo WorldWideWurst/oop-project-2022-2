@@ -44,7 +44,7 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         private void ViewMusic(object sender, RoutedEventArgs e)
         {
-            var music = Database.Instance.GetMusic(((SourceViewModel)DataContext).Source.MusicId);
+            var music = ((SourceViewModel)DataContext).Source.Music.Target;
             var ctrl = new MusicOverview(music);
             ((MainWindow)Application.Current.MainWindow).LibraryTab.ShowLibraryPage(ctrl);
         }
@@ -62,7 +62,7 @@ namespace Project.UI.MVVM.View.LibraryPages
             {
                 var music = Database.Instance.GetMusic(Source.MusicId);
                 var sb = new StringBuilder();
-                sb.AppendJoin(", ", music.Artists.Select(mba => mba.ArtistId));
+                sb.AppendJoin(", ", music.Artists.Target.Select(mba => mba.ArtistId));
                 sb.Append(sb.Length > 0? " - " : "").Append(music.Title ?? "");
                 return sb.Length > 0 ? sb.ToString() : Address;
             }
