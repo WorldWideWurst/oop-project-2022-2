@@ -1,30 +1,13 @@
 namespace Project.Download;
-public class YTDLPAI {
+public class YTDLAPI {
 
-    string path; 
-    int Quality;
+    public string Path { get; set; }
+    public int Quality { get; set; }
 
-    public static YTDLAPI (string path, int Quality){
-        this.path = path;
+    public YTDLAPI (string path, int Quality){
+        Path = path;
         this.Quality = Quality;
 
     }
-
-    void setPath (string path){
-        this.path = path;
-    }
-
-     string getPath(){
-        return this.path;
-    }
-    
-    void setQuality (int Quality){
-        this.Quality = Quality;
-    }
-
-    int getQuality(){
-        return this.Quality;
-    }
-
 
 }
