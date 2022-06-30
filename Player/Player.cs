@@ -131,12 +131,18 @@ namespace Project.Player
 
         private void LoadMusic(Music music)
         {
-            var source = music.Sources.First();
+            var source = music.Sources.Target[0];
+            var uri = new Uri(source.Address);
             CurrentState = PlayerState.Loading;
-            player.Open(new Uri(source.Address));
+            player.Open(uri);
             timer.Start();
             CurrentMusicChanged?.Invoke(music, CurrentIndex);
             PlayerTickUpdate?.Invoke();
+            
+            if(uri == player.Source)
+            {
+                Player_MediaOpened(this, EventArgs.Empty);
+            }
         }
 
         private void Idle()
@@ -183,21 +189,6 @@ namespace Project.Player
         public void RestartMusic()
         {
             player.Position = TimeSpan.Zero;
-        }
-
-        public bool ChooseSource()
-        {
-            bool status;
-            OpenFileDialog openFileDialog = new();
-            openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                player.Open(new Uri(openFileDialog.FileName));
-                status = true;
-            }
-            else
-                status = false;
-            return status;
         }
 
         private static T[] reorderRandom<T>(T[] list)
