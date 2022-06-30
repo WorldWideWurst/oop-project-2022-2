@@ -86,5 +86,23 @@ namespace Project.UI.MVVM.View
         {
             
         }
+
+        private void HintNull(object sender, RoutedEventArgs e)
+        {
+            if(URLInput.Text == "Hier einen Link eingeben!")
+            {
+                URLInput.Text = null;
+                URLInput.Foreground = Brushes.Black;
+            }
+        }
+
+        private void HintShow(object sender, RoutedEventArgs e)
+        {
+            if(URLInput.Text == "")
+            {
+                URLInput.Foreground = Brushes.Gray;
+                URLInput.Text = "Hier einen Link eingeben!";
+            }
+        }
     }
 }
