@@ -3,6 +3,9 @@ using System.Net;
 using System.IO;
 using System.Text;
 using Project.Index;
+using System;
+using System.Diagnostics;
+using System.ComponentModel;
 
 // als Singelton umbauen
 //Interface Implementieren
@@ -14,6 +17,9 @@ namespace Project.Download
         {
             //fileName: "Name"
             //fileType: "." + "fileType" 
+
+            Process.Start("IExplore.exe", "www.northwindtraders.com");
+
 
             WebClient webclient = new WebClient();
 
@@ -32,6 +38,7 @@ namespace Project.Download
             return true;
         }
 
+// Nullpointer einbauen!!!
 
         public static string[] ParseForDownloadables(string URL)
         {
