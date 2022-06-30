@@ -16,7 +16,7 @@ conf: Settings
 */
  public static void Download(string URL, string conf)
         {
-            var processInfo = new ProcessStartInfo("youtube-dl.exe", conf + URL); 
+            var processInfo = new ProcessStartInfo("Download\\youtube-dl.exe", conf + URL); 
             processInfo.CreateNoWindow = true;
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardError = true;
