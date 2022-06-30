@@ -16,25 +16,33 @@
         <StackPanel>
             <TextBlock  Text="Downloader" 
                         Foreground="White" 
-                        FontSize="40"/>
-            <TextBlock  Foreground="White" 
-                        Text="Ziel hier eingeben"
+                        FontSize="40"
+                        Margin="0,0,0,10"/>
+            <Grid HorizontalAlignment="Stretch"
+                  Margin="100,0,100,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="100"/>
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <TextBox    Name="URLInput"
+                            VerticalContentAlignment="Center"
+                            MinWidth="200"
+                            TextWrapping="Wrap"
+                            AcceptsReturn="True"
+                            Text="Hier einen Link eingeben!"
+                            Foreground="Gray"
+                            Grid.Row="1"
+                            GotFocus="HintNull" 
+                            LostFocus="HintShow"/>
+                <Button Content="Suchen"
+                        Style="{DynamicResource StandardButtonTheme}"
+                        Click="DownloaderButton_Click"
+                        Height="40" Width="120"
+                        Margin="10,0,0,0"
                         HorizontalAlignment="Center" 
-                        FontSize="20"/>
-            <TextBox    Name="URLInput"
-                        Margin="100,20,100,0"
-                        MinWidth="200"
-                        TextWrapping="Wrap"
-                        AcceptsReturn="True"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"/>
-            <Button Content="Herunterladen"
-                    Style="{DynamicResource StandardButtonTheme}"
-                    Click="DownloaderButton_Click" 
-                    Margin="0,20,0,0" 
-                    Height="40" Width="220"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Top"/>
+                        VerticalAlignment="Top"
+                        Grid.Column="1"/>
+            </Grid>
             <TextBlock  Text="Ergebnisse"
                         Foreground="White"
                         HorizontalAlignment="Center"
