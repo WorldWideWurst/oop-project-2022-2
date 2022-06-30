@@ -7,7 +7,6 @@ public class YTDLAPI {
     public YTDLAPI (string path, int Quality){
         Path = path;
         this.Quality = Quality;
-
     }
 
 }
