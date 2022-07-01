@@ -78,7 +78,7 @@ namespace Project.UI.MVVM.View
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)
         {
-
+            DoSearch();
         }
 
         private void DoSearch()
