@@ -38,7 +38,8 @@
                             Foreground="Gray"
                             Grid.Row="0"
                             GotFocus="HintNull" 
-                            LostFocus="HintShow"/>
+                            LostFocus="HintShow"
+                            KeyDown="URLInput_KeyDown"/>
                 <Button Content="Suchen"
                         Style="{DynamicResource StandardButtonTheme}"
                         Click="DownloaderButton_Click"
@@ -94,7 +95,6 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Button Grid.Row="0"
                             Click="EnqueueFront_Click">
@@ -106,12 +106,6 @@
                             Click="EnqueueBack_Click">
                         <TextBlock TextWrapping="Wrap">
                             Hinten Rein
-                        </TextBlock>
-                    </Button>
-                    <Button Grid.Row="2"
-                            Click="ClearSelection_Click">
-                        <TextBlock TextWrapping="Wrap">
-                            Großes X
                         </TextBlock>
                     </Button>
                 </Grid>

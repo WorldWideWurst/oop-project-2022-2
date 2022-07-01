@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ using Project;
 namespace Project.UI.MVVM.View
 {
 
-    public class DownloadEntry
+    public class DownloadEntry : INotifyPropertyChanged
     {
         public string Thumbnail { get; set; }
         public string FileName { get; set; }
@@ -28,8 +29,11 @@ namespace Project.UI.MVVM.View
         public string Artist { get; set; }
         public TimeSpan Duration { get; set; }
         public DateOnly UploadDate { get; set; }
-        public double Progress { get; set; }
+        public double Progress { get => progress; set { progress = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress")); } }
+        double progress;
         public Download.YTDLAPI Settings { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 
     
@@ -74,6 +78,11 @@ namespace Project.UI.MVVM.View
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void DoSearch()
+        {
             var uriString = URLInput.Text;
             Uri uri;
 
@@ -86,6 +95,10 @@ namespace Project.UI.MVVM.View
                 MessageBox.Show(ex.Message);
                 return;
             }
+
+            // nun kann die eingabe gelöscht werden
+            URLInput.Clear();
+            HintShow(null, null); // lol
 
             // Download.Youtubedl.Download(uriString, "");
             CurrentEntry = new DownloadEntry()
@@ -119,6 +132,13 @@ namespace Project.UI.MVVM.View
                 URLInput.Text = "Hier einen Link eingeben!";
             }
         }
+        private void URLInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                DoSearch();
+            }
+        }
 
         private void CancelDownload_Click(object sender, RoutedEventArgs e)
         {
@@ -127,7 +147,8 @@ namespace Project.UI.MVVM.View
 
         private void QueueDisplay_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
-            CurrentEntry = (DownloadEntry)((ListBox)sender).SelectedItem;
+            var listBox = (ListBox)sender;
+            CurrentEntry = (DownloadEntry?)listBox.SelectedItem;
         }
 
         private void EnqueueFront_Click(object sender, RoutedEventArgs e)
@@ -147,9 +168,6 @@ namespace Project.UI.MVVM.View
                 CurrentEntry= null;
             }
         }
-        private void ClearSelection_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentEntry = null;
-        }
+
     }
 }
