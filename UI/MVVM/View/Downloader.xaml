@@ -21,12 +21,13 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MinWidth="100"/>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto" MinWidth="200"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition MinHeight="70"/>
+                    <RowDefinition MaxHeight="70"/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -46,23 +47,117 @@
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top"
                         Grid.Column="1"/>
-                <Grid Grid.Column="0"
-                      Grid.ColumnSpan="2"
-                      Grid.Row="1">
-                    <TextBlock Name="NoSelectionDisplay">Nichts ausgewählt.</TextBlock>
-                    <DockPanel Name="SelectionDisplay"
-                               DataContext="{Binding CurrentEntry}">
-                        <Image Source="{Binding Path=CurrentEntry.Image}"
-                               DockPanel.Dock="Left"/>
-                        <Rectangle DockPanel.Dock="Right"
-                                   VerticalAlignment="Stretch"
-                                   Width="100"/>
-                    </DockPanel>
+                <TextBlock Grid.Column="0"
+                           Grid.Row="1"
+                           Grid.ColumnSpan="2"
+                           Name="NoSelectionDisplay">Nichts ausgewählt.</TextBlock>
+                <Grid Name="SelectionDisplay"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="1"
+                      Grid.Row="1"
+                      DataContext="{Binding CurrentEntry}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="{Binding Thumbnail}"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               Grid.RowSpan="3"
+                               Height="70"/>
+                    <TextBlock Grid.Column="1"
+                                   Grid.Row="0"
+                                   Text="{Binding Title}"/>
+                    <StackPanel Grid.Column="1"
+                                    Grid.Row="1"
+                                    Orientation="Horizontal">
+                        <TextBlock Text="{Binding Artist}"/>
+                        <Rectangle Width="20"/>
+                        <TextBlock Text="{Binding UploadDate}"/>
+                        <Rectangle Width="20"/>
+                        <TextBlock Text="{Binding Duration}"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1"
+                                   Grid.Row="2"
+                                   Text="{Binding FileName}"/>
+
                 </Grid>
-                <TextBox Grid.Column="2"
-                         Grid.Row="0"
-                         Grid.RowSpan="2"
-                         Text="settings hier"/>
+                <Grid Grid.Column="1"
+                      Grid.Row="1"
+                      Name="EnqueueOptions"
+                      Visibility="Hidden">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Row="0"
+                            Click="EnqueueFront_Click">
+                        <TextBlock TextWrapping="Wrap">
+                            Vorne Rein
+                        </TextBlock>
+                    </Button>
+                    <Button Grid.Row="1"
+                            Click="EnqueueBack_Click">
+                        <TextBlock TextWrapping="Wrap">
+                            Hinten Rein
+                        </TextBlock>
+                    </Button>
+                    <Button Grid.Row="2"
+                            Click="ClearSelection_Click">
+                        <TextBlock TextWrapping="Wrap">
+                            Großes X
+                        </TextBlock>
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="2"
+                      Grid.Row="0"
+                      Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0"
+                           Grid.Row="0"
+                           Content="Qualität"/>
+                    <ComboBox Grid.Column="3"
+                              Grid.Row="0">
+                        <ComboBoxItem IsSelected="true">Helo</ComboBoxItem>
+                        <ComboBoxItem>Helo2</ComboBoxItem>
+                        <ComboBoxItem>Helo3</ComboBoxItem>
+                        <ComboBoxItem>Helo4</ComboBoxItem>
+                    </ComboBox>
+                    <Label Grid.Column="0"
+                           Grid.Row="1"
+                           Content="Mamma mia"/>
+                    <ComboBox Grid.Column="3"
+                              Grid.Row="1">
+                        <ComboBoxItem IsSelected="true">Helo</ComboBoxItem>
+                        <ComboBoxItem>Helo2</ComboBoxItem>
+                        <ComboBoxItem>Helo3</ComboBoxItem>
+                        <ComboBoxItem>Helo4</ComboBoxItem>
+                    </ComboBox>
+                    <Label Grid.Column="0"
+                           Grid.Row="2"
+                           Content="Brathähnchen"/>
+                    <ComboBox Grid.Column="3"
+                              Grid.Row="2">
+                        <ComboBoxItem IsSelected="true">Helo</ComboBoxItem>
+                        <ComboBoxItem>Helo2</ComboBoxItem>
+                        <ComboBoxItem>Helo3</ComboBoxItem>
+                        <ComboBoxItem>Helo4</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
             </Grid>
             <!-- With DataTemplate -->
             <TextBlock>Warteschlange</TextBlock>
@@ -70,17 +165,25 @@
                      BorderBrush="Transparent" 
                      Grid.IsSharedSizeScope="True"
                      HorizontalContentAlignment="Stretch"
+                     SelectionMode="Single"
+                     SelectionChanged="QueueDisplay_SelectionChanged"
                      x:Name="Results">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="4"
                               Height="30">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="40" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition MaxWidth="100" MinWidth="50" />
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <!--Image Source="{Binding Thumbnail}"/-->
-                            <TextBlock Grid.Column="1" Text="{Binding FileName}" />
+                            <Image Source="{Binding Thumbnail}"
+                                   Height="20"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Title}" />
+                            <ProgressBar Grid.Column="2"
+                                         DataContext="{Binding Progress}"></ProgressBar>
+                            <Button Grid.Column="3" Click="CancelDownload_Click">Abbruch</Button>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

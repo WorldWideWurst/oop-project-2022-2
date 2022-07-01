@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -18,14 +19,57 @@ using Project;
 
 namespace Project.UI.MVVM.View
 {
+
+    public class DownloadEntry
+    {
+        public string Thumbnail { get; set; }
+        public string FileName { get; set; }
+        public string Title { get; set; }
+        public string Artist { get; set; }
+        public TimeSpan Duration { get; set; }
+        public DateOnly UploadDate { get; set; }
+        public double Progress { get; set; }
+        public Download.YTDLAPI Settings { get; set; }
+    }
+
+    
     /// <summary>
     /// Interaktionslogik für Downloader.xaml
     /// </summary>
     public partial class Downloader : UserControl
     {
+
+        public ObservableCollection<DownloadEntry> Queue { get; set; } = new();
+        public DownloadEntry? CurrentEntry 
+        {
+            get => currentEntry;
+            set
+            {
+                currentEntry = value;
+                DataContext = this;
+                if(currentEntry != null)
+                {
+                    SelectionDisplay.Visibility = Visibility.Visible;
+                    EnqueueOptions.Visibility = Visibility.Visible;
+                    SelectionDisplay.DataContext = value;
+
+                    NoSelectionDisplay.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    SelectionDisplay.Visibility = Visibility.Hidden;
+                    EnqueueOptions.Visibility = Visibility.Hidden;
+
+                    NoSelectionDisplay.Visibility = Visibility.Visible;
+                }
+            }
+        }
+        DownloadEntry? currentEntry;
+
         public Downloader()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         private void DownloaderButton_Click(object sender, RoutedEventArgs e)
@@ -43,7 +87,18 @@ namespace Project.UI.MVVM.View
                 return;
             }
 
-            Download.Youtubedl.Download(uriString, "");
+            // Download.Youtubedl.Download(uriString, "");
+            CurrentEntry = new DownloadEntry()
+            {
+                Thumbnail = "/UI/Images/heart.png",
+                FileName = uriString,
+                Artist = "Marzipan",
+                Duration = new TimeSpan(69, 4, 20),
+                Title = "Yo Mama",
+                UploadDate = new DateOnly(2020, 2, 20),
+            };
+
+            Task.Run(() => Download.Youtubedl.Download(uriString, ""));
         }
 
 
@@ -63,6 +118,38 @@ namespace Project.UI.MVVM.View
                 URLInput.Foreground = Brushes.Gray;
                 URLInput.Text = "Hier einen Link eingeben!";
             }
+        }
+
+        private void CancelDownload_Click(object sender, RoutedEventArgs e)
+        {
+            Queue.Remove((DownloadEntry)((Button)sender).DataContext);
+        }
+
+        private void QueueDisplay_SelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            CurrentEntry = (DownloadEntry)((ListBox)sender).SelectedItem;
+        }
+
+        private void EnqueueFront_Click(object sender, RoutedEventArgs e)
+        {
+            if(CurrentEntry != null)
+            {
+                Queue.Insert(0, CurrentEntry);
+                CurrentEntry = null;
+            }
+        }
+
+        private void EnqueueBack_Click(object sender, RoutedEventArgs e)
+        {
+            if(CurrentEntry != null)
+            {
+                Queue.Add(CurrentEntry);
+                CurrentEntry= null;
+            }
+        }
+        private void ClearSelection_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentEntry = null;
         }
     }
 }
