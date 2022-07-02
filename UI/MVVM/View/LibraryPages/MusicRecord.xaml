@@ -33,23 +33,24 @@
                     Click="AddToBackButton_Click"
                     Grid.Row="1"/>
         </Grid>
-        <Button Name="OpenPageButton"
-            HorizontalContentAlignment="Left"
-            Click="OpenPageButton_Click">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Name="Title"
-                        Text="{Binding Title}"
-                        Width="200"
-                        TextTrimming="CharacterEllipsis"/>
-                <TextBlock Name="Album"
-                        Text="{Binding Album}"
-                        Width="100"
-                        TextTrimming="CharacterEllipsis"/>
-                <WrapPanel Name="Artists" Width="200"
-                        MaxHeight="50">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Name="Title"
+                    Text="{Binding Title}"
+                    Width="200"
+                    TextTrimming="CharacterEllipsis"/>
+            <TextBlock Name="Album"
+                    Text="{Binding Album}"
+                    Width="100"
+                    TextTrimming="CharacterEllipsis"/>
+            <WrapPanel Name="Artists" Width="200"
+                    MaxHeight="50">
 
-                </WrapPanel>
-            </StackPanel>
-        </Button>
+            </WrapPanel>
+            <Button Name="OpenPageButton"
+                HorizontalContentAlignment="Left"
+                Click="OpenPageButton_Click">
+                Goto
+            </Button>
+        </StackPanel>
     </StackPanel>
 </UserControl>
