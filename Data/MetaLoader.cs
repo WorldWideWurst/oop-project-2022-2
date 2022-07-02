@@ -99,6 +99,14 @@ namespace Project.Data
         public string? OriginalAlbum;
         public readonly IList<string> Artists = new List<string>();
         public readonly IList<string> OriginalArtists = new List<string>();
+        public readonly IList<string> AlbumArtists = new List<string>();
+        public (int Index, int Total)? TrackIndex;
+        public DateTime? RecordingDate;
+        public DateTime? ReleaseDate;
+        public MusicType? MusicType;
+        public MusicListType? MusicListType;
+        public string? Art;
+
 
         public MusicFileMeta(string? path)
         {
@@ -285,7 +293,22 @@ namespace Project.Data
                                 meta.Artists.Add(artistRaw.Trim());
                             }
                             break;
+                        case "TPE2":
+                            // album artists
+                            break;
+                        case "TRCK":
+                            // track index info
+                            break;
+                        case "TDRC":
+                            // recording date
+                            break;
+                        case "TDOR":
+                            // original release date
+                        case "TDRL":
+                            // release date
+                            break;
                     }
+
                 }
 
             }
@@ -339,6 +362,25 @@ namespace Project.Data
                                 meta.Artists.Add(artistRaw.Trim());
                             }
                             break;
+                        case "TPE2":
+                            // album artists
+                            break;
+                        case "TRCK":
+                            // track index info
+                            break;
+                        case "TYER":
+                            // recording year
+                            break;
+                        case "TDAT":
+                            // recording date
+                            break;
+                        case "TIME":
+                            // recording time
+                            break;
+                        case "TORY":
+                            // release year
+                            break;
+
                     }
                 }
 
@@ -383,6 +425,12 @@ namespace Project.Data
                             {
                                 meta.Artists.Add(artistRaw.Trim());
                             }
+                            break;
+                        case "TP2":
+                            // album artists
+                            break;
+                        case "TRK":
+                            // track index info
                             break;
                     }
                 }
