@@ -231,6 +231,15 @@ namespace Project.Player
             CurrentList.Add(music);
         }
 
+        public void RemoveMusic(int index)
+        {
+            CurrentList.RemoveAt(index);
+            if(index >= CurrentIndex)
+            {
+                CurrentIndex = index;
+            }
+        }
+
         public void PlayImmediately(Music music)
         {
             if(IsIdle)
