@@ -56,7 +56,7 @@ namespace Project.Data
     public class Database : IDisposable
     {
         
-        public const string Version = "0.5";
+        public const string Version = "0.5.1";
         
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
         public static readonly string EmptyDBSQLLoc = "Data\\empty_musicdb_template.sqlite3.sql";
