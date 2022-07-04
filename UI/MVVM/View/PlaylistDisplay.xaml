@@ -6,13 +6,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
+             xmlns:player="clr-namespace:Project.Player"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="280">
-    <ScrollViewer>
-        <StackPanel>
-            <TextBlock Foreground="White"
-                       Background="Transparent" 
-                       Text="Test&#xA;Katze&#xA;Neko&#xA;Gato&#xA;cat&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Test&#xA;Letzter Test&#xA;Noch eine Katze :D&#xA;&lt;3&#xA;Das hier testet nur den Scroller" />
-        </StackPanel>
-    </ScrollViewer>
+    <ListView x:Name="ListView"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <DockPanel HorizontalAlignment="Stretch">
+                    <Button Content=";)"
+                            Click="ViewMusicList_Click"
+                            DockPanel.Dock="Right"/>
+                    <TextBlock Text="{Binding Name}"
+                               TextTrimming="CharacterEllipsis"/>
+                </DockPanel>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </UserControl>

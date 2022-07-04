@@ -23,6 +23,13 @@ namespace Project.UI.MVVM.View
         public PlaylistDisplay()
         {
             InitializeComponent();
+            ListView.ItemsSource = Player.Library.Instance.Entries;
+        }
+
+        private void ViewMusicList_Click(object sender, RoutedEventArgs e)
+        {
+            PlaylistOverview ctrl = new((Data.IMusicList)((Button)sender).DataContext);
+            ((MainWindow)Application.Current.MainWindow).OpenLibraryPage(ctrl);
         }
     }
 }
