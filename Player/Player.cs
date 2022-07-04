@@ -233,8 +233,12 @@ namespace Project.Player
 
         public void RemoveMusic(int index)
         {
+            if(index < CurrentIndex)
+            {
+                currentIndex--;
+            }
             CurrentList.RemoveAt(index);
-            if(index >= CurrentIndex)
+            if (index == CurrentIndex)
             {
                 CurrentIndex = index;
             }

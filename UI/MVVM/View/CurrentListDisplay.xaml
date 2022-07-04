@@ -13,11 +13,11 @@
     <ListBox x:Name="List"
              ItemsSource="{Binding CurrentListMirror}"
              Background="#ff323232"
-             BorderThickness="0">
+             BorderThickness="0"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <RadioButton GroupName="List"
-                             Style="{DynamicResource StandardRadioButtonTheme}"
                              IsChecked="{Binding IsCurrentlyPlaying}">
                     <DockPanel>
                         <Button DockPanel.Dock="Right"

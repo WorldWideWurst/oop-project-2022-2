@@ -21,22 +21,26 @@ namespace Project.UI.MVVM.View
     // Verfasst von Janek Engel
     public partial class SubMenu : UserControl
     {
+
+        private readonly CurrentListDisplay CurrentListDisplay = new();
+        private readonly PlaylistDisplay PlaylistDisplay = new();
+
         public SubMenu()
         {
             //Initialisiert und zeigt PlaylistDisplay an
-            DataContext = new PlaylistDisplay();
             InitializeComponent();
+            DataContext = PlaylistDisplay;
         }
 
 
         private void CurrentListDisplayButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new CurrentListDisplay();
+            DataContext = CurrentListDisplay;
         }
 
         private void PlaylistDisplayButton_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = new PlaylistDisplay();
+            DataContext = PlaylistDisplay;
         }
     }
 }

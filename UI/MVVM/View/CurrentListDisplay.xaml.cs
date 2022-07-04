@@ -22,7 +22,7 @@ namespace Project.UI.MVVM.View
 	/// <summary>
 	/// Interaktionslogik für CurrentListDisplay.xaml
 	/// </summary>
-	public partial class CurrentListDisplay : UserControl
+	public partial class CurrentListDisplay : UserControl, INotifyPropertyChanged
     {
 
         public class CurrentListMusicViewModel : INotifyPropertyChanged
@@ -36,10 +36,10 @@ namespace Project.UI.MVVM.View
             {
                 Music = music;
                 OwnIndex = ownIndex;
-                Player.Player.Instance.CurrentMusicChanged += (music, index) =>
+                Player.Player.Instance.CurrentMusicChanged += new((music, index) =>
                 {
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsCurrentlyPlaying)));
-                };
+                });
             }
 
             public string Description
@@ -73,14 +73,16 @@ namespace Project.UI.MVVM.View
             }
         }
 
-        public ObservableCollection<CurrentListMusicViewModel> CurrentListMirror = new();
+        public ObservableCollection<CurrentListMusicViewModel> CurrentListMirror { get; set; } = new();
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public CurrentListDisplay()
         {
             InitializeComponent();
             DataContext = this;
 
-            Player.Player.Instance.CurrentList.CollectionChanged += (list, args) =>
+            Player.Player.Instance.CurrentList.CollectionChanged += new((list, args) =>
             {
                 CurrentListMirror.Clear();
                 var l = (IList<Music>)list;
@@ -90,7 +92,8 @@ namespace Project.UI.MVVM.View
                     var entry = new CurrentListMusicViewModel(music, i);
                     CurrentListMirror.Add(entry);
                 }
-            };
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentListMirror"));
+            });
 
         }
 
