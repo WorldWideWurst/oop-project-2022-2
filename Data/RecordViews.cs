@@ -279,17 +279,21 @@ namespace Project.Data
         public Link<string?, Art?> Art;
         public bool IsDeletable { get; set; }
 
-        public IEnumerable<MusicInList> Entries => Database.Instance.GetMusicInList(this);
-        public IEnumerable<Music> MusicEntries => Database.Instance.GetMusicInListDirect(this);
+
+        public Rel<MusicInList[]> Entries;
+        public Rel<Music[]> MusicEntries;
 
         public string? CoverArtSource => "/UI/Images/heart_active.png";
-        IEnumerable<Music> IMusicList.Entries => MusicEntries;
+        IEnumerable<Music> IMusicList.Entries => MusicEntries.Target;
+        string? IMusicList.Description => null;
 
         public MusicList(Guid id)
         {
             Id = id;
             Owner = new(null, o => o != null ? Database.Instance.GetArtist(o) : null);
             Art = new(null, a => a != null? Database.Instance.GetArt(a) : null);
+            Entries = new(() => Database.Instance.GetMusicInList(this).ToArray());
+            MusicEntries = new(() => Database.Instance.GetMusicInListDirect(this).ToArray());
         }
 
         public MusicList() : this(Guid.NewGuid()) {  }
