@@ -14,7 +14,7 @@ namespace Project.Data
         void ForceReload();
     }
 
-    public struct Link<K, T> : IRecordRelation<T>
+    public class Link<K, T> : IRecordRelation<T>
     {
         public K? Key
         {
@@ -50,7 +50,7 @@ namespace Project.Data
         public void ForceReload() => loaded = false;
     }
 
-    public struct Rel<T> : IRecordRelation<T>
+    public class Rel<T> : IRecordRelation<T>
     {
         public T? Target
         {
@@ -97,7 +97,7 @@ namespace Project.Data
             get => Music.Key;
             set => Music.Key = value;
         }
-        public Link<Guid, Music> Music = new(default, id => Database.Instance.GetMusic(id));
+        public Link<Guid, Music> Music { get; } = new(default, id => Database.Instance.GetMusic(id));
         public ulong? Checksum { get; set; }
 
         public Source(string address, Guid musicId)
@@ -147,7 +147,7 @@ namespace Project.Data
             get => Album.Key;
             set => Album.Key = value;
         }
-        public Link<Guid?, MusicList> Album;
+        public Link<Guid?, MusicList> Album { get; }
         public DateTime? LastPlayed { get; set; }
         public DateTime FirstRegistered { get; set; }
         public string? ArtAddress
@@ -155,14 +155,14 @@ namespace Project.Data
             get => Art.Key;
             set => Art.Key = value;
         }
-        public Link<string?, Art?> Art;
+        public Link<string?, Art?> Art { get; }
         public TimeSpan? Duration { get; set; }
         public MusicType MusicType { get; set; } = MusicType.Undefined;
         public uint PlayCount { get; set; } = 0;
 
-        public Rel<MusicByArtist[]> Artists;
+        public Rel<MusicByArtist[]> Artists { get; }
 
-        public Rel<Source[]> Sources;
+        public Rel<Source[]> Sources { get; }
 
         public Art? AlbumArt => Album.Target?.Art.Target;
        
@@ -268,7 +268,7 @@ namespace Project.Data
             get => Owner.Key;
             set => Owner.Key = value;
         }
-        public Link<string?, Artist?> Owner;
+        public Link<string?, Artist?> Owner { get; }
         public MusicListType Type { get; set; } = MusicListType.Undefined;
         public DateTime? PublishDate { get; set; }
         public string? ArtAddress 
@@ -276,7 +276,7 @@ namespace Project.Data
             get => Art.Key;
             set => Art.Key = value;
         }
-        public Link<string?, Art?> Art;
+        public Link<string?, Art?> Art { get; }
         public bool IsDeletable { get; set; }
 
 

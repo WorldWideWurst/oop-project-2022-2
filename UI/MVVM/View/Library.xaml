@@ -46,7 +46,8 @@
                         Grid.Column="2"
                         Width="60"/>
             </Grid>
-            <ContentControl x:Name="LibraryContent">
+            <ContentControl x:Name="LibraryContent"
+                            Margin="0,10,0,0">
                 <libPages:Main/>
             </ContentControl>
         </DockPanel>

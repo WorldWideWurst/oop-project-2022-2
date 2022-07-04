@@ -133,16 +133,16 @@ namespace Project.Player
         {
             var source = music.Sources.Target[0];
             var uri = new Uri(source.Address);
+            bool isPreloaded = uri == player.Source;
+
             CurrentState = PlayerState.Loading;
             player.Open(uri);
             timer.Start();
             CurrentMusicChanged?.Invoke(music, CurrentIndex);
             PlayerTickUpdate?.Invoke();
             
-            if(uri == player.Source)
-            {
+            if(isPreloaded)
                 Player_MediaOpened(this, EventArgs.Empty);
-            }
         }
 
         private void Idle()
