@@ -199,7 +199,7 @@ namespace Project.Player
 
         public void AppendMusicList(Data.MusicList list)
         {
-            var entries = list.MusicEntries.ToArray();
+            var entries = list.MusicEntries.Target;
             if(Shuffle) entries = reorderRandom(entries);
             
             foreach (var music in entries)
@@ -210,7 +210,7 @@ namespace Project.Player
 
         public void PrependMusicList(MusicList list)
         {
-            var entries = list.MusicEntries.ToArray();
+            var entries = list.MusicEntries.Target;
             if(Shuffle) entries = reorderRandom(entries);
             int offset = CurrentIndex + (IsIdle ? 0 : 1);
 
