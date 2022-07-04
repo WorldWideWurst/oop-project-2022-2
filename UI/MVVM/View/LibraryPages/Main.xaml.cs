@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Project.Data;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,38 +22,27 @@ namespace Project.UI.MVVM.View.LibraryPages
     /// </summary>
     public partial class Main : UserControl, ILibraryPage
     {
+
+        public ObservableCollection<IMusicList> LibraryEntries { get; } = Player.Library.Instance.Entries;
+
         public Main()
         {
             InitializeComponent();
-            RepopulatePlaylists();
             Data.Database.Instance.DatabaseChanged += (type, _) => 
             { 
-                if (type == typeof(Data.MusicInList) || type == typeof(Data.MusicList)) 
-                    Application.Current.Dispatcher.Invoke(() => RepopulatePlaylists()); 
-            };
-        }
-
-
-        void RepopulatePlaylists()
-        {
-            Items.Items.Clear();
-
-            var virtualPlaylists = new Data.IMusicList[]
-            {
-                new Data.AllMusicList(),
-                new Data.UnregisteredMusicList(),
-            };
-            var allPlaylists = virtualPlaylists.Concat(Data.Database.Instance.GetMusicList());
-
-            foreach(var list in allPlaylists)
-            {
-                var ctrl = new PlaylistMiniature(list)
+                if (type == typeof(MusicInList) || type == typeof(MusicList))
                 {
-                    Margin = new Thickness(0)
-                };
-                Items.Items.Add(ctrl);
-            }
+                    Application.Current.Dispatcher.Invoke(() => 
+                    {
+                        Player.Library.Instance.Refresh();
+                        Items.Items.Refresh();
+                    }); 
+                } 
+            };
+            DataContext = this;
         }
+
+
         public void Search(string queryString)
         {
             throw new NotImplementedException();

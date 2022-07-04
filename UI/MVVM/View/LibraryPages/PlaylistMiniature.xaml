@@ -17,7 +17,7 @@
                    Text="{Binding Name}"
                    TextWrapping="Wrap"/>
         <TextBlock Name="ArtistName"
-                   Text="{Binding Owner}"
+                   Text="{Binding OwnerName}"
                    TextTrimming="CharacterEllipsis"/>
         <TextBlock Name="EntryCount"
                    Text="{Binding Count, StringFormat=Lieder: {0}}"/>

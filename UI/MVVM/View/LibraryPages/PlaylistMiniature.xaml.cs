@@ -20,18 +20,21 @@ namespace Project.UI.MVVM.View.LibraryPages
     /// </summary>
     public partial class PlaylistMiniature : UserControl
     {
-        public PlaylistMiniature(Data.IMusicList musicList)
+
+        public PlaylistMiniature() 
         {
             InitializeComponent();
+        }
+
+        public PlaylistMiniature(Data.IMusicList musicList) : this()
+        {
             DataContext = musicList;
-            ArtistName.Text = musicList.OwnerName;
-            EntryCount.Text = musicList.Count.ToString();
         }
 
         private void GotoPlaylist_Click(object sender, RoutedEventArgs e)
         {
             PlaylistOverview ctrl = new((Data.IMusicList)DataContext);
-            ((MainWindow)Application.Current.MainWindow).LibraryTab.ShowLibraryPage(ctrl);
+            ((MainWindow)Application.Current.MainWindow).OpenLibraryPage(ctrl);
         }
     }
 }
