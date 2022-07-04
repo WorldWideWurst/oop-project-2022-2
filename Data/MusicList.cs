@@ -11,6 +11,7 @@ namespace Project.Data
         string Name { get; }
         string? CoverArtSource { get; }
         string? OwnerName { get; }
+        string? Description { get; }
         IEnumerable<Music> Entries { get; }
 
         int Count => Entries.Count();
@@ -20,8 +21,8 @@ namespace Project.Data
     {
         public string Name => "Nicht eingeordnet";
         public string? CoverArtSource => "/UI/Images/heart_hover.png";
-
         public string? OwnerName => null;
+        public string? Description => null;
 
         public IEnumerable<Music> Entries => Database.Instance.GetMusicWithoutAlbum();
         
@@ -31,10 +32,20 @@ namespace Project.Data
     {
         public string Name => "Alle Lieder";
         public string? CoverArtSource => "/UI/Images/heart_hover.png";
-
         public string? OwnerName => null;
+        public string? Description => null;
 
         public IEnumerable<Music> Entries => Database.Instance.GetMusic();
 
+    }
+
+    public class FavouritesList : IMusicList
+    {
+        public string Name => "Lieblingslieder";
+        public string? CoverArtSource => "/UI/Images/heart_hover.png";
+        public string? OwnerName => null;
+        public string? Description => null;
+
+        public IEnumerable<Music> Entries => Database.Instance.GetMusicList(Database.FavouritesPlaylistId).MusicEntries.Target;
     }
 }
