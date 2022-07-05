@@ -17,24 +17,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Project;
+using Project.Download;
 
 namespace Project.UI.MVVM.View
 {
-
-    public class DownloadEntry : INotifyPropertyChanged
-    {
-        public string Thumbnail { get; set; }
-        public string FileName { get; set; }
-        public string Title { get; set; }
-        public string Artist { get; set; }
-        public TimeSpan Duration { get; set; }
-        public DateOnly UploadDate { get; set; }
-        public double Progress { get => progress; set { progress = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress")); } }
-        double progress;
-        public Download.YTDLAPI Settings { get; set; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-    }
 
     
     /// <summary>
@@ -43,8 +29,7 @@ namespace Project.UI.MVVM.View
     public partial class Downloader : UserControl
     {
 
-        public ObservableCollection<DownloadEntry> Queue { get; set; } = new();
-        public DownloadEntry? CurrentEntry 
+        public MusicDownload? CurrentEntry 
         {
             get => currentEntry;
             set
@@ -68,7 +53,7 @@ namespace Project.UI.MVVM.View
                 }
             }
         }
-        DownloadEntry? currentEntry;
+        MusicDownload? currentEntry;
 
         public Downloader()
         {
@@ -100,18 +85,10 @@ namespace Project.UI.MVVM.View
             URLInput.Clear();
             HintShow(null, null); // lol
 
-            // Download.Youtubedl.Download(uriString, "");
-            CurrentEntry = new DownloadEntry()
-            {
-                Thumbnail = "/UI/Images/heart.png",
-                FileName = uriString,
-                Artist = "Marzipan",
-                Duration = new TimeSpan(69, 4, 20),
-                Title = "Yo Mama",
-                UploadDate = new DateOnly(2020, 2, 20),
-            };
+            var musicDownload = Download.Download.Instance.GetMusicDownload(uriString);
+            CurrentEntry = musicDownload;
 
-            Task.Run(() => Download.Youtubedl.Download(uriString, ""));
+            Download.Download.Instance.DirectDownloadDownload(musicDownload);
         }
 
 
@@ -142,20 +119,20 @@ namespace Project.UI.MVVM.View
 
         private void CancelDownload_Click(object sender, RoutedEventArgs e)
         {
-            Queue.Remove((DownloadEntry)((Button)sender).DataContext);
+            // Queue.Remove((DownloadEntry)((Button)sender).DataContext);
         }
 
         private void QueueDisplay_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             var listBox = (ListBox)sender;
-            CurrentEntry = (DownloadEntry?)listBox.SelectedItem;
+            // CurrentEntry = (DownloadEntry?)listBox.SelectedItem;
         }
 
         private void EnqueueFront_Click(object sender, RoutedEventArgs e)
         {
             if(CurrentEntry != null)
             {
-                Queue.Insert(0, CurrentEntry);
+                // Queue.Insert(0, CurrentEntry);
                 CurrentEntry = null;
             }
         }
@@ -164,7 +141,7 @@ namespace Project.UI.MVVM.View
         {
             if(CurrentEntry != null)
             {
-                Queue.Add(CurrentEntry);
+                // Queue.Add(CurrentEntry);
                 CurrentEntry= null;
             }
         }
