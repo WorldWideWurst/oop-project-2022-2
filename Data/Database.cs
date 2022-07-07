@@ -680,37 +680,37 @@ namespace Project.Data
             return music;
         }
 
-        public Music RegisterMusicDownload(Project.Download.MusicDownload download)
-        {
-            if(download.Thumbnail != null)
-            {
-                new Art(download.Thumbnail).Insert();
-            }
+        //public Music RegisterMusicDownload(Project.Download.MusicDownloadInfo download)
+        //{
+        //    if(download.Thumbnail != null)
+        //    {
+        //        new Art(download.Thumbnail).Insert();
+        //    }
 
-            var music = new Music()
-            {
-                Title = download.Title,
-                ArtAddress = download.Thumbnail,
-                Duration = download.Duration,
-                FirstRegistered = DateTime.Now,
-                MusicType = MusicType.Song,  
-            };
-            music.Insert();
+        //    var music = new Music()
+        //    {
+        //        Title = download.Title,
+        //        ArtAddress = download.Thumbnail,
+        //        Duration = download.Duration,
+        //        FirstRegistered = DateTime.Now,
+        //        MusicType = MusicType.Song,  
+        //    };
+        //    music.Insert();
 
-            new Artist(download.Artist).Insert();
-            new MusicByArtist(music.Id, download.Artist).Insert();
+        //    new Artist(download.Artist).Insert();
+        //    new MusicByArtist(music.Id, download.Artist).Insert();
 
-            if(download.FileLocation != null)
-            {
-                new Source(download.FileLocation, music.Id).Insert();
-            }
-            new Source(download.Source, music.Id)
-            {
-                SourceType = SourceType.Stream
-            }.Insert();
+        //    if(download.FileLocation != null)
+        //    {
+        //        new Source(download.FileLocation, music.Id).Insert();
+        //    }
+        //    new Source(download.Source, music.Id)
+        //    {
+        //        SourceType = SourceType.Stream
+        //    }.Insert();
 
-            return music;
-        }
+        //    return music;
+        //}
 
         public IEnumerable<IRecordView> StringQuery(string query)
         {

@@ -14,8 +14,8 @@ namespace Project.Download
         public static readonly Download Instance = new Download();
 
         public readonly string YTDLExecutablePath = "Download\\youtube-dl.exe";
-        public readonly string DataDownloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.music_db\\download\\";
-        public string DataDownloadTempPath => DataDownloadPath + "temp\\";
+        public readonly string DataDownloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.music_db\\download";
+        public string DataDownloadTempPath => DataDownloadPath + "\\temp";
 
         private readonly string[] InfoOptions =
         {
@@ -23,11 +23,12 @@ namespace Project.Download
             "--print-json", // daten werden im json format ausgegeben
             "--no-progress", // kein herunterlade-fortschritt wird ausgegeben
             "--write-thumbnail", // thumbnail wird heruntergeladen
-            "-o {OutputDir}", // da wo der kram hin soll
+            "-o {Target}", // da wo der kram hin soll
         };
 
         private readonly string[] DownloadOptions =
         {
+            "-o {Target}", // wo das gute zeugs hin soll
             "--extract-audio", // damit nur das audio heruntergeladen wird
             "--audio-format mp3", // mp3 format bitte
             "--audio-quality {AudioQuality}", // audio Qualität. 0 bestes, 9 schlechtestes
@@ -35,12 +36,10 @@ namespace Project.Download
             "--embed-thumbnail", // thumbnail hinzufügen
             "--no-continue", // zuvor heruntergeladenes wird nicht weitergemacht
             "--newline", // damit der fortschritt begutachtet werden kann
+            // "--limit-rate {DownloadSpeedLimit}", // downloadrate limitieren
         };
 
-
-        public readonly ObservableCollection<MusicDownload> Queue = new ObservableCollection<MusicDownload>();
-        public readonly ObservableCollection<MusicDownload> Done = new ObservableCollection<MusicDownload>();
-        public bool IsBusy { get; private set; }
+        private readonly Regex progressRegex = new Regex("\\[download\\]\\s*(\\d+\\.\\d+)%");
 
 
         private Download()
@@ -51,7 +50,7 @@ namespace Project.Download
             }
         }
 
-        public MusicDownload? GetMusicDownload(string address)
+        public MusicDownloadInfo? GetMusicDownloadInfo(string address)
         {
             var processInfo = new ProcessStartInfo(YTDLExecutablePath);
             processInfo.CreateNoWindow = true;
@@ -63,7 +62,7 @@ namespace Project.Download
                 .Append($"\"{address}\" ")
                 .AppendJoin(" ", InfoOptions)
                 .ToString();
-            args = args.Replace("{OutputDir}", $"\"{DataDownloadPath}\"");
+            args = args.Replace("{Target}", $"\"{DataDownloadPath}\"");
             processInfo.Arguments = args;
 
             using var process = Process.Start(processInfo);
@@ -94,10 +93,10 @@ namespace Project.Download
             return ParseMusicDownloadFromJSON(address, json);
         }
 
-        private MusicDownload ParseMusicDownloadFromJSON(string address, JsonNode root)
+        private MusicDownloadInfo ParseMusicDownloadFromJSON(string address, JsonNode root)
         {
             var obj = root.AsObject();
-            return new MusicDownload()
+            return new MusicDownloadInfo()
             {
                 Source = address,
                 UploadDate = UploadDateToDateTime((string)obj["upload_date"]),
@@ -117,85 +116,81 @@ namespace Project.Download
             return new DateTime(year, month, day);
         }
 
-        public void EnqueueDownload(MusicDownload download)
+
+        public void DownloadMusic(string source, string target, DownloadSettings settings, IObserver<float> progressObserver)
         {
-            Queue.Add(download);
-            download.DownloadState = DownloadState.Enqueued;
-        }
-
-        public void DirectDownloadDownload(MusicDownload download)
-        {
-            IsBusy = true;
-
-            var fileName = $"{DataDownloadPath}{download.Title}.mp3";
-
             var processInfo = new ProcessStartInfo(YTDLExecutablePath);
             processInfo.CreateNoWindow = true;
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardError = true;
             processInfo.RedirectStandardOutput = true;
 
+            int quality = settings.Quality switch
+            {
+                QualitySetting.Lowest => 0,
+                QualitySetting.Default => 5,
+                QualitySetting.Best => 9,
+            };
+
             string args = new StringBuilder()
-                .Append($"\"{download.Source}\" ")
+                .Append($"\"{source}\" ")
                 .AppendJoin(" ", DownloadOptions)
                 .ToString();
-            args = args.Replace("{OutputDir}", $"\"{fileName}\"");
-            args = args.Replace("{AudioQuality}", $"{5}");
+            args = args.Replace("{Target}", $"\"{target}\"");
+            args = args.Replace("{AudioQuality}", $"{quality}");
+            args = args.Replace("{DownloadSpeedLimit}", $"{settings.DownloadSpeedLimit / 1024}K");
             processInfo.Arguments = args;
-
-            download.DownloadState = DownloadState.Downloading;
             
             using var process = Process.Start(processInfo);
 
             process.OutputDataReceived += (s, e) => 
             {
                 if(e.Data == null) return;
+                Console.WriteLine(e.Data);
 
-                var match = new Regex("\\[download\\]\\s*(\\d+\\.\\d+)%").Match(e.Data);
+                var match = progressRegex.Match(e.Data);
                 if(match.Success)
                 {
                     float progress = float.Parse(match.Groups[1].Value) / 1000f;
-                    Console.WriteLine(progress);
-                    download.Progress = progress;
+                    progressObserver.OnNext(progress);
                 }
             };
             process.BeginOutputReadLine();
 
-            var errorOutput = process.StandardError.ReadToEnd();
+            process.ErrorDataReceived += (s, e) =>
+            {
+                if (e.Data == null) return;
+                Console.WriteLine(e.Data);
+            };
+            process.BeginErrorReadLine();
 
             process.WaitForExit();
 
-            if(errorOutput.Length > 0)
+            if(process.ExitCode == 0)
             {
-                download.FileLocation = fileName;
-                download.DownloadState = DownloadState.Success;
+                progressObserver.OnCompleted();
             }
             else
             {
-                download.DownloadState = DownloadState.Error;
+                progressObserver.OnError(new Exception("FÖHLER"));
             }
-
-            IsBusy = false;
         }
     }
 
-    public interface IDownloadable
+    public enum QualitySetting
     {
-        public string Source { get; }
-
-
+        Lowest,
+        Default,
+        Best,
     }
 
-    public enum DownloadState
+    public class DownloadSettings
     {
-        Waiting,
-        Enqueued,
-        Downloading,
-        Success,
-        Error,
+        public QualitySetting Quality { get; set; }
+        public int DownloadSpeedLimit { get; set; }
     }
 
-    public class MusicDownload : IDownloadable
+    public class MusicDownloadInfo
     {
         public string Source { set; get; }
         public string? Thumbnail { set; get; }
@@ -204,33 +199,6 @@ namespace Project.Download
         public string Artist { set; get; }
         public DateTime UploadDate { get; set; }
         public TimeSpan Duration { set; get; }
-
-        public DownloadState DownloadState
-        {
-            get => downloadState;
-            set
-            {
-                downloadState = value;
-                DownloadStateChanged?.Invoke(value);
-            }
-        }
-        private DownloadState downloadState = DownloadState.Waiting;
-
-        public string? FileLocation { set; get; } = null;
-        public float Progress
-        {
-            get => progress;
-            set
-            {
-                progress = value;
-                ProgressChanged?.Invoke(value);
-            }
-        }
-        private float progress = 0;
-
-        public event Action<float> ProgressChanged;
-        public event Action<DownloadState> DownloadStateChanged;
-
     }
 
 }

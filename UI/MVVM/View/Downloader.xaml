@@ -22,7 +22,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" MinWidth="100"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto" MinWidth="200"/>
+                    <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -66,48 +66,27 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
-                    <Image Source="{Binding Thumbnail}"
+                    <Image Source="{Binding Path=Info.Thumbnail}"
                                Grid.Column="0"
                                Grid.Row="0"
                                Grid.RowSpan="3"
                                Height="70"/>
                     <TextBlock Grid.Column="1"
                                    Grid.Row="0"
-                                   Text="{Binding Title}"/>
+                                   Text="{Binding Path=Info.Title}"/>
                     <StackPanel Grid.Column="1"
                                     Grid.Row="1"
                                     Orientation="Horizontal">
-                        <TextBlock Text="{Binding Artist}"/>
+                        <TextBlock Text="{Binding Path=Info.Artist}"/>
                         <Rectangle Width="20"/>
-                        <TextBlock Text="{Binding UploadDate}"/>
+                        <TextBlock Text="{Binding Path=Info.UploadDate}"/>
                         <Rectangle Width="20"/>
-                        <TextBlock Text="{Binding Duration}"/>
+                        <TextBlock Text="{Binding Path=Info.Duration}"/>
                     </StackPanel>
                     <TextBlock Grid.Column="1"
                                    Grid.Row="2"
-                                   Text="{Binding FileName}"/>
+                                   Text="{Binding Target}"/>
 
-                </Grid>
-                <Grid Grid.Column="1"
-                      Grid.Row="1"
-                      Name="EnqueueOptions"
-                      Visibility="Hidden">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Button Grid.Row="0"
-                            Click="EnqueueFront_Click">
-                        <TextBlock TextWrapping="Wrap">
-                            Vorne Rein
-                        </TextBlock>
-                    </Button>
-                    <Button Grid.Row="1"
-                            Click="EnqueueBack_Click">
-                        <TextBlock TextWrapping="Wrap">
-                            Hinten Rein
-                        </TextBlock>
-                    </Button>
                 </Grid>
                 <Grid Grid.Column="2"
                       Grid.Row="0"
@@ -118,68 +97,72 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Column="0"
                            Grid.Row="0"
                            Content="Qualität"/>
                     <ComboBox Grid.Column="3"
-                              Grid.Row="0">
-                        <ComboBoxItem IsSelected="true">Helo</ComboBoxItem>
-                        <ComboBoxItem>Helo2</ComboBoxItem>
-                        <ComboBoxItem>Helo3</ComboBoxItem>
-                        <ComboBoxItem>Helo4</ComboBoxItem>
+                              Grid.Row="0"
+                              SelectionChanged="QualitySetting_SelectionChanged">
+                        <ComboBoxItem>Beste</ComboBoxItem>
+                        <ComboBoxItem IsSelected="true">Standard</ComboBoxItem>
+                        <ComboBoxItem>Schlechteste</ComboBoxItem>
                     </ComboBox>
-                    <Label Grid.Column="0"
-                           Grid.Row="1"
-                           Content="Mamma mia"/>
-                    <ComboBox Grid.Column="3"
-                              Grid.Row="1">
-                        <ComboBoxItem IsSelected="true">Helo</ComboBoxItem>
-                        <ComboBoxItem>Helo2</ComboBoxItem>
-                        <ComboBoxItem>Helo3</ComboBoxItem>
-                        <ComboBoxItem>Helo4</ComboBoxItem>
-                    </ComboBox>
-                    <Label Grid.Column="0"
-                           Grid.Row="2"
-                           Content="Brathähnchen"/>
-                    <ComboBox Grid.Column="3"
-                              Grid.Row="2">
-                        <ComboBoxItem IsSelected="true">Helo</ComboBoxItem>
-                        <ComboBoxItem>Helo2</ComboBoxItem>
-                        <ComboBoxItem>Helo3</ComboBoxItem>
-                        <ComboBoxItem>Helo4</ComboBoxItem>
-                    </ComboBox>
+                    <StackPanel Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Grid.Row="1">
+                        <Button x:Name="EnqueueDownloadButton"
+                                Content="In die Warteschlange"
+                                Click="EnqueueDownloadButton_Click"
+                                IsEnabled="{Binding CanEnqueueDownload}"/>
+                        <Button x:Name="InstantDownloadButton"
+                                Content="Sofort Herunterladen"
+                                Click="InstantDownloadButton_Click"
+                                IsEnabled="{Binding CanInstantDownload}"/>
+                        <Button x:Name="AbortDownloadButtom"
+                                Content="Abbruch"
+                                Click="AbortDownloadButton_Click"
+                                IsEnabled="{Binding CanAbortDownload}"/>
+                        <Button x:Name="DeleteDownloadButton"
+                                Content="Löschen"
+                                Click="DeleteDownloadButton_Click"
+                                IsEnabled="{Binding CanDeleteDownload}"/>
+                        <RadioButton Name="AutoDownloadRadioButton" Content="Warteschlange Abarbeiten"
+                                     Unchecked="AutoDownloadRadioButton_Unchecked"
+                                     Checked="AutoDownloadRadioButton_Checked"
+                                     IsChecked="{Binding AutoDownloadEnabled}"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
             <!-- With DataTemplate -->
             <TextBlock>Warteschlange</TextBlock>
-            <ListBox ItemsSource="{Binding Queue}" 
-                     BorderBrush="Transparent" 
+            <ListBox BorderBrush="Transparent" 
                      Grid.IsSharedSizeScope="True"
                      HorizontalContentAlignment="Stretch"
                      SelectionMode="Single"
                      SelectionChanged="QueueDisplay_SelectionChanged"
-                     x:Name="Results">
+                     x:Name="Results"
+                     ItemsSource="{Binding Queue}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="4"
                               Height="30">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="40" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition MaxWidth="100" MinWidth="50" />
-                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition MaxWidth="200" />
+                                <ColumnDefinition MinWidth="50" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="{Binding Thumbnail}"
-                                   Height="20"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Title}" />
+                            <Image Source="{Binding Path=Info.Thumbnail}"
+                                   Height="30"/>
+                            <TextBlock Grid.Column="1" 
+                                       Text="{Binding Path=Info.Title}" 
+                                       TextWrapping="Wrap"/>
                             <ProgressBar Grid.Column="2"
                                          Margin="0,0,5,0"
-                                         DataContext="{Binding Progress}"></ProgressBar>
-                            <Button Grid.Column="3" 
-                                    Click="CancelDownload_Click">Abbruch</Button>
+                                         Minimum="0"
+                                         Maximum="1"
+                                         Value="{Binding Progress}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

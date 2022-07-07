@@ -33,8 +33,6 @@ namespace Project.UI.MVVM.View
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            var info = Download.Download.Instance.GetMusicDownload("https://www.youtube.com/watch?v=pRpeEdMmmQ0");
-            Download.Download.Instance.DirectDownloadDownload(info);
         }
     }
 }
