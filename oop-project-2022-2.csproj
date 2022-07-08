@@ -30,6 +30,8 @@
     <None Remove="UI\Images\heart_hover.png" />
     <None Remove="UI\Images\help.png" />
     <None Remove="UI\Images\help_hover.png" />
+    <None Remove="UI\Images\info.png" />
+    <None Remove="UI\Images\info_hover.png" />
     <None Remove="UI\Images\loop.png" />
     <None Remove="UI\Images\loop_hover.png" />
     <None Remove="UI\Images\loop_list.png" />
@@ -43,11 +45,17 @@
     <None Remove="UI\Images\pause.png" />
     <None Remove="UI\Images\pause_hover.png" />
     <None Remove="UI\Images\Play.png" />
+    <None Remove="UI\Images\playlistback.png" />
+    <None Remove="UI\Images\playlistback_hover.png" />
+    <None Remove="UI\Images\playlistfront.png" />
+    <None Remove="UI\Images\playlistfront_hover.png" />
     <None Remove="UI\Images\play_hover.png" />
     <None Remove="UI\Images\shuffle.png" />
     <None Remove="UI\Images\shuffle_active.png" />
     <None Remove="UI\Images\shuffle_active_hover.png" />
     <None Remove="UI\Images\shuffle_hover.png" />
+    <None Remove="UI\Images\trash.png" />
+    <None Remove="UI\Images\trash_hover.png" />
     <None Remove="UI\Images\volume.png" />
     <None Remove="UI\Images\volume_hover.png" />
   </ItemGroup>
@@ -119,6 +127,12 @@
     <Content Include="UI\Images\help_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Images\info.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\info_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Images\loop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -158,6 +172,18 @@
     <Content Include="UI\Images\play.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="UI\Images\playlistback.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\playlistback_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\playlistfront.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\playlistfront_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UI\Images\play_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -171,6 +197,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\shuffle_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\trash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\trash_hover.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\volume.png">
