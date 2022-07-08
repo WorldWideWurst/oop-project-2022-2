@@ -19,12 +19,31 @@
             <DataTemplate>
                 <RadioButton GroupName="List"
                              IsChecked="{Binding IsCurrentlyPlaying}">
-                    <DockPanel>
-                        <Button DockPanel.Dock="Right"
-                                Click="Remove_Click">X</Button>
-                        <TextBlock Text="{Binding Description}"
-                                   TextWrapping="Wrap"/>
-                    </DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="229" />
+                            <ColumnDefinition Width="20" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Button x:Name="RemoveButton"
+                                Style="{DynamicResource RemoveButton}"
+                                Click="Remove_Click" 
+                                VerticalAlignment="Center"
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                Width="20"/>
+                        <TextBlock Text="{Binding Title}"
+                                   Foreground="White"
+                                   TextTrimming="CharacterEllipsis"
+                                   Grid.Row="0"/>
+                        <TextBlock Text="{Binding Artists}"
+                                   Foreground="White"
+                                   TextTrimming="CharacterEllipsis"
+                                   Grid.Row="1"/>
+                    </Grid>
                 </RadioButton>
             </DataTemplate>
         </ListBox.ItemTemplate>

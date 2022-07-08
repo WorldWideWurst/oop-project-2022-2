@@ -10,15 +10,17 @@
     <StackPanel>
         <Image Source="{Binding Path=Art.Key}"
                MinHeight="20"/>
-        <TextBlock Text="{Binding Title}"/>
+        <TextBlock Text="{Binding Title}"
+                   Foreground="White"
+                   FontSize="20"/>
         <Grid Margin="5,0,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -28,65 +30,118 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" Content="Album:"/>
-            <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding Album}"/>
-            
-            <Label Grid.Column="0" Grid.Row="1">Künstler:</Label>
-            <ListView ItemsSource="{Binding Path=Artists.Target}" Grid.Column="2" Grid.Row="1">
+            <TextBlock  Text="Album:" 
+                        Grid.Column="0" 
+                        Grid.Row="0"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
+            <TextBlock  Grid.Column="2" 
+                        Grid.Row="0" 
+                        Text="{Binding Album}"
+                        Foreground="White"
+                        TextWrapping="Wrap"
+                        Margin="0,5,0,5"/>
+
+            <TextBlock  Text="Künstler:"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Foreground="White" 
+                        Margin="0,5,0,5"/>
+            <ListView ItemsSource="{Binding Path=Artists.Target}" 
+                      Grid.Column="2"
+                      Grid.Row="1"
+                        Margin="0,5,0,5">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding ArtistId}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
-            <Label Grid.Column="0" Grid.Row="2">Quellen:</Label>
-            <ListView ItemsSource="{Binding Path=Sources.Target}" Grid.Column="2" Grid.Row="2"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+            <TextBlock  Text="Quellen:" 
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
+            <ListView ItemsSource="{Binding Path=Sources.Target}" 
+                      Grid.Column="2" 
+                      Grid.Row="2"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      Margin="0,5,0,5">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <DockPanel HorizontalAlignment="Stretch">
-                            <Button DockPanel.Dock="Right"
-                                    Click="ViewSource_Click">Lookie</Button>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                            </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding Address}"
-                                       TextWrapping="Wrap"/>
-                        </DockPanel>
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,5,0"
+                                       Grid.Column="0"/>
+                            <Button Name="ViewSourceButton"
+                                    Click="ViewSource_Click" 
+                                    Style="{DynamicResource ViewSourceButton}"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Label Content="Zuletzt abgespielt:"
-                   Grid.Column="0"
-                   Grid.Row="3"/>
-            <TextBlock Text="{Binding LastPlayed}"
-                       Grid.Column="2"
-                       Grid.Row="3"/>
+            
+            <TextBlock  Text="Zuletzt abgespielt:"
+                        VerticalAlignment="Top"
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
+            <TextBlock  Text="{Binding LastPlayed}"
+                        VerticalAlignment="Top"
+                        Grid.Column="2"
+                        Grid.Row="3"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
 
-            <Label Content="Importiert am:"
-                   Grid.Column="0"
-                   Grid.Row="4"/>
-            <TextBlock Text="{Binding FirstRegistered}"
-                       Grid.Column="2"
-                       Grid.Row="4"/>
+            <TextBlock  Text="Importiert am:"
+                        Grid.Column="0"
+                        Grid.Row="4"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
+            <TextBlock  Text="{Binding FirstRegistered}"
+                        Grid.Column="2"
+                        Grid.Row="4"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
 
-            <Label Content="Länge:"
-                   Grid.Column="0"
-                   Grid.Row="5"/>
-            <TextBlock Text="{Binding Duration, StringFormat={}}"
-                       Grid.Column="2"
-                       Grid.Row="5"/>
+            <TextBlock  Text="Länge:"
+                        Grid.Column="0"
+                        Grid.Row="5"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
+            <TextBlock  Text="{Binding Duration, StringFormat={}}"
+                        Grid.Column="2"
+                        Grid.Row="5"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
 
-            <Label Content="Typ: "
-                   Grid.Column="0"
-                   Grid.Row="6"/>
-            <TextBlock Text="{Binding MusicType}"
-                       Grid.Column="2"
-                       Grid.Row="6"/>
+            <TextBlock  Text="Typ: "
+                        Grid.Column="0"
+                        Grid.Row="6"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
+            <TextBlock  Text="{Binding MusicType}"
+                        Grid.Column="2"
+                        Grid.Row="6"
+                        Foreground="White"
+                        Margin="0,5,0,5"/>
 
-            <TextBlock Grid.Column="0"
-                       Grid.Row="7"
-                       Grid.RowSpan="3" 
-                       Text="{Binding PlayCount, StringFormat=Schon {0} mal angehört!}"/>
+            <TextBlock  Grid.Column="0"
+                        Grid.Row="7"
+                        Grid.ColumnSpan="3" 
+                        Foreground="White"
+                        Text="{Binding PlayCount, StringFormat=Schon {0} mal angehört!}"
+                        Margin="0,5,0,5"/>
         </Grid>
     </StackPanel>
 </UserControl>

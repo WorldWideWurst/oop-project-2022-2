@@ -42,15 +42,23 @@ namespace Project.UI.MVVM.View
                 });
             }
 
-            public string Description
+            public string Title
             {
                 get
                 {
                     var sb = new StringBuilder();
                     sb.Append(Music.Title != null ? Music.Title : (Music.Sources.Target.FirstOrDefault().Address ?? "??"));
-                    if(Music.Artists.Target.Any())
+                    return sb.ToString();
+                }
+            }
+
+            public string Artists
+            {
+                get
+                {
+                    var sb = new StringBuilder();
+                    if (Music.Artists.Target.Any())
                     {
-                        sb.Append(" - by ");
                         sb.AppendJoin("/", Music.Artists.Target.Select(a => a.ArtistId));
                     }
                     return sb.ToString();
@@ -102,5 +110,6 @@ namespace Project.UI.MVVM.View
             var vm = (CurrentListMusicViewModel)((Button)sender).DataContext;
             Player.Player.Instance.RemoveMusic(CurrentListMirror.IndexOf(vm));
         }
+
     }
 }

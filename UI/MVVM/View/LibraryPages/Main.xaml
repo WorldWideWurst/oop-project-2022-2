@@ -9,7 +9,8 @@
     <ListView Name="Items"
               ItemsSource="{Binding LibraryEntries}"
               Background="#FF454545"
-              BorderThickness="0">
+              BorderThickness="0"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <local:PlaylistMiniature VerticalContentAlignment="Top"/>

@@ -238,6 +238,109 @@
         </Setter>
     </Style>
 
+    <!-- ViewSource-Button -->
+    <Style x:Key="ViewSourceButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="ButtonImage" Source="/UI/Images/heart.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <ContentPresenter />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/UI/Images/heart_hover.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ViewSourceInExplorer-Button -->
+    <Style x:Key="ViewSourceInExplorerButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="ButtonImage" Source="/UI/Images/heart.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <ContentPresenter />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/UI/Images/heart_hover.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ViewMusic-Button -->
+    <Style x:Key="ViewMusicButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="ButtonImage" Source="/UI/Images/heart.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <ContentPresenter />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/UI/Images/heart_hover.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Remove-Button -->
+    <Style x:Key="RemoveButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel>
+                        <Image x:Name="ButtonImage" Source="/UI/Images/heart.png"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <ContentPresenter />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonImage" Property="Source" Value="/UI/Images/heart_hover.png"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- PlaylistDisplay-Button -->
+    <Style TargetType="{x:Type Button}"
+           x:Key="PlaylistDisplayButtonTheme">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Style="{StaticResource BorderTheme}">
+                            <Grid VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Stretch">
+                                <TextBlock Text="{TemplateBinding Property=Content}" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="Foreground" Value="White" />
+        </Style.Setters>
+    </Style>
+
     <!-- Volume-Button mit integriertem Slider zur Lautstärke-Kontrolle -->
     <Style x:Key="VolumeButton" TargetType="Button">
         <Setter Property="Template">

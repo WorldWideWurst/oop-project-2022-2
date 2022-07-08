@@ -42,7 +42,9 @@ namespace Project.UI.MVVM.View.LibraryPages
             {
                 Artists.Children.Add(new TextBlock()
                 {
-                    Text = artist.ArtistId
+                    Text = artist.ArtistId,
+                    Foreground = Brushes.White,
+                    FontSize = 14
                 });
             }
         }

@@ -9,7 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -17,32 +17,51 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
-        <Label Content="Quellort:" 
-               Grid.Column="0" 
-               Grid.Row="0"/>
+        <TextBlock  Text="Quellort:" 
+                    Grid.Column="0" 
+                    Grid.Row="0"
+                    Foreground="White"/>
         <DockPanel Grid.Column="1"
                    Grid.Row="0">
-            <Button DockPanel.Dock="Right"
-                    Click="ViewSourceInExplorer">Anguge</Button>
-            <TextBlock Text="{Binding Address}"/>
+            <Button x:Name="ViewSourceInExplorerButton"
+                    Style="{DynamicResource ViewMusicButton}"
+                    DockPanel.Dock="Right"
+                    VerticalAlignment="Center"
+                    Click="ViewSourceInExplorer" 
+                    Width="30"/>
+            <TextBlock Text="{Binding Address}"
+                       Foreground="White"
+                       Margin="5,0,0,5"
+                        TextWrapping="Wrap"/>
         </DockPanel>
 
-        <Label Content="Enthält Musik:"
-               Grid.Column="0"
-               Grid.Row="1"/>
+        <TextBlock  Text="Enthält Musik:"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Foreground="White"/>
         <DockPanel Grid.Column="1"
                    Grid.Row="1">
-            <Button DockPanel.Dock="Right"
-                    Click="ViewMusic">Anguge</Button>
-            <TextBlock Text="{Binding MusicDescription}"/>
+            <Button x:Name="ViewMusicButton"
+                    Style="{DynamicResource ViewMusicButton}"
+                    DockPanel.Dock="Right"
+                    VerticalAlignment="Center"
+                    Click="ViewMusic" 
+                    Width="30"/>
+            <TextBlock  Text="{Binding MusicDescription}"
+                        Foreground="White"
+                        Margin="5,0,0,5"
+                        TextWrapping="Wrap"/>
         </DockPanel>
 
-        <Label Content="Typ:"
-               Grid.Column="0"
-               Grid.Row="2"/>
-        <TextBlock Text="{Binding Type}"
-                   Grid.Column="1"
-                   Grid.Row="2"/>
+        <TextBlock  Text="Typ:"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Foreground="White"/>
+        <TextBlock  Text="{Binding Type}"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Foreground="White"
+                    Margin="5,0,0,0"/>
 
     </Grid>
 </UserControl>

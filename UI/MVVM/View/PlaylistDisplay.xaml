@@ -10,16 +10,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="280">
     <ListView x:Name="ListView"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              Background="#FF323232"
+              BorderThickness="0">
+        
         <ListView.ItemTemplate>
             <DataTemplate>
-                <DockPanel HorizontalAlignment="Stretch">
-                    <Button Content=";)"
+                <Button     x:Name="PlaylistDisplayButton"
+                            Content="{Binding Name}"
+                            Style="{DynamicResource PlaylistDisplayButtonTheme}"
                             Click="ViewMusicList_Click"
-                            DockPanel.Dock="Right"/>
-                    <TextBlock Text="{Binding Name}"
-                               TextTrimming="CharacterEllipsis"/>
-                </DockPanel>
+                            Foreground="White"
+                            HorizontalAlignment="Left"
+                            Background="#FF323232"
+                            BorderThickness="0"
+                            Width="280"
+                            Height="25"/>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
