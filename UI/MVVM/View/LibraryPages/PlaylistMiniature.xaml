@@ -6,20 +6,25 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View.LibraryPages"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="100"
-             Width="100">
-    <StackPanel Margin="10px">
+             Width="100" Height="200">
+    <StackPanel Margin="5"
+                PreviewMouseDown="GotoPlaylist_Click">
         <Button Name="GotoPlaylist"
-                Click="GotoPlaylist_Click">
+                BorderThickness="0">
             <Image Name="PlaylistArt"
                    Source="{Binding CoverArtSource}"/>
         </Button>
         <TextBlock Name="PlaylistName"
                    Text="{Binding Name}"
-                   TextWrapping="Wrap"/>
+                   TextWrapping="Wrap"
+                   MaxHeight="65"
+                   Foreground="White"/>
         <TextBlock Name="ArtistName"
                    Text="{Binding OwnerName}"
-                   TextTrimming="CharacterEllipsis"/>
+                   TextWrapping="Wrap"
+                   Foreground="White"/>
         <TextBlock Name="EntryCount"
-                   Text="{Binding Count, StringFormat=Lieder: {0}}"/>
+                   Text="{Binding Count, StringFormat=Lieder: {0}}"
+                   Foreground="White"/>
     </StackPanel>
 </UserControl>
