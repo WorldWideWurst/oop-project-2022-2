@@ -8,21 +8,77 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" 
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
                   VerticalScrollBarVisibility="Auto"
                   Padding="10,0,10,0">
         <Grid>
-            <TextBlock Text="Startseite" Foreground="White" FontSize="40"/>
+            <StackPanel>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="55" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Startseite" 
+                       Foreground="White" 
+                       FontSize="40"/>
+                    <Button x:Name="HelpButton"
+                            MouseEnter="HelpButton_MouseEnter"
+                            MouseLeave="HelpButton_MouseLeave" 
+                            Style="{StaticResource HelpButton}"
+                            Height="55" Width="55"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Grid.Column="1"
+                            Margin="0,0,0,0"/>
+                </Grid>
 
-            <Button x:Name="TestButton" 
-                    Click="TestButton_Click"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Margin="10,60,0,0"
-                    Background="#FFFF3E3E"
-                    Foreground="White">
-                Ich bin ein Testknopf
-            </Button>
+                <TextBlock Text="Herzlich Willkommen!" 
+                       Foreground="White" 
+                       FontSize="30"
+                       TextAlignment="Center"
+                       Margin="0,10,0,25"/>
+
+                <TextBlock  Text="Diese Anwendung dient als Musik-Player, gleichzeitig aber auch zur Verwaltung der Musik. Außerdem ermöglicht sie dir, Musik aus dem Internet herunterzuladen. Sie befindet sich noch in der Entwicklung., aber du kannst trotzdem schon viel mit ihr anstellen!"
+                        FontSize="15"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        Margin="0,5,0,25"/>
+
+                <TextBlock  Text="Einige Erklärungen findest du in den Einstellungen, aber auch in den jeweiligen Reitern in der oberen rechten Ecke!"
+                        FontSize="15"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        Foreground="White"
+                        Margin="0,5,0,25"/>
+
+            </StackPanel>
+            
+            <!-- Dynamisch eingeblendete Hilfs-Menüs -->
+            <Grid   VerticalAlignment="Stretch"
+                    x:Name="Help"
+                    Visibility="Collapsed"
+                    MouseEnter="HelpButton_MouseEnter"
+                    MouseLeave="HelpButton_MouseLeave"
+                    Margin="0,55,0,0"
+                    Background="#FF454545">
+                <StackPanel Margin="0,10,0,10">
+                    <TextBlock Text="Dies ist ein Hilfs-Menü!"
+                               FontSize="18"
+                               TextAlignment="Center"
+                               Foreground="White"
+                               Margin="0,0,0,10"/>
+                    <TextBlock Text="Kleine Hilfen wie diese findest du überall in der Anwendung verteilt. Um die Hilfe zu schließen, verlasse sie einfach mit deinem Mauszeiger!"
+                               FontSize="15"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Foreground="White"
+                               Margin="0,0,0,25"/>
+                </StackPanel>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </UserControl>

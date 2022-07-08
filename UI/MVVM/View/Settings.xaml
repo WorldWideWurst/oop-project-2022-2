@@ -178,12 +178,12 @@
                                TextWrapping="Wrap"
                                Foreground="White"
                                Margin="0,0,0,25"/>
-                    <TextBlock Text="Bla Bla"
+                    <TextBlock Text="Die erste Musik hören"
                                FontSize="18"
                                TextAlignment="Center"
                                Foreground="White"
                                Margin="0,0,0,10"/>
-                    <TextBlock Text="Bla Blub Katze Katze haha"
+                    <TextBlock Text="Ablauf:&#xA;1: Musik importieren (im gleichnamigen Reiter)&#xA;2: In die Bibliothek gehen und die Musik auswählen&#xA;3: Genießen!"
                                FontSize="15"
                                TextAlignment="Center"
                                TextWrapping="Wrap"

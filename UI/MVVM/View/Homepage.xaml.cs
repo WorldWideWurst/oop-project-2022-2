@@ -31,8 +31,14 @@ namespace Project.UI.MVVM.View
             InitializeComponent();
         }
 
-        private void TestButton_Click(object sender, RoutedEventArgs e)
+        private void HelpButton_MouseEnter(object sender, RoutedEventArgs e)
         {
+            Help.Visibility = Visibility.Visible;
+        }
+
+        private void HelpButton_MouseLeave(object sender, RoutedEventArgs e)
+        {
+            Help.Visibility = Visibility.Collapsed;
         }
     }
 }
