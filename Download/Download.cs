@@ -15,7 +15,8 @@ namespace Project.Download
 
         public readonly string YTDLExecutablePath = "Download\\youtube-dl.exe";
         public readonly string DataDownloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.music_db\\download";
-        public string DataDownloadTempPath => DataDownloadPath + "\\temp";
+        public string MusicDownloadPath => DataDownloadPath + "\\music";
+        public string ThumbnailDownloadPath => DataDownloadPath + "\\thumbnails";
 
         private readonly string[] InfoOptions =
         {
@@ -23,7 +24,8 @@ namespace Project.Download
             "--print-json", // daten werden im json format ausgegeben
             "--no-progress", // kein herunterlade-fortschritt wird ausgegeben
             "--write-thumbnail", // thumbnail wird heruntergeladen
-            "-o {Target}", // da wo der kram hin soll
+            "-o {Target}", // da wo der kram (das thumbnail!) hin soll
+            "-v",  // verbosity
         };
 
         private readonly string[] DownloadOptions =
@@ -37,6 +39,7 @@ namespace Project.Download
             "--no-continue", // zuvor heruntergeladenes wird nicht weitergemacht
             "--newline", // damit der fortschritt begutachtet werden kann
             // "--limit-rate {DownloadSpeedLimit}", // downloadrate limitieren
+            "-v",  // verbosity
         };
 
         private readonly Regex progressRegex = new Regex("\\[download\\]\\s*(\\d+\\.\\d+)%");
@@ -44,14 +47,14 @@ namespace Project.Download
 
         private Download()
         {
-            if(!Directory.Exists(DataDownloadPath))
-            {
-                Directory.CreateDirectory(DataDownloadPath);
-            }
+            Directory.CreateDirectory(MusicDownloadPath);
+            Directory.CreateDirectory(ThumbnailDownloadPath);
         }
 
         public MusicDownloadInfo? GetMusicDownloadInfo(string address)
         {
+            var thumbnailTempFile = Path.GetTempFileName();
+
             var processInfo = new ProcessStartInfo(YTDLExecutablePath);
             processInfo.CreateNoWindow = true;
             processInfo.UseShellExecute = false;
@@ -62,7 +65,7 @@ namespace Project.Download
                 .Append($"\"{address}\" ")
                 .AppendJoin(" ", InfoOptions)
                 .ToString();
-            args = args.Replace("{Target}", $"\"{DataDownloadPath}\"");
+            args = args.Replace("{Target}", $"\"{thumbnailTempFile}\"");
             processInfo.Arguments = args;
 
             using var process = Process.Start(processInfo);
@@ -90,7 +93,10 @@ namespace Project.Download
             }
 
             var json = JsonNode.Parse(jsonString);
-            return ParseMusicDownloadFromJSON(address, json);
+
+            var info = ParseMusicDownloadFromJSON(address, json);
+
+            return info;
         }
 
         private MusicDownloadInfo ParseMusicDownloadFromJSON(string address, JsonNode root)
