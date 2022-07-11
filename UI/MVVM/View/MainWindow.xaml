@@ -145,8 +145,8 @@
         <Rectangle  Margin="0,0,0,100" 
                     Panel.ZIndex="1000" 
                     VerticalAlignment="Bottom" 
-                    HorizontalAlignment="Left" 
-                    Height="20" Width="280"
+                    HorizontalAlignment="Stretch" 
+                    Height="20"
                     IsHitTestVisible="False">
             <Rectangle.Fill>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">

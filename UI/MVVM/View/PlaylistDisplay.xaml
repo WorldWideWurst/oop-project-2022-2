@@ -21,6 +21,7 @@
                             Style="{DynamicResource PlaylistDisplayButtonTheme}"
                             Click="ViewMusicList_Click"
                             Foreground="White"
+                            HorizontalContentAlignment="Left"
                             HorizontalAlignment="Left"
                             Background="#FF323232"
                             BorderThickness="0"

@@ -68,36 +68,35 @@ namespace Project.UI.MVVM.View
         //noch nicht implementiert
         private void RandomizeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Randomizing Song Order!");
+            
         }
         private void RandomizeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not randomizing anymore");
+            
         }
 
         private void RepeatCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Repeating this song!");
-            //Funktionalität ist im timer_Tick eingebaut
+            
         }
         private void RepeatCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not repeating this song anymore");
+            
         }
         private void RepeatCheckbox_Indeterminant(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Repeating the Playlist");
+            
         }
 
 
         private void LikeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Liked the song!");
+            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
         }
 
         private void LikeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Dont like the song anymore :(");
+            
         }
 
 

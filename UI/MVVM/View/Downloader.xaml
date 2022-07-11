@@ -13,25 +13,43 @@
                   HorizontalScrollBarVisibility="Disabled"
                   VerticalScrollBarVisibility="Auto"
                   Padding="10,0,10,0">
-        <StackPanel>
-            <TextBlock  Text="Downloader" 
-                        Foreground="White" 
-                        FontSize="40"
-                        Margin="0,0,0,10"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MinWidth="100"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition MaxHeight="70"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBox    Name="URLInput"
+        <Grid>
+            <StackPanel>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="55" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Downloader" 
+                       Foreground="White" 
+                       FontSize="40"/>
+                    <Button x:Name="HelpButton"
+                            MouseEnter="HelpButton_MouseEnter"
+                            MouseLeave="HelpButton_MouseLeave" 
+                            Style="{StaticResource HelpButton}"
+                            Height="55" Width="55"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Grid.Column="1"
+                            Margin="0,0,0,0"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="100"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition MaxHeight="70"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBox    Name="URLInput"
                             VerticalContentAlignment="Center"
                             MinWidth="200"
                             Text="Hier einen Link eingeben!"
@@ -40,133 +58,172 @@
                             GotFocus="HintNull" 
                             LostFocus="HintShow"
                             KeyDown="URLInput_KeyDown"/>
-                <Button Content="Suchen"
+                    <Button Content="Suchen"
                         Style="{DynamicResource StandardButtonTheme}"
                         Click="DownloaderButton_Click"
-                        Height="40" Width="80"
-                        Margin="0,0,0,0"
+                        Height="60" Width="80"
+                        Margin="10,0,10,0"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top"
                         Grid.Column="1"/>
-                <TextBlock Grid.Column="0"
+                    <TextBlock Grid.Column="0"
                            Grid.Row="1"
                            Grid.ColumnSpan="2"
+                           Foreground="White"
                            Name="NoSelectionDisplay">Nichts ausgewählt.</TextBlock>
-                <Grid Name="SelectionDisplay"
+                    <Grid Name="SelectionDisplay"
                       Grid.Column="0"
                       Grid.ColumnSpan="1"
                       Grid.Row="1"
                       DataContext="{Binding CurrentEntry}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Image Source="{Binding Path=Info.Thumbnail}"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Source="{Binding Path=Info.Thumbnail}"
                                Grid.Column="0"
                                Grid.Row="0"
                                Grid.RowSpan="3"
                                Height="70"/>
-                    <TextBlock Grid.Column="1"
-                                   Grid.Row="0"
-                                   Text="{Binding Path=Info.Title}"/>
-                    <StackPanel Grid.Column="1"
+                        <TextBlock Grid.Column="1"
+                               Grid.Row="0"
+                               Foreground="White"
+                               Text="{Binding Path=Info.Title}"/>
+                        <StackPanel Grid.Column="1"
                                     Grid.Row="1"
                                     Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Info.Artist}"/>
-                        <Rectangle Width="20"/>
-                        <TextBlock Text="{Binding Path=Info.UploadDate}"/>
-                        <Rectangle Width="20"/>
-                        <TextBlock Text="{Binding Path=Info.Duration}"/>
-                    </StackPanel>
-                    <TextBlock Grid.Column="1"
+                            <TextBlock Text="{Binding Path=Info.Artist}"/>
+                            <Rectangle Width="20"/>
+                            <TextBlock Text="{Binding Path=Info.UploadDate}"/>
+                            <Rectangle Width="20"/>
+                            <TextBlock Text="{Binding Path=Info.Duration}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="1"
                                    Grid.Row="2"
                                    Text="{Binding Target}"/>
 
-                </Grid>
-                <Grid Grid.Column="2"
+                    </Grid>
+                    <Grid Grid.Column="2"
                       Grid.Row="0"
                       Grid.RowSpan="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Column="0"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0"
                            Grid.Row="0"
+                           Foreground="White"
                            Content="Qualität"/>
-                    <ComboBox Grid.Column="3"
+                        <ComboBox Grid.Column="3"
                               Grid.Row="0"
                               SelectionChanged="QualitySetting_SelectionChanged">
-                        <ComboBoxItem>Beste</ComboBoxItem>
-                        <ComboBoxItem IsSelected="true">Standard</ComboBoxItem>
-                        <ComboBoxItem>Schlechteste</ComboBoxItem>
-                    </ComboBox>
-                    <StackPanel Grid.Column="0"
+                            <ComboBoxItem>Beste</ComboBoxItem>
+                            <ComboBoxItem IsSelected="true">Standard</ComboBoxItem>
+                            <ComboBoxItem>Schlechteste</ComboBoxItem>
+                        </ComboBox>
+                        <StackPanel Grid.Column="0"
                                 Grid.ColumnSpan="2"
-                                Grid.Row="1">
-                        <Button x:Name="EnqueueDownloadButton"
+                                Grid.Row="1"
+                                Margin="0,5,0,0">
+                            <Button x:Name="EnqueueDownloadButton"
+                                Height="20"
                                 Content="In die Warteschlange"
                                 Click="EnqueueDownloadButton_Click"
+                                Style="{DynamicResource StandardButtonTheme}"
                                 IsEnabled="{Binding CanEnqueueDownload}"/>
-                        <Button x:Name="InstantDownloadButton"
+                            <Button x:Name="InstantDownloadButton"
+                                Height="20"
                                 Content="Sofort Herunterladen"
                                 Click="InstantDownloadButton_Click"
+                                Style="{DynamicResource StandardButtonTheme}"
                                 IsEnabled="{Binding CanInstantDownload}"/>
-                        <Button x:Name="AbortDownloadButtom"
+                            <Button x:Name="AbortDownloadButtom"
+                                Height="20"
                                 Content="Abbruch"
                                 Click="AbortDownloadButton_Click"
+                                Style="{DynamicResource StandardButtonTheme}"
                                 IsEnabled="{Binding CanAbortDownload}"/>
-                        <Button x:Name="DeleteDownloadButton"
+                            <Button x:Name="DeleteDownloadButton"
+                                Height="20"
                                 Content="Löschen"
                                 Click="DeleteDownloadButton_Click"
+                                Style="{DynamicResource StandardButtonTheme}"
                                 IsEnabled="{Binding CanDeleteDownload}"/>
-                        <RadioButton Name="AutoDownloadRadioButton" Content="Warteschlange Abarbeiten"
+                            <RadioButton Name="AutoDownloadRadioButton" Content="Warteschlange abarbeiten"
+                                     Foreground="White"
+                                     Margin="0,5,0,0"
                                      Unchecked="AutoDownloadRadioButton_Unchecked"
                                      Checked="AutoDownloadRadioButton_Checked"
                                      IsChecked="{Binding AutoDownloadEnabled}"/>
-                    </StackPanel>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <!-- With DataTemplate -->
-            <TextBlock>Warteschlange</TextBlock>
-            <ListBox BorderBrush="Transparent" 
+                <!-- With DataTemplate -->
+                <TextBlock Text="Warteschlange"
+                       Foreground="White"
+                       Margin="0,5,0,5"/>
+                <ListBox BorderBrush="Transparent" 
                      Grid.IsSharedSizeScope="True"
                      HorizontalContentAlignment="Stretch"
                      SelectionMode="Single"
                      SelectionChanged="QueueDisplay_SelectionChanged"
                      x:Name="Results"
                      ItemsSource="{Binding Queue}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="4"
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="4"
                               Height="30">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="40" />
-                                <ColumnDefinition MaxWidth="200" />
-                                <ColumnDefinition MinWidth="50" />
-                            </Grid.ColumnDefinitions>
-                            <Image Source="{Binding Path=Info.Thumbnail}"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition MaxWidth="200" />
+                                    <ColumnDefinition MinWidth="50" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Path=Info.Thumbnail}"
                                    Height="30"/>
-                            <TextBlock Grid.Column="1" 
+                                <TextBlock Grid.Column="1" 
                                        Text="{Binding Path=Info.Title}" 
                                        TextWrapping="Wrap"/>
-                            <ProgressBar Grid.Column="2"
+                                <ProgressBar Grid.Column="2"
                                          Margin="0,0,5,0"
                                          Minimum="0"
                                          Maximum="1"
                                          Value="{Binding Progress}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <!-- Dynamisch eingeblendete Hilfs-Menüs -->
+            <Grid   VerticalAlignment="Stretch"
+                    x:Name="Help"
+                    Visibility="Collapsed"
+                    MouseEnter="HelpButton_MouseEnter"
+                    MouseLeave="HelpButton_MouseLeave"
+                    Margin="0,55,0,0"
+                    Background="#FF454545">
+                <StackPanel Margin="0,10,0,10">
+                    <TextBlock Text="Downloader-Hilfe"
+                               FontSize="18"
+                               TextAlignment="Center"
+                               Foreground="White"
+                               Margin="0,0,0,10"/>
+                    <TextBlock Text="Dieses Menü hilft dir dabei, deine Lieblingsmusik ohne große Umwege auf deinen Rechner herunterzuladen. Gibt einfach einen Link zu einem Lied auf einer beliebigen Pattform ein, und klicke auf &quot;Suchen!&quot;&#xA;Falls die Plattform mit diesem Programm kompatibel ist kannst du entscheiden, ob du den Song in die Warteschlange packen oder direkt herunterladen willst.&#xA;Die Warteschlange kannst du automatisch abarbeiten oder pausieren, indem du die Checkbox klickst."
+                               FontSize="15"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Foreground="White"
+                               Margin="0,0,0,25"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </ScrollViewer>
 </UserControl>

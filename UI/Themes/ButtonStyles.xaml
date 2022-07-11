@@ -38,6 +38,11 @@
 
             <Setter Property="Foreground" Value="White" />
         </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="Gray" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Border-Style, der im folgenden Standard-Button genutzt wird -->

@@ -161,5 +161,15 @@ Benötigte Zeit: {(DateTime.Now - beginTime)}");
         {
 
         }
+
+        private void HelpButton_MouseEnter(object sender, RoutedEventArgs e)
+        {
+            Help.Visibility = Visibility.Visible;
+        }
+
+        private void HelpButton_MouseLeave(object sender, RoutedEventArgs e)
+        {
+            Help.Visibility = Visibility.Collapsed;
+        }
     }
 }

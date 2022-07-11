@@ -18,64 +18,104 @@
                   VerticalScrollBarVisibility="Auto"
                   Background="Transparent"
                   Padding="10,0,10,0px">
-        <StackPanel>
-            <TextBlock Text="Musik importieren" 
+        <Grid>
+            <StackPanel>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="55" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Musik importieren" 
                        Foreground="White" 
-                       FontSize="40" 
-                       Margin="0,0,0,20px"/>
-            <Button     x:Name="SelectMusicDir" 
+                       FontSize="40"/>
+                    <Button x:Name="HelpButton"
+                            MouseEnter="HelpButton_MouseEnter"
+                            MouseLeave="HelpButton_MouseLeave" 
+                            Style="{StaticResource HelpButton}"
+                            Height="55" Width="55"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Grid.Column="1"
+                            Margin="0,0,0,0"/>
+                </Grid>
+                <Button     x:Name="SelectMusicDir" 
                         Style="{StaticResource StandardRoundedButtonTheme}"
                         Height="50"
                         FontSize="20"
                         Click="SelectMusicDir_Click"
                         Content="{StaticResource SelectMusicDir_Idle}" 
                         Margin="0,0,0,20"/>
-            <Expander x:Name="SuccessfulListExpander"
+                <Expander x:Name="SuccessfulListExpander"
                       Foreground="Green"
                       Style="{StaticResource StandardExpanderTheme}">
-                <Expander.Header>
-                    <local:ImportLogHeader HeaderText="Erfolgreich"/>
-                </Expander.Header>
-                <ListView x:Name="SuccessfulList"
+                    <Expander.Header>
+                        <local:ImportLogHeader HeaderText="Erfolgreich"/>
+                    </Expander.Header>
+                    <ListView x:Name="SuccessfulList"
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
-            </Expander>
+                </Expander>
 
-            <Expander x:Name="ErrorListExpander" 
+                <Expander x:Name="ErrorListExpander" 
                       Foreground="Red"
                       Style="{StaticResource StandardExpanderTheme}">
-                <Expander.Header>
-                    <local:ImportLogHeader HeaderText="Fehlerhaft"/>
-                </Expander.Header>
-                <ListView x:Name="ErrorList" 
+                    <Expander.Header>
+                        <local:ImportLogHeader HeaderText="Fehlerhaft"/>
+                    </Expander.Header>
+                    <ListView x:Name="ErrorList" 
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
-            </Expander>
+                </Expander>
 
-            <Expander x:Name="ConvertedListExpander" 
+                <Expander x:Name="ConvertedListExpander" 
                       Foreground="Yellow"
                       Style="{StaticResource StandardExpanderTheme}">
-                <Expander.Header>
-                    <local:ImportLogHeader HeaderText="Konvertiert"/>
-                </Expander.Header>
-                <ListView x:Name="ConvertedList" 
+                    <Expander.Header>
+                        <local:ImportLogHeader HeaderText="Konvertiert"/>
+                    </Expander.Header>
+                    <ListView x:Name="ConvertedList" 
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
-            </Expander>
+                </Expander>
 
-            <Expander  x:Name="AlreadyExistsListExpander"
+                <Expander  x:Name="AlreadyExistsListExpander"
                        Expanded="AlreadyExistsExpander_Expand" 
                        Foreground="LightGray"
                        Style="{StaticResource StandardExpanderTheme}">
-                <Expander.Header>
-                    <local:ImportLogHeader HeaderText="Schon Vorhanden"/>
-                </Expander.Header>
-                <ListView x:Name="AlreadyExistsList" 
+                    <Expander.Header>
+                        <local:ImportLogHeader HeaderText="Schon Vorhanden"/>
+                    </Expander.Header>
+                    <ListView x:Name="AlreadyExistsList" 
                           MaxHeight="200px"
                           Style="{StaticResource ExpanderListTheme}"/>
-            </Expander>
-
-        </StackPanel>
+                </Expander>
+            </StackPanel>
+            
+            <!-- Dynamisch eingeblendete Hilfs-Menüs -->
+            <Grid   VerticalAlignment="Stretch"
+                    x:Name="Help"
+                    Visibility="Collapsed"
+                    MouseEnter="HelpButton_MouseEnter"
+                    MouseLeave="HelpButton_MouseLeave"
+                    Margin="0,55,0,0"
+                    Background="#FF454545">
+                <StackPanel Margin="0,10,0,10">
+                    <TextBlock Text="Importier-Hilfe"
+                               FontSize="18"
+                               TextAlignment="Center"
+                               Foreground="White"
+                               Margin="0,0,0,10"/>
+                    <TextBlock Text="Dieses Menü ermöglicht es dir, Musik in die Programminterne Datenbank zu schreiben. Dafür musst du nur den gewünschten Ordner auswählen, und dann wird dieser Ordner und all seine Unterordner nach Musik durchsucht.&#xA;Wunder dich nicht, die Dateien in den Ordnern werden nicht angezeigt, damit du auch wirklich einen Ordner auswählst!&#xA;&#xA;Wenn das Programm fertig importiert hat, bekommst du eine kurze Benachrichtigung, und kannst dann in den Dropdown-Menüs nachschauen, ob alles unktioniert hat.&#xA;&#xA;Die importierte Musik ist dann in der Bibliothek verfügbar!"
+                               FontSize="15"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Foreground="White"
+                               Margin="0,0,0,25"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </ScrollViewer>
-
 </UserControl>

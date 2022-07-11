@@ -11,45 +11,121 @@
                   VerticalScrollBarVisibility="Auto"
                   Background="#FF454545"
                   Padding="10,0,10,0">
-        <DockPanel>
-            <TextBlock Text="Bibliothek" 
-                       Foreground="White" 
-                       FontSize="40"
-                       DockPanel.Dock="Top"/>
-            <Grid DockPanel.Dock="Top"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Top"
-                  Height="30">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Button Name="GoBackButton"
-                        Style="{DynamicResource BackMenuButton}"
-                        Width="30"
-                        Height="30"
-                        Grid.Column="0"
-                        Click="GoBackButton_Click"
-                        Margin="0,0,5,0"
-                        Visibility="Collapsed"/>
-                <TextBox Name="SearchBar" Margin="0,0,10,0"
-                         FontSize="16"
-                         VerticalContentAlignment="Center"
-                         Grid.Column="1"
-                         HorizontalAlignment="Stretch" TextChanged="SearchBar_TextChanged">
-                </TextBox>
-                <Button Name="OpenFiltersButton" 
-                        Style="{DynamicResource StandardButtonTheme}"
-                        Content="Filtern"
-                        Margin="0,0,0,0"
-                        Grid.Column="2"
-                        Width="60"/>
+        <Grid>
+            <DockPanel>
+                <Grid Margin="0,0,0,10"
+                      DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="55" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Bibliothek" 
+                           Foreground="White" 
+                           FontSize="40"/>
+                    <Button x:Name="HelpButton"
+                                MouseEnter="HelpButton_MouseEnter"
+                                MouseLeave="HelpButton_MouseLeave" 
+                                Style="{StaticResource HelpButton}"
+                                Height="55" Width="55"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Grid.Column="1"
+                                Margin="0,0,0,0"/>
+                </Grid>
+                <Grid DockPanel.Dock="Top"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Top"
+                      Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="GoBackButton"
+                            Style="{DynamicResource BackMenuButton}"
+                            Width="30"
+                            Height="30"
+                            Grid.Column="0"
+                            Click="GoBackButton_Click"
+                            Margin="0,0,5,0"
+                            Visibility="Collapsed"/>
+                    <TextBox Name="SearchBar" Margin="0,0,10,0"
+                             FontSize="16"
+                             VerticalContentAlignment="Center"
+                             Grid.Column="1"
+                             HorizontalAlignment="Stretch" TextChanged="SearchBar_TextChanged">
+                    </TextBox>
+                    <Button Name="OpenFiltersButton" 
+                            Style="{DynamicResource StandardButtonTheme}"
+                            Content="Filtern"
+                            Margin="0,0,0,0"
+                            Grid.Column="2"
+                            Width="60"/>
+                </Grid>
+                <ContentControl x:Name="LibraryContent"
+                                Margin="0,10,0,0">
+                    <libPages:Main/>
+                </ContentControl>
+            </DockPanel>
+            
+            <!-- Dynamisch eingeblendete Hilfs-Menüs -->
+            <Grid   VerticalAlignment="Stretch"
+                    x:Name="Help"
+                    Visibility="Collapsed"
+                    MouseEnter="HelpButton_MouseEnter"
+                    MouseLeave="HelpButton_MouseLeave"
+                    Margin="0,55,0,0"
+                    Background="#FF454545">
+                <StackPanel Margin="0,10,0,10">
+                    <TextBlock Text="Bibliothek-Hilfe"
+                                   FontSize="18"
+                                   TextAlignment="Center"
+                                   Foreground="White"
+                                   Margin="0,0,0,10"/>
+                    <TextBlock Text="In diesem Menu findest du alle Lieder, die du in die Datenbank importiert hast. Falls du also Lieder nicht findest, versuche sie einfach noch einmal zu importieren!&#xA;&#xA;Das erste was du siehst sind alle Alben, die das Programm gefunden hat. Du kannst in der Suchleiste aber auch einfach ein Lied, einen Künstler oder ein Album suchen."
+                                   FontSize="15"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   Foreground="White"
+                                   Margin="0,0,0,25"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.ColumnSpan="2"
+                                       Foreground="White"
+                                       Text="Legende:"
+                                       Margin="0,0,0,5"/>
+                        <Image Source="/UI/Images/playlistfront.png"
+                                      HorizontalAlignment="Stretch"
+                                      Grid.Row="1"/>
+                        <TextBlock Text="Dieser Button setzt das jeweilige Lied als nächstes Lied der Warteschlange, und verschiebt alle anderen somit nach hinten."
+                                       VerticalAlignment="Center"
+                                       Grid.Row="1"
+                                       Grid.Column="1"
+                                       Foreground="White"
+                                       TextWrapping="Wrap"/>
+                        <Image Source="/UI/Images/playlistback.png"
+                                      HorizontalAlignment="Stretch"
+                                      Grid.Row="2"/>
+                        <TextBlock Text="Dieser Button setzt das jeweilige Lied als letztes Lied der Warteschlange."
+                                    VerticalAlignment="Center"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Foreground="White"
+                                    TextWrapping="Wrap"/>
+                    </Grid>
+                </StackPanel>
             </Grid>
-            <ContentControl x:Name="LibraryContent"
-                            Margin="0,10,0,0">
-                <libPages:Main/>
-            </ContentControl>
-        </DockPanel>
+        </Grid>
     </ScrollViewer>
 </UserControl>
