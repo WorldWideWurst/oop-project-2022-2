@@ -61,7 +61,7 @@ namespace Project.Data
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
         public static readonly string EmptyDBSQLLoc = "Data\\empty_musicdb_template.sqlite3.sql";
 
-        public static readonly Guid FavouritesPlaylistId = new Guid("{7330F811-F47F-41BC-A4FF-E792D073F41F}");
+        public static readonly Guid FavouritesPlaylistId = new Guid("{11f83073-7ff4-bc41-a4ff-e792d073f41f}");
 
         public static readonly Database Instance = new();
 
@@ -228,7 +228,7 @@ namespace Project.Data
         static string GenerateInsertQueryString<Host>(ConversionTable<Host> ct)
         {
             var query = new StringBuilder();
-            query.Append($"insert into {ct.TableName}(");
+            query.Append($"insert or ignore into {ct.TableName}(");
             query.AppendJoin(", ", ct.Table.Select(item => item.DbName));
             query.Append(") values (");
             query.AppendJoin(", ", ct.Table.Select(item => "@" + item.DbName));
@@ -529,7 +529,7 @@ namespace Project.Data
         public MusicList? GetMusicList(Guid id)
         {
             using var cmd = new SQLiteCommand("select * from music_list where id = @id", connection);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@id", id.ToByteArray());
             cmd.Prepare();
 
             return parseAll(cmd.ExecuteReader(), parseMusicList).FirstOrDefault();
@@ -581,6 +581,16 @@ namespace Project.Data
             cmd.ExecuteNonQuery();
 
             DatabaseChanged?.Invoke(typeof(MusicList), musicList.Id);
+        }
+
+        public MusicInList? GetMusicInList(Guid listId, Guid musicId)
+        {
+            using var cmd = new SQLiteCommand("select * from _music_in_list where _list = @_list and _music = @_music", connection);
+            cmd.Parameters.AddWithValue("@_list", listId);
+            cmd.Parameters.AddWithValue("@_music", musicId);
+            cmd.Prepare();
+
+            return parseAll(cmd.ExecuteReader(), parseMusicInList).FirstOrDefault();
         }
 
         internal IEnumerable<MusicInList> GetMusicInList(MusicList musicList)
