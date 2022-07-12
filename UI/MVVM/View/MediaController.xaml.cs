@@ -68,35 +68,59 @@ namespace Project.UI.MVVM.View
         //noch nicht implementiert
         private void RandomizeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            
+            Player.Player.Instance.Shuffle = true;
+            RandomizeCheckbox.IsChecked = Player.Player.Instance.Shuffle;
         }
         private void RandomizeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            
+            Player.Player.Instance.Shuffle = false;
+            RandomizeCheckbox.IsChecked = Player.Player.Instance.Shuffle;
         }
 
         private void RepeatCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            
+            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
         }
         private void RepeatCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            
+            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
         }
         private void RepeatCheckbox_Indeterminant(object sender, RoutedEventArgs e)
         {
-            
+            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
         }
 
 
         private void LikeCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
+            if(!Player.Player.Instance.IsIdle)
+            {
+                var favs = Data.Database.Instance.GetMusicList("Lieblingslieder").First(); // TODO: böser hack. Direkter zugriff über Guid auf Datenbank geht nicht, dann also über namen
+                new Data.MusicInList(Player.Player.Instance.CurrentMusic.Id, favs.Id)
+                {
+                    DateAdded = DateTime.Now,
+                }
+                .Insert();
+                LikeCheckbox.IsChecked = true;
+            }
+            else
+            {
+                LikeCheckbox.IsChecked = false;
+            }
         }
 
         private void LikeCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            
+            if (!Player.Player.Instance.IsIdle)
+            {
+                var favs = Data.Database.Instance.GetMusicList("Lieblingslieder").First(); // TODO: böser hack. Direkter zugriff über Guid auf Datenbank geht nicht, dann also über namen
+                var mil = Data.Database.Instance.GetMusicInList(Player.Player.Instance.CurrentMusic.Id, favs.Id);
+                if(mil.HasValue)
+                {
+                    mil.Value.Delete();
+                }
+                LikeCheckbox.IsChecked = false;
+            }
         }
 
 
@@ -155,6 +179,7 @@ namespace Project.UI.MVVM.View
             else if (music.Sources.Target.Any()) SongNameText.Text = music.Sources.Target[0].Address.Split("\\").Last().Split(".").First();
             ArtistText.Text = music.Artists.Target.Any() ? new StringBuilder().AppendJoin(", ", music.Artists.Target.Select(mba => mba.ArtistId)).ToString() : "<unknown>";
             AlbumText.Text = music.AlbumName ?? "<unknown>";
+            LikeCheckbox.IsChecked = Data.Database.Instance.GetMusicInList(Data.Database.Instance.GetMusicList("Lieblingslieder").First().Id, Player.Player.Instance.CurrentMusic.Id).HasValue;
         }
 
         //passiert wenn der Player Idle geht
@@ -164,6 +189,7 @@ namespace Project.UI.MVVM.View
             SongNameText.Text = null;
             ArtistText.Text = null;
             AlbumText.Text = null;
+            LikeCheckbox.IsChecked = false;
         }
     }
 }
