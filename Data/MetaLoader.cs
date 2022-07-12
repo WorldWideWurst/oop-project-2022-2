@@ -5,8 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+// Verfasst von Richard Förster
+
 namespace System.IO
 {
+
+    /// <summary>
+    /// Stream Decoder, mit dem sich angenehm Daten aus einem byte-Stream
+    /// lesen lassen.
+    /// </summary>
     public class StreamDecoder : IDisposable
     {
 
@@ -35,6 +42,9 @@ namespace System.IO
 
         public long Length => stream.Length;
 
+        /// <summary>
+        /// Byte lesen.
+        /// </summary>
         public byte U8()
         {
             var b = stream.ReadByte(); 
@@ -50,13 +60,22 @@ namespace System.IO
 
         public ushort U16BE() => (ushort)((U8() << 8) | U8());
         public ushort U16LE() => (ushort)(U8() | (U8() << 8));
+        /// <summary>
+        /// 16 Bit-Zahl entsprechend der eingestellten Endianness lesen.
+        /// </summary>
         public ushort U16() => Endian == Endianness.Little ? U16LE() : U16BE();
 
         public uint U32BE() => (uint)((U8() << 24) | (U8() << 16) | (U8() << 8) | U8());
         public uint U32LE() => (uint)(U8() | (U8() << 8) | (U8() << 16) | (U8() << 24));
+        /// <summary>
+        /// 32 Bit-Zahl entsprechend der eingestellten Endianness lesen.
+        /// </summary>
         public uint U32() => Endian == Endianness.Little ? U32LE() : U32BE();
 
 
+        /// <summary>
+        /// N Bytes lesen.
+        /// </summary>
         public byte[] Bytes(uint n)
         {
             if(Length < n)
@@ -68,8 +87,10 @@ namespace System.IO
             stream.Read(bytes, 0, (int)n);
             return bytes;
         }
-        public int Bytes(byte[] buf, int offset, int count) => stream.Read(buf, offset, count);
-        
+
+        /// <summary>
+        /// N Bytes überspringen
+        /// </summary>
         public void Skip(uint ct)
         {
             stream.Seek(ct, SeekOrigin.Current);
@@ -84,13 +105,33 @@ namespace System.IO
 
 namespace Project.Data
 {
+    /// <summary>
+    /// Ein Meta Loader hat die Aufgabe, Metadaten (zusammengefasst als
+    /// MusicFileMeta-Objekt) aus einer Musikdatei zu lesen.
+    /// </summary>
     public interface IMetaLoader
     {
+        /// <summary>
+        /// Helfermethode, um generell zu prüfen, ob dieser MetaLoader
+        /// eine Dateiendung unterstützt.
+        /// z.B. wird ein mp3-Loader sagen, dass er .mp3 Dateiendungen bevorzugt.
+        /// </summary>
         bool SupportsExtension(string extension);
 
+        /// <summary>
+        /// Versucht, die Musikmetadaten aus einer Datei zu lesen.
+        /// Wirft eine UnknownMusicFormat-Exception, wenn das Musikformat von diesem Loader
+        /// nicht unterstützt wird.
+        /// Wirft eine InvalidMusicFileFormat-Exception, wenn die zu lesende Datei zwar vom richtigen Format
+        /// ist, aber interne Fehler enthält.
+        /// </summary>
         MusicFileMeta Load(string path);
     }
 
+    /// <summary>
+    /// Alle interessaten Daten in einem Objekt zusammengefasst, die man so aus Musikdateien
+    /// herausfiltern kann.
+    /// </summary>
     public class MusicFileMeta
     {
         public string? File;
@@ -135,10 +176,15 @@ namespace Project.Data
     /// Tag-Conversion-Tabelle: https://wiki.hydrogenaud.io/index.php?title=Tag_Mapping
     /// 
     /// Der eine Wilde Converter: https://exiftool.org/
+    /// 
+    /// Allgemeiner Meta Loader, der mehrere Spezielle Loader nacheinander ausprobiert,
+    /// um eine Musikdatei nach Metadaten zu durchsuchen.
     /// </summary>
     public class MetaLoader : IMetaLoader
     {
-
+        /// <summary>
+        /// Zentrale Instanz
+        /// </summary>
         public static readonly MetaLoader Instance = new MetaLoader();
 
         static MetaLoader()
@@ -148,6 +194,9 @@ namespace Project.Data
             Instance.Loaders.Add(WAVAccepter.Instance);
         }
 
+        /// <summary>
+        /// Alle registrierten speziellen Meta Loader.
+        /// </summary>
         public IList<IMetaLoader> Loaders { get; } = new List<IMetaLoader>();
 
         public bool SupportsExtension(string extension)
@@ -155,6 +204,12 @@ namespace Project.Data
             return Loaders.Any(loader => loader.SupportsExtension(extension));
         }
 
+        /// <summary>
+        /// Versucht, eine Musikdatei zu laden, indem alle hier registrierten
+        /// speziellen MusicLoader nacheinander in Registrierungsreihenfolge ausprobiert werden,
+        /// ob sie die Musikdatei ohne Fehler geladen bekommen. Das Ergebnits des ersten erfolgreiche Loader 
+        /// ist das Ergebnis dieses Aufrufs.
+        /// </summary>
         public MusicFileMeta Load(string path)
         {
             var extension = Path.GetExtension(path).Substring(1);
@@ -178,6 +233,11 @@ namespace Project.Data
         }
     }
 
+
+    /// <summary>
+    /// Reine MP3-Dateien enthalten keine Metadaten. Hier wird lediglich auf einen
+    /// mp3-Header getestet, falls dieser gelingt, werden null Metadaten übergeben.
+    /// </summary>
     public class MP3MetaLoader : IMetaLoader
     {
 
@@ -206,11 +266,15 @@ namespace Project.Data
     }
 
     /// <summary>
-    /// Zur referenz: das muss geparst werden https://id3.org/id3v2.4.0-structure
+    /// Lädt Metadaten aus allen Dateien, die einen ID3v2.2+ Header am Beginn stehen haben.
+    /// 
+    /// ID3v2.2+ ist so ziemlich das wichtigste Metadatenformat für dieses Projekt, da
+    /// da sich dieses Projekt speziell auf mp3-Dateien konzentriert.
+    /// 
+    /// Zur referenz: das muss (theoretisch) geparst werden https://id3.org/id3v2.4.0-structure
     /// </summary>
     public class ID3v2MetaLoader : IMetaLoader
     {
-
 
         public static readonly ID3v2MetaLoader Instance = new ID3v2MetaLoader();
 
@@ -221,9 +285,13 @@ namespace Project.Data
             return extension == "mp3"; // TODO: gibt es ID3v2 header auch wo anders?
         }
 
+        /// <summary>
+        /// Lädt ein Subset der ID3v2.2, .3 und .4 -metadatein ein.
+        /// </summary>
         public MusicFileMeta Load(string path)
         {
             var reader = new StreamDecoder(new FileStream(path, FileMode.Open, FileAccess.Read));
+            // eindiannes von ID3v2.2+ ist immer big endian
             reader.Endian = StreamDecoder.Endianness.Big;
 
             // Magic lesen: "ID3"
@@ -255,6 +323,7 @@ namespace Project.Data
                     reader.Skip(2 + extHeaderSize);
                 }
 
+                // solang noch bytes verfügbar sind, chunks einlesen
                 var remainingSize = size;
                 while(remainingSize > 0)
                 {
@@ -262,6 +331,7 @@ namespace Project.Data
                     uint frameSize = (uint)(((reader.U8() & 0x7F) << 21) | ((reader.U8() & 0x7F) << 14) | ((reader.U8() & 0x7F) << 7) | (reader.U8() & 0xFF));
                     if (frameSize <= 0)
                     {
+                        // ist schon mal vorgekommen, dass lauter 0-Bytes den verbleibenden Platz gefüllt haben.
                         reader.Skip(remainingSize);
                         break;
                     }
@@ -270,6 +340,7 @@ namespace Project.Data
                     byte[] data = reader.Bytes(frameSize);
                     remainingSize -= 4 + 4 + 2 + frameSize;
 
+                    // eigentliche Metadaten einlesen.
                     switch(frameName)
                     {
                         case "TIT2":
@@ -314,6 +385,7 @@ namespace Project.Data
             }
             else if (version.hi == 3)
             {
+                // ähnliches Schema wie bei ID3v2.4, dokumentation siehe oben
                 bool unsyncFlag = (flags & 0b10000000) > 0;
                 bool extHeaderFlag = (flags & 0b01000000) > 0;
                 bool expFlag = (flags & 0b00100000) > 0;
@@ -388,6 +460,8 @@ namespace Project.Data
             }
             else if(version.hi == 2)
             {
+                // ähnliche Struktur wie ID3v2.4, nur etwas simpler
+                // dokumentation siehe oben
                 var remainingSize = size;
                 while (remainingSize > 0)
                 {
@@ -440,6 +514,9 @@ namespace Project.Data
             return meta;
         }
 
+        /// <summary>
+        /// Übersetzt die im ID3v2.2+-Text-Tags kodierte Kodierung.
+        /// </summary>
         private static Encoding byteToEncoding(byte b)
         {
             return b switch
@@ -455,7 +532,7 @@ namespace Project.Data
         /// <summary>
         /// Scheiß Micorosft hat mir ganze 3 Stunden Lebenszeit geraubt FÜR DIESEN SCHEIß
         /// </summary>
-        /// <param name="str">DEINE MUTTER</param>
+        /// <param name="str">DEINE M*TTER</param>
         /// <returns>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</returns>
         private static string stripBOM(string str)
         {
@@ -471,6 +548,12 @@ namespace Project.Data
         }
     }
 
+
+    /// <summary>
+    /// WAV-Dateien entahlten keine interessaten Metadaten, können aber abgespielt werden.
+    /// Auch hier besteht der Lade-Prozess darin, keine DAten zu lesen und ein "leeres" Ergebnis
+    /// zurückzugeben.
+    /// </summary>
     public class WAVAccepter : IMetaLoader
     {
 
@@ -487,6 +570,11 @@ namespace Project.Data
         }
     }
 
+    /// <summary>
+    /// Soll geworfen werden, wenn das Dateiformat von einem Loader nicht unterstützt wird.
+    /// Z.B. wenn der ID3v2.2 Loader eine mp3 ohne ID3-Header bekommt, was vorkommen kann.
+    /// Die Date ist wahrscheinlich für einen anderen Loader lesbar.
+    /// </summary>
     public class UnknownMusicFileFormat : Exception
     {
         // <3
@@ -496,6 +584,10 @@ namespace Project.Data
             : base($"Unbekanntes Musikformat .{extension}") { }
     }
 
+    /// <summary>
+    /// Soll geworfen werden, wenn die auf ein Format verifizierte Datei
+    /// strukturfehler enthält. Datei für von keinem anderen Loader lesbar sein.
+    /// </summary>
     public class InvalidMusicFileFormat : Exception
     {
 

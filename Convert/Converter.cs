@@ -10,25 +10,41 @@ using System.Net;
 using System.ComponentModel;
 using System.Data;
 
+// Allein Verfasst von Ben Briesemeister
 namespace Project.Convert
 {
-
     public interface IConverter
     {
-
+        /// <summary>
+        /// Ob dieser Converter eine KOnvertierung des einen Formats (angegeben in mp3 z.B.) in das andere unterstützt.
+        /// </summary>
+        /// <returns></returns>
         bool SupportsConversion(string sourceExtension, string targetExtension);
 
+        /// <summary>
+        /// Führt die eigentlich Konvertierung durch.
+        /// Es soll von un zu dem Format entsprechend der Dateiendungen der Pfade konvertiert werden.
+        /// </summary>
         void Convert(string source, string target);
     }
 
+    /// <summary>
+    /// Eine implementierung des IConverter interfaces.
+    /// Benutzt ffmpeg um die Konvertierung umzusetzen.
+    /// </summary>
     public class Converter : IConverter
     {
        
-        
-
+        /// <summary>
+        /// Singleton Instanz der Klasse.
+        /// </summary>
         public static readonly Converter Instance = new();
 
+        private Converter() { }
 
+        /// <summary>
+        /// Temporäre statische funktion, die ffmpeg zum konvertieren Nutzt.
+        /// </summary>
         public void Convert(string[] args, string source, string target)
         {
             

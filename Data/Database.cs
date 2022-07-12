@@ -10,15 +10,34 @@ using System.Reflection;
 using System.Data.Common;
 using System.Data;
 
+// Verfasst von Richard Förster
 namespace Project.Data
 {
 
+    /// <summary>
+    /// Enthält Informationen zu den jeweiligen Datenbank-Tabellen nd wie zu den entsprechenden
+    /// IRecordView-Derivat-Properties konvertiert werden kann.
+    /// </summary>
+    /// <typeparam name="Host">Was für ein IRecordView hier im Fokus steht</typeparam>
     public class ConversionTable<Host>
     {
+
+        /// <summary>
+        /// Ein Eintrag in der internen "Tabelle"
+        /// </summary>
+        /// <typeparam name="Host"></typeparam>
+        /// <param name="DbName">Name des Attributs in der Datenbank</param>
+        /// <param name="Getter">Holt einen Wert aus der entsprechendem IRecordView-Objekt-Property</param>
         public  record Entry<Host>(string DbName, Func<Host, object?> Getter) { }
 
+        /// <summary>
+        /// Name der Tabelle in der Datenbank
+        /// </summary>
         public string TableName { get; set; }
 
+        /// <summary>
+        /// Tabelle
+        /// </summary>
         public Entry<Host>[] Table
         {
             get => table;
@@ -34,53 +53,76 @@ namespace Project.Data
         }
         Entry<Host>[] table;
 
+        /// <summary>
+        /// Wie viele primary keys die Tabelle hat. Entweder 1 oder 2 in der Datenbank. 
+        /// </summary>
         public int PrimaryKeys { get; set; }
 
+        /// <summary>
+        /// Um effizient auf Einträge in der Tabelle zuzugreifen.
+        /// </summary>
         public Dictionary<string, Entry<Host>> Index { get; private set; } = new();
-
-
-        public void AddParam(SQLiteCommand cmd, string dbName, Host host)
-        {
-            cmd.Parameters.AddWithValue("@" + dbName, Index[dbName].Getter(host));
-        }
-
-        public void AddAllParams(SQLiteCommand cmd, Host host)
-        {
-            foreach(var item in table)
-            {
-                cmd.Parameters.AddWithValue("@" + item.DbName, item.Getter(host));
-            }
-        }
     }
 
+    /// <summary>
+    /// Datenbank für die Datenverwaltung des Players.
+    /// Ist als Singleton implementiert, da Programm sowieso nur eine Datenbank existiert.
+    /// </summary>
     public class Database : IDisposable
     {
         
+        /// <summary>
+        /// Version der aktuellen Datenbank. Über die Zeit hat sich das Datenbank-Schema leicht verändert,
+        /// nach jeder Änderung des Datenbankschemas muss einfach nur die Version geändert werden - 
+        /// und es wird eine neue Datenbank aus dem SQL-Skript empty_musicdb_template.sqlite3.sql
+        /// </summary>
         public const string Version = "0.5.2";
         
+        /// <summary>
+        /// Der Dateipfad der aktuellen Datenbank.
+        /// </summary>
         public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
+        /// <summary>
+        /// Wo, relativ zu dieser Datei, das Erstellungsskript für eine neue leere Datenbank sich befindet.
+        /// </summary>
         public static readonly string EmptyDBSQLLoc = "Data\\empty_musicdb_template.sqlite3.sql";
 
+        /// <summary>
+        /// Hardcoded-Guid für die Lieblingslieder-Playlist. Funktioniert irgendwie nicht TODO
+        /// </summary>
         public static readonly Guid FavouritesPlaylistId = new Guid("{11f83073-7ff4-bc41-a4ff-e792d073f41f}");
 
         public static readonly Database Instance = new();
 
-
+        /// <summary>
+        /// Event für interessierte, wenn sich etwas in dieser Datenbank ändert.
+        /// </summary>
         public event Action<Type, object?> DatabaseChanged;
 
+        /// <summary>
+        /// Verbindungs-Objekt zur Datenbank.
+        /// </summary>
         private SQLiteConnection connection;
 
+        /// <summary>
+        /// Erstellt eine Datenbank-Instanz mit dem entsprechendem Pfad zu der vielleicht
+        /// noch nicht existierenden SQLite3 Datei.
+        /// </summary>
+        /// <param name="path"></param>
         private Database(string path)
         {
             // Datenbank kreieren falls nicht existent
             if(!File.Exists(path))
             {
+                // Zuerst die Directories wenn nötig
                 string? parent = Directory.GetParent(path)?.FullName;
                 if (!Directory.Exists(parent)) Directory.CreateDirectory(parent);
 
+                // zugriff zum empty db Script
                 string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 string sqlFile = Path.Combine(assemblyFolder, EmptyDBSQLLoc);
 
+                // Connection aufbauen
                 connection = new SQLiteConnection($"URI=file:{path}");
                 connection.Open();
 
@@ -98,9 +140,15 @@ namespace Project.Data
 
         public Database() : this(DefaultDBLoc) { }
 
+        /// <summary>
+        /// Schnelle Ausgabe der Version von SQLite3.
+        /// </summary>
         public string? SQLiteVersion => new SQLiteCommand("SELECT SQLITE_VERSION()", connection)?.ExecuteScalar().ToString();
 
 
+        /// <summary>
+        /// Conversion Tables für jede einzige Tabelle in der Datenbank.
+        /// </summary>
         #region ConversionTables
 
         static ConversionTable<Music> MusicConversionTable = new()
@@ -196,11 +244,27 @@ namespace Project.Data
             PrimaryKeys = 2,
         };
 
+        /// <summary>
+        /// Automatisiertes Hinzufügen von Daten zu cmd.Parameters.
+        /// </summary>
+        /// <typeparam name="Host"></typeparam>
+        /// <param name="ct">der Converstion Table für die Tabelle</param>
+        /// <param name="cmd">SQLite3Command</param>
+        /// <param name="dbName">name des Attributs in der Datenbank</param>
+        /// <param name="host">Das IRecordView Objekt, aus dem Daten gelesen werden.</param>
         static void AddParam<Host>(ConversionTable<Host> ct, SQLiteCommand cmd, string dbName, Host host) 
         {
             cmd.Parameters.AddWithValue("@" + dbName, ct.Index[dbName].Getter(host));
         }
 
+
+        /// <summary>
+        /// Fürgt alle daten in den SQLiteCommand hinein.
+        /// </summary>
+        /// <typeparam name="Host"></typeparam>
+        /// <param name="ct">der Converstion Table für die Tabelle</param>
+        /// <param name="cmd">SQLite3Command</param>
+        /// <param name="host">Das IRecordView Objekt, aus dem Daten gelesen werden.</param>
         static void AddAllParams<Host>(ConversionTable<Host> ct, SQLiteCommand cmd, Host host)
         {
             foreach (var item in ct.Table)
@@ -209,6 +273,14 @@ namespace Project.Data
             }
         }
 
+
+        /// <summary>
+        /// Fürgt alle daten in den SQLiteCommand hinein, außer die Primary Keys.
+        /// </summary>
+        /// <typeparam name="Host"></typeparam>
+        /// <param name="ct">der Converstion Table für die Tabelle</param>
+        /// <param name="cmd">SQLite3Command</param>
+        /// <param name="host">Das IRecordView Objekt, aus dem Daten gelesen werden.</param>
         static void AddNonPrimaryParams<Host>(ConversionTable<Host> ct, SQLiteCommand cmd, Host host)
         {
             foreach(var item in ct.Table.Skip(ct.PrimaryKeys))
@@ -217,6 +289,13 @@ namespace Project.Data
             }
         }
 
+        /// <summary>
+        /// Fürgt alle daten in den SQLiteCommand hinein, nur die Primary Keys.
+        /// </summary>
+        /// <typeparam name="Host"></typeparam>
+        /// <param name="ct">der Converstion Table für die Tabelle</param>
+        /// <param name="cmd">SQLite3Command</param>
+        /// <param name="host">Das IRecordView Objekt, aus dem Daten gelesen werden.</param>
         static void AddPrimaryParams<Host>(ConversionTable<Host> ct, SQLiteCommand cmd, Host host)
         {
             foreach(var item in ct.Table.Take(ct.PrimaryKeys))
@@ -225,6 +304,9 @@ namespace Project.Data
             }
         }
 
+        /// <summary>
+        /// Generiert eine SQL-Insert-Template für eine Tabellenbeschreibung.
+        /// </summary>
         static string GenerateInsertQueryString<Host>(ConversionTable<Host> ct)
         {
             var query = new StringBuilder();
@@ -236,6 +318,9 @@ namespace Project.Data
             return query.ToString();
         }
 
+        /// <summary>
+        /// Generiert eine SQL-Update-Template für eine gewünschte Tabellenbeschreibung.
+        /// </summary>
         static string GenerateUpdateQueryString<Host>(ConversionTable<Host> ct, string selector)
         {
             var query = new StringBuilder();
@@ -247,8 +332,12 @@ namespace Project.Data
 
         #endregion
 
-        #region RecordView from Parser
 
+        /// <summary>
+        /// Funktionen, um Daten aus Abfrage-Ergebnissen in IRecordView-Objekte umzuwandeln.
+        /// </summary>
+
+        #region RecordView from Parser
         static Music parseMusic(DbDataReader reader)
         {
             return new Music(reader.GetGuid(0))
@@ -320,6 +409,9 @@ namespace Project.Data
             };
         }
 
+        /// <summary>
+        /// Übersetzt alle Zeilen eines Abfrageergebnisses, jede Zeile mit der entsprechenden Parser-Funktion
+        /// </summary>
         static IEnumerable<T> parseAll<T>(DbDataReader reader, Func<DbDataReader, T> parser)
         {
             while(reader.Read())
@@ -330,17 +422,34 @@ namespace Project.Data
 
         #endregion
 
+
         #region Getters, Queries, Inserters, Savers, Deleters
 
+        /// <summary>
+        /// Fragt einen Musik-Eintrag aus der Datenbank ab, die die entsprechende ID hat.
+        /// </summary>
+        /// <param name="id">Musik-Id</param>
+        /// <returns>Music</returns>
         public Music? GetMusic(Guid id)
         {
+            // der Ablauf einer Abfrage in C#, nur hier erklärt, da sich das Schema durchzieht
+            // Command erstellen
             using var cmd = new SQLiteCommand("select * from music where id = @id", connection);
+            // parameterdaten hinzufügen
             cmd.Parameters.AddWithValue("@id", id);
+            // PREPARE: nur wenn parameter hinzugefügt wurden
             cmd.Prepare();
 
+            // und das Ergebnis übersetzen
             return parseAll(cmd.ExecuteReader(), parseMusic).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Fragt alle Musikeinträge ab, die die Wörter, getrennt durch Leerzeichen,
+        /// im Titel enthalten. Ist input null, dann werden einfach alle Musikeinträge abgefragt.
+        /// Dass eine gewisse Zahl von Einträgen ausgewählt und übersprungen werden kann,
+        /// ist noch nicht implementiert.
+        /// </summary>
         public IEnumerable<Music> GetMusic(string? input = null, Range? range = null)
         {
             using var cmd = new SQLiteCommand(connection);
@@ -359,6 +468,9 @@ namespace Project.Data
             return parseAll(cmd.ExecuteReader(), parseMusic);
         }
 
+        /// <summary>
+        /// Abfrage für Musikeinträge ohne Album.
+        /// </summary>
         public IEnumerable<Music> GetMusicWithoutAlbum()
         {
             using var cmd = new SQLiteCommand(connection);
@@ -370,6 +482,10 @@ namespace Project.Data
             return parseAll(cmd.ExecuteReader(), parseMusic);
         }
 
+        /// <summary>
+        /// Fügt einen Musikeintrag der Datenbank hinzu 
+        /// (oder auch nicht falls einer mit gleicher Id schon existiert)
+        /// </summary>
         internal void InsertMusic(Music music)
         {
             using SQLiteCommand cmd = new(GenerateInsertQueryString(MusicConversionTable), connection);
@@ -379,7 +495,10 @@ namespace Project.Data
             DatabaseChanged?.Invoke(typeof(Music), music.Id);
         }
 
-
+        /// <summary>
+        /// Überschreibt einen (hoffentlich!) existierenden
+        /// Eintrag in der Datenbank mit den hier angegebenen Daten
+        /// </summary>
         internal void SaveMusic(Music music)
         {
             using var cmd = new SQLiteCommand(GenerateUpdateQueryString(MusicConversionTable, "where id = @id"), connection);
@@ -389,6 +508,9 @@ namespace Project.Data
 
             DatabaseChanged?.Invoke(typeof(Music), music.Id);
         }
+
+        // der rest der folgenden Funktionen laufen nach dem gleichen Schema wie oben ab:
+        // Insert, Get, Save, Delete wenn vorhanden, ...
 
         internal IEnumerable<MusicByArtist> GetMusicArtists(Music music)
         {
@@ -622,6 +744,9 @@ namespace Project.Data
             DatabaseChanged?.Invoke(typeof(MusicInList), (musicInList.MusicId, musicInList.ListId));
         }
 
+        /// <summary>
+        /// Direkter Zugriff auf die Musik in einer MusicList.
+        /// </summary>
         internal IEnumerable<Music> GetMusicInListDirect(MusicList musicList)
         {
             using var cmd = new SQLiteCommand(@"
@@ -646,7 +771,14 @@ namespace Project.Data
 
 
 
-
+        /// <summary>
+        /// Registriert die Daten, die sich in der MusicFileMeta befinden,
+        /// in der Datenbank. Quellen-, Artist-, Art-, MusicByArtist- und ein Music-Eintrag werden
+        /// erstellt.
+        /// </summary>
+        /// <returns>
+        /// Der Musikeintrag, zu dem nun lauter Daten eingetragen wurden.
+        /// </returns>
         public Music RegisterMusicSource(MusicFileMeta meta)
         {
             // musik-Eintrag hinzufügen
@@ -690,6 +822,8 @@ namespace Project.Data
             return music;
         }
 
+        // War eigentlich für heruntergeladene DAten gedacht, dass diese auch direkt in die Datenbank
+        // geschleust werden. Da es aber zu diesem Schritt hier noch nie gekommen ist, wurde erstmal auskommentiert.
         //public Music RegisterMusicDownload(Project.Download.MusicDownloadInfo download)
         //{
         //    if(download.Thumbnail != null)
@@ -722,11 +856,21 @@ namespace Project.Data
         //    return music;
         //}
 
+        /// <summary>
+        /// API-Idee: Es wird ein Such-String, so wie bei z.B. Google-Search, eingegeben,
+        /// Ergebnisse kommen zurück. Eine Suchfunktion im UI ist noch nicht implementiert.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public IEnumerable<IRecordView> StringQuery(string query)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Alle DAten aus allen Tabellen Löschen. Repektiert allerdings die Existenz der Lieblings-Playlist nicht! OMG!
+        /// </summary>
         public void ClearAll()
         {
             string[] tables =
@@ -742,6 +886,7 @@ namespace Project.Data
 
             foreach(var table in tables)
             {
+                // unbedingte löscung aller einträge der Tabelle.
                 using var cmd = new SQLiteCommand($"delete from {table}", connection);
                 cmd.ExecuteNonQuery();
             }
@@ -764,10 +909,29 @@ namespace Project.Data
         
     }
 
+    /// <summary>
+    /// Implementierende Klassen sollen einzelne Einträge in einer Datenbanktabelle darstellen.
+    /// Pro Tabelle eine implementierende Klasse.
+    /// 
+    /// Die Klassen sind RecordViews.cs implementiert.
+    /// </summary>
     public interface IRecordView
     {
+        /// <summary>
+        /// Diesen Eintrag aus der Datenbank löschen. Bitte nicht doppelt löschen!
+        /// </summary>
         void Delete();
+
+        /// <summary>
+        /// Dieser Eintrag soll in die Taballe hinzugefügt werden.
+        /// Ist der Eintrag schon vorhanden, soll NICHTS geschehen.
+        /// </summary>
         void Insert();
+
+        /// <summary>
+        /// Überschreibt die aktuell vorhandenen Daten zu diesem Eintrag
+        /// in der Tabelle mit den in diesem Objekt vorhandenen Daten.
+        /// </summary>
         void Save();
     }
 

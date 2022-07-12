@@ -4,8 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// verfasst von Richard Förster
+
 namespace Project.Data
 {
+    /// <summary>
+    /// eine IMusicList soll eine Liste von Musik abstrahieren,
+    /// sodass nicht nur fest eingetragene Listen in der Datenbank
+    /// Musiklisten sind, sondern auch beispielsweise Musiklisten wie "alle eingetragenen Lieder"
+    /// 
+    /// Ist ehrlich geschrieben eher eine ViewModel angelegenheit, aber
+    /// nun ist die Datei eben einmal hier.
+    /// </summary>
     public interface IMusicList
     {
         string Name { get; }
@@ -17,6 +27,9 @@ namespace Project.Data
         int Count => Entries.Count();
     }
 
+    /// <summary>
+    /// Musikliste, die alle Lieder ohne Album auflistet.
+    /// </summary>
     public class UnregisteredMusicList : IMusicList
     {
         public string Name => "Nicht eingeordnet";
@@ -28,6 +41,10 @@ namespace Project.Data
         
     }
 
+
+    /// <summary>
+    /// Musikliste, die jedes Lied auflistet.
+    /// </summary>
     public class AllMusicList : IMusicList
     {
         public string Name => "Alle Lieder";
@@ -39,6 +56,9 @@ namespace Project.Data
 
     }
 
+    /// <summary>
+    /// Spezielle Musikliste, die sich auf die Lieblingslieder-Liste konzentriert.
+    /// </summary>
     public class FavouritesList : IMusicList
     {
         public string Name => "Lieblingslieder";
