@@ -155,7 +155,28 @@ namespace Project.Player
         }
 
 
-        public bool Shuffle { get; set; }
+        public bool Shuffle
+        {
+            get => shuffle;
+            set
+            {
+                shuffle = value;
+                if (!value) return;
+
+                var rng = new Random();
+                int offset = CurrentIndex + 1;
+                int n = CurrentList.Count - offset;
+                while (n > 1)
+                {
+                    n--;
+                    int k = rng.Next(n + 1);
+                    var temp = CurrentList[k + offset];
+                    CurrentList[k + offset] = CurrentList[n + offset];
+                    CurrentList[n + offset] = temp;
+                }
+            }
+        }
+        private bool shuffle = false;
 
 
         public TimeSpan Tickspeed
