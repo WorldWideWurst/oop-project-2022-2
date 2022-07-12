@@ -26,14 +26,14 @@
                             IsChecked="True"
                             GroupName="LeftBar"
                             Click="PlaylistDisplayButton_Click"
-                            Content="PlaylistDisplay"
+                            Content="Playlists"
                             HorizontalContentAlignment="Center"
                             Style="{StaticResource DisplayButtonTheme}"
                             Width="140" Height="24"/>
             <RadioButton    x:Name="CurrentListDisplayButton"
                             GroupName="LeftBar"
                             Click="CurrentListDisplayButton_Click"
-                            Content="CurrentListDisplay"
+                            Content="Warteschlange"
                             HorizontalContentAlignment="Center"
                             Style="{StaticResource DisplayButtonTheme}"
                             Width="140" Height="24"/>
