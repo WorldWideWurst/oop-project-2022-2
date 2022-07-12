@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +41,7 @@ namespace Project.UI.MVVM.View.LibraryPages
 
         private void ViewSourceInExplorer(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Hier öffnet sich nun der Explorer TODO");
+            Process.Start("explorer.exe", $"\"{Directory.GetParent(((SourceViewModel)DataContext).Source.Address)}\"");
         }
 
         private void ViewMusic(object sender, RoutedEventArgs e)

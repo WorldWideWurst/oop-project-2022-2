@@ -37,7 +37,7 @@
                         Margin="0,5,0,5"/>
             <TextBlock  Grid.Column="2" 
                         Grid.Row="0" 
-                        Text="{Binding Album}"
+                        Text="{Binding AlbumName}"
                         Foreground="White"
                         TextWrapping="Wrap"
                         Margin="0,5,0,5"/>
