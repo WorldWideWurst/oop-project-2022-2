@@ -167,13 +167,13 @@
                        Foreground="White"/>
                     <TextBox    Name="Downloadpath"
                                 VerticalContentAlignment="Center"
-                                Text=" Pfad hier eingeben"
+                                Text="Pfad hier eingeben!"
                                 MinWidth="200"
                                 Foreground="Gray"
                                 Grid.Row="1"
                                 GotFocus="HintNull" 
-                                LostFocus="HintShow"
-                                KeyDown="URLInput_KeyDown"
+                                LostFocus="HintShowPath"
+                                KeyDown="DownloadPath_KeyDown"
                                 Height="30"
                                 HorizontalAlignment="Stretch"/>
                 </Grid>
@@ -188,12 +188,12 @@
                     <TextBox    Name="Downloadgeschwindigkeit"
                             VerticalContentAlignment="Center"
                             MinWidth="200"
-                            Text=" in byte (2000, 50k etc.)"
+                            Text="in byte (2000, 50k etc.)"
                             Foreground="Gray"
                             Grid.Row="1"
                             GotFocus="HintNull" 
-                            LostFocus="HintShow"
-                            KeyDown="URLInput_KeyDown" 
+                            LostFocus="HintShowSpeed"
+                            KeyDown="DownloadSpeed_KeyDown" 
                             Height="30"
                             HorizontalAlignment="Stretch"/>
                 </Grid>
