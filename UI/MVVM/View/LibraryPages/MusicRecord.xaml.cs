@@ -16,6 +16,8 @@ using Project.UI;
 using Project.Player;
 using Project.Data;
 
+// verfasst von Richard Förster
+
 namespace Project.UI.MVVM.View.LibraryPages
 {
     /// <summary>

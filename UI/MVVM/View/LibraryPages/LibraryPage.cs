@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// verfasst von Richard Förster
+
 namespace Project.UI.MVVM.View.LibraryPages
 {
 

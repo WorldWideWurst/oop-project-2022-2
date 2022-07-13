@@ -16,6 +16,8 @@ using Project.Data;
 using Project.Player;
 using System.Text.RegularExpressions;
 
+//erstellt von Janek Engel
+
 namespace Project.UI.MVVM.View
 {
     /// <summary>

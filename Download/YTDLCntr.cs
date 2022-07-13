@@ -1,4 +1,6 @@
 namespace Project.Download;
+
+// verfasst von Louis Rädisch
 public class YTDLAPI {
 
     public string Path { get; set; }
