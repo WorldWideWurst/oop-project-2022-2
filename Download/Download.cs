@@ -12,7 +12,7 @@ namespace Project.Download
     public class Download
     {
         public static readonly Download Instance = new Download();
-
+        //start ytdl
         public readonly string YTDLExecutablePath = "Download\\youtube-dl.exe";
         public readonly string DataDownloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.music_db\\download";
         public string MusicDownloadPath => DataDownloadPath + "\\music";
@@ -25,7 +25,7 @@ namespace Project.Download
             "--no-progress", // kein herunterlade-fortschritt wird ausgegeben
             "--write-thumbnail", // thumbnail wird heruntergeladen
             "-o {Target}", // da wo der kram (das thumbnail!) hin soll
-            "-v",  // verbosity
+            //"-v",  // verbosity
         };
 
         private readonly string[] DownloadOptions =
@@ -39,7 +39,7 @@ namespace Project.Download
             "--no-continue", // zuvor heruntergeladenes wird nicht weitergemacht
             "--newline", // damit der fortschritt begutachtet werden kann
             // "--limit-rate {DownloadSpeedLimit}", // downloadrate limitieren
-            "-v",  // verbosity
+            //"-v",  // verbosity
         };
 
         private readonly Regex progressRegex = new Regex("\\[download\\]\\s*(\\d+\\.\\d+)%");

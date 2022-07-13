@@ -127,5 +127,15 @@ namespace Project.UI
         {
             FullscreenView.Visibility = show == true ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        private void StartseiteButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SubMenu_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
