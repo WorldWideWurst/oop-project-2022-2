@@ -77,11 +77,15 @@ namespace Project.Data
         /// und es wird eine neue Datenbank aus dem SQL-Skript empty_musicdb_template.sqlite3.sql
         /// </summary>
         public const string Version = "0.5.2";
-        
+
+        /// <summary>
+        /// Wo alle Programmdaten gespeichert werden.
+        /// </summary>
+        public static readonly string DataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\MusicDB";
         /// <summary>
         /// Der Dateipfad der aktuellen Datenbank.
         /// </summary>
-        public static readonly string DefaultDBLoc = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"\\.music_db\\database\\{Version.Replace(".", "_")}.sqlite3";
+        public static readonly string DefaultDBLoc = $"{DataPath}\\database\\{Version.Replace(".", "_")}.sqlite3";
         /// <summary>
         /// Wo, relativ zu dieser Datei, das Erstellungsskript für eine neue leere Datenbank sich befindet.
         /// </summary>
