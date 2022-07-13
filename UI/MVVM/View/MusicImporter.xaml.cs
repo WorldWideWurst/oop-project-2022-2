@@ -18,6 +18,8 @@ using Project.Index;
 using Project.Data;
 using System.Threading;
 
+//erstellt von Richard Förster
+
 namespace Project.UI.MVVM.View
 {
     /// <summary>

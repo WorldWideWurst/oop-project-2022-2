@@ -11,6 +11,8 @@ using System.Windows;
 using System.Linq;
 using System.Collections.ObjectModel;
 
+// verfasst von Richard Förster
+
 namespace Project.Player
 {
 

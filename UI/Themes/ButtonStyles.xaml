@@ -249,7 +249,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <StackPanel>
-                        <Image x:Name="ButtonImage" Source="/UI/Images/info.png"
+                        <Image x:Name="ButtonImage" Source="/UI/Images/info_black.png"
                                RenderOptions.BitmapScalingMode="HighQuality"/>
                         <ContentPresenter />
                     </StackPanel>

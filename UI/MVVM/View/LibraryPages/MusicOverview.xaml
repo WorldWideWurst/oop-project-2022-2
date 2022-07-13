@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <!-- verfasst von Richard Förster, Design von Janek Engel -->
 
     <StackPanel>
         <Image Source="{Binding Path=Art.Key}"
