@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="100"
              Width="100" Height="200">
+    <!-- verfasst von Richard Förster, Design von Janek Engel -->
+    
     <StackPanel Margin="5"
                 PreviewMouseDown="GotoPlaylist_Click">
         <Button Name="GotoPlaylist"

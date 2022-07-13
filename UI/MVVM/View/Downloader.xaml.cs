@@ -21,6 +21,8 @@ using System.Windows.Threading;
 using Project;
 using Project.Download;
 
+//erstellt von Richard Förster
+
 namespace Project.UI.MVVM.View
 {
 

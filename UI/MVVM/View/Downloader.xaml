@@ -1,4 +1,4 @@
-﻿<!-- Erstellt von Louis Rädisch, angepasst von Janek Engel -->
+﻿<!-- Erstellt von Louis Rädisch, angepasst von Richard Förster, Design von Janek Engel -->
 
 <UserControl x:Class="Project.UI.MVVM.View.Downloader"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

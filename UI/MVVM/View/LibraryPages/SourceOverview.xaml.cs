@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Project.Data;
 
+// verfasst von Richard Förster
+
 namespace Project.UI.MVVM.View.LibraryPages
 {
     /// <summary>

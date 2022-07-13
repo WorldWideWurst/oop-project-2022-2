@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+// verfasst von Richard Förster
+
 namespace Project.UI.MVVM.View
 {
     /// <summary>

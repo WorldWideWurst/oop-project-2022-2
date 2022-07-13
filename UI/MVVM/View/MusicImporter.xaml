@@ -1,4 +1,4 @@
-﻿<!-- Erstellt von Richard Förster, visuell angepaJanek Engel -->
+﻿<!-- Erstellt von Richard Förster, visuell angepasst von Janek Engel -->
 
 <UserControl x:Class="Project.UI.MVVM.View.MusicImporter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
