@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Erstellt von Richard Förster
+
 namespace Project.UI.MVVM
 {
     /// <summary>

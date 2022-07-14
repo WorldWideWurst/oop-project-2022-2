@@ -51,7 +51,7 @@
 
     <!--Layout-Design von Philipp Funk, Umsetzung von Janek Engel -->
     <Grid x:Name="LayoutRoot"
-          Background="#FF454545"
+          Background="#202225"
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch">
 
@@ -60,7 +60,7 @@
               Margin="0,0,0,0" 
               VerticalAlignment="Top" 
               Height="30" 
-              Background="#FF323232"
+              Background="#2F3136"
               Panel.ZIndex="998">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -74,7 +74,8 @@
 		               VerticalAlignment="Center"
 		               FontSize="14"
                        Foreground="White"
-		               Text="Media Player" />
+		               Text="Media Player" 
+                       FontFamily="Gotham"/>
 
             <Button x:Name="CloseButton" 
                     Click="CloseButton_Click"
@@ -104,7 +105,7 @@
               HorizontalAlignment="Left"
               Width="280"
               Margin="0,30,0,100"
-              Background="#FF323232"
+              Background="#36393F"
               Panel.ZIndex="800">
 
             <StackPanel Height="200" VerticalAlignment="Top">
@@ -113,7 +114,7 @@
                              Click="StartseiteButton_Click" 
                              Content="Startseite"
                              Style="{StaticResource MenuButtonTheme}"
-                             IsChecked="True" Height="40"/>
+                             IsChecked="True" Height="40" Checked="StartseiteButton_Checked"/>
                 <RadioButton x:Name="BibliothekButton"
                              GroupName="Menu"
                              Click="BibliothekButton_Click"
@@ -135,26 +136,11 @@
                              Content="Einstellungen und Hilfe"
                              Style="{StaticResource MenuButtonTheme}" Height="40" />
             </StackPanel>
-            <views:SubMenu Margin="0,200,0,0" />
+            <views:SubMenu Margin="0,200,0,0" Loaded="SubMenu_Loaded" />
         </Grid>
         <ContentControl x:Name="ContentViewer"
                         Margin="280,30,0,100"
                         Content="{Binding }"/>
-
-        <!-- rein visueller Schatten -->
-        <Rectangle  Margin="0,0,0,100" 
-                    Panel.ZIndex="1000" 
-                    VerticalAlignment="Bottom" 
-                    HorizontalAlignment="Stretch" 
-                    Height="20"
-                    IsHitTestVisible="False">
-            <Rectangle.Fill>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#00323232" />
-                    <GradientStop Color="#FF222222" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
 
         <views:Fullscreen   x:Name="FullscreenView"
                             Margin="0,30,0,100"

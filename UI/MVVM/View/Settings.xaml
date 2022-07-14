@@ -1,4 +1,4 @@
-﻿<!-- Erstellt von Janek Engel -->
+﻿<!-- Erstellt von Janek Engel bearbeitet von Louis -->
 
 <UserControl x:Class="Project.UI.MVVM.View.Settings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,7 +7,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Project.UI.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1000" d:DesignWidth="800">
 
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Padding="10,0,10,0">
         <Grid>
@@ -65,9 +65,10 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Content="Intervall der Updates der Wiedergabeleiste in Sekunden" 
+                    <TextBlock Text="Intervall der Updates der Wiedergabeleiste in Sekunden" 
                            Foreground="White"
-                           Grid.Column="0"/>
+                           Grid.Column="0"
+                               VerticalAlignment="Center"/>
                     <Button x:Name="HelpTickSpeedButton"
                             MouseEnter="HelpButtonTickSpeed_MouseEnter"
                             MouseLeave="HelpButtonTickSpeed_MouseLeave" 
@@ -86,7 +87,6 @@
                         <Slider x:Name="TickpeedSlider"
                             HorizontalAlignment="Stretch"
                             ValueChanged="TickpeedSlider_ValueChanged"
-                            Margin="5,0,0,0"
                             Value="0.25"
                             Minimum="0.1"
                             Maximum="2"
@@ -96,21 +96,22 @@
                 </Grid>
                 <Grid Margin="0,0,0,10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Content="Beim Shufflen schon gespielte Songs ignorieren? (dieses feature funktioniert noch nicht)"
+                    <TextBlock Text="Beim Shufflen schon gespielte Songs ignorieren? (dieses feature funktioniert noch nicht)"
+                               VerticalAlignment="Center"
                        Foreground="White"/>
                     <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Center"
+                                HorizontalAlignment="Left"
                                 Grid.Row="1">
-                        <RadioButton Content="Yes" 
+                        <RadioButton Content="Ja" 
                                  Style="{DynamicResource StandardRadioButtonTheme}"
                                  GroupName="ShuffleExclude"
                                  IsChecked="True"
                                  Margin="0,0,30,0"
                                  Width="50" Height="30"/>
-                        <RadioButton Content="No"
+                        <RadioButton Content="Nein"
                                  Style="{DynamicResource StandardRadioButtonTheme}"
                                  GroupName="ShuffleExclude"
                                  Margin="50,0,0,0"
@@ -119,23 +120,23 @@
                 </Grid>
                 <Grid Margin="0,0,0,10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Label Content="Download-Geschwindigkeit limitieren?"
+                    <TextBlock Text="Download-Geschwindigkeit limitieren?"
+                               VerticalAlignment="Center"
                        Foreground="White"/>
                     <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Center"
+                                HorizontalAlignment="Left"
                                 Grid.Row="1">
-                        <RadioButton Content="Yes" 
+                        <RadioButton Content="Ja" 
                                      x:Name="DownloadSpeedLimitedButton"
                                  Style="{DynamicResource StandardRadioButtonTheme}"
                                  GroupName="DownloadSpeedLimit"
                                  Click="DownloadSpeedLimit_Click"
                                  Margin="0,0,30,0"
                                  Width="50" Height="30"/>
-                        <RadioButton Content="No"
+                        <RadioButton Content="Nein"
                                  Style="{DynamicResource StandardRadioButtonTheme}"
                                  GroupName="DownloadSpeedLimit"
                                  Click="DownloadSpeedLimit_Click"   
@@ -154,6 +155,120 @@
                         <TextBlock Text=" kiloByte"
                                    Foreground="White"
                                    FontSize="15"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Standard Download-Pfad:"
+                               VerticalAlignment="Center"
+                       Foreground="White"/>
+                    <TextBox    Name="Downloadpath"
+                                VerticalContentAlignment="Center"
+                                Text="Pfad hier eingeben!"
+                                MinWidth="200"
+                                Foreground="Gray"
+                                Grid.Row="1"
+                                GotFocus="HintNull" 
+                                LostFocus="HintShowPath"
+                                KeyDown="DownloadPath_KeyDown"
+                                Height="30"
+                                HorizontalAlignment="Stretch"/>
+                </Grid>
+                <Grid Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Downloadgeschwindigkeit:"
+                               VerticalAlignment="Center"
+                       Foreground="White"/>
+                    <TextBox    Name="Downloadgeschwindigkeit"
+                            VerticalContentAlignment="Center"
+                            MinWidth="200"
+                            Text="in byte (2000, 50k etc.)"
+                            Foreground="Gray"
+                            Grid.Row="1"
+                            GotFocus="HintNull" 
+                            LostFocus="HintShowSpeed"
+                            KeyDown="DownloadSpeed_KeyDown" 
+                            Height="30"
+                            HorizontalAlignment="Stretch"/>
+                </Grid>
+                <Grid Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Downloadqualität:"
+                               VerticalAlignment="Center"
+                       Foreground="White"/>
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Left"
+                                Grid.Row="1">
+                        <RadioButton Content="Niedrig" 
+                                 Style="{DynamicResource StandardRadioButtonTheme}"
+                                 GroupName="ShuffleExclude"
+                                 IsChecked="True"
+                                 Margin="0,0,80,0"
+                                 Width="50" Height="30"/>
+                        <RadioButton Content="Medium"
+                                 Style="{DynamicResource StandardRadioButtonTheme}"
+                                 GroupName="ShuffleExclude"
+                                 Margin="0,0,80,0"
+                                 Width="50" Height="30"/>
+                        <RadioButton Content="Hoch"
+                                 Style="{DynamicResource StandardRadioButtonTheme}"
+                                 GroupName="ShuffleExclude"
+                                 Width="50" Height="30"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Geobypass:"
+                               VerticalAlignment="Center"
+                       Foreground="White"/>
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Left"
+                                Grid.Row="1">
+                        <RadioButton Content="Ja" 
+                                 Style="{DynamicResource StandardRadioButtonTheme}"
+                                 GroupName="ShuffleExclude"
+                                 IsChecked="True"
+                                 Margin="0,0,80,0"
+                                 Width="50" Height="30"/>
+                        <RadioButton Content="Nein"
+                                 Style="{DynamicResource StandardRadioButtonTheme}"
+                                 GroupName="ShuffleExclude"
+                                 Width="50" Height="30"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Gleiche Dateien überschreiben:"
+                               VerticalAlignment="Center"
+                       Foreground="White"/>
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Left"
+                                Grid.Row="1">
+                        <RadioButton Content="Ja" 
+                                 Style="{DynamicResource StandardRadioButtonTheme}"
+                                 GroupName="OverwriteExistingFiles"
+                                 IsChecked="True"
+                                 Margin="0,0,80,0"
+                                 Width="50" Height="30"/>
+                        <RadioButton Content="Nein"
+                                 Style="{DynamicResource StandardRadioButtonTheme}"
+                                 GroupName="OverwriteExistingFiles"
+                                 Width="50" Height="30"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>

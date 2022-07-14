@@ -92,5 +92,45 @@ namespace Project.UI.MVVM.View
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-}
+
+        private void HintNull(object sender, RoutedEventArgs e)
+        {
+            TextBox TargetBox = (TextBox)sender;
+            if (TargetBox.Text == "Pfad hier eingeben!" || TargetBox.Text == "in byte (2000, 50k etc.)")
+            {
+                TargetBox.Text = null;
+                TargetBox.Foreground = Brushes.Black;
+            }
+        }
+
+        private void HintShowPath(object sender, RoutedEventArgs e)
+        {
+            TextBox TargetBox = (TextBox)sender;
+            if (TargetBox.Text == "")
+            {
+                TargetBox.Foreground = Brushes.Gray;
+                TargetBox.Text = "Pfad hier eingeben!";
+            }
+        }
+
+        private void HintShowSpeed(object sender, RoutedEventArgs e)
+        {
+            TextBox TargetBox = (TextBox)sender;
+            if (TargetBox.Text == "")
+            {
+                TargetBox.Foreground = Brushes.Gray;
+                TargetBox.Text = "in byte (2000, 50k etc.)";
+            }
+        }
+
+        private void DownloadPath_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void DownloadSpeed_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+    }
 }
