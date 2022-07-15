@@ -158,12 +158,10 @@
                                 Click="DeleteDownloadButton_Click"
                                 Style="{DynamicResource StandardButtonTheme}"
                                 IsEnabled="{Binding CanDeleteDownload}"/>
-                            <RadioButton Name="AutoDownloadRadioButton" Content="Warteschlange abarbeiten"
-                                     Foreground="White"
-                                     Margin="0,5,0,0"
-                                     Unchecked="AutoDownloadRadioButton_Unchecked"
-                                     Checked="AutoDownloadRadioButton_Checked"
-                                     IsChecked="{Binding AutoDownloadEnabled}"/>
+                            <CheckBox Name="AutoDownloadCheckBox" Content="Warteschlange abarbeiten"
+                                      Foreground="White"
+                                      Margin="0,5,0,0"
+                                      IsChecked="{Binding AutoDownloadEnabled, Mode=TwoWay}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

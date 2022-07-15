@@ -250,7 +250,7 @@ namespace Project.UI.MVVM.View
                 {
                     Queue.Insert(0, CurrentEntry);                
                 }
-                AutoDownloadEnabled = true;
+                downloadNext();
             }
         }
 
@@ -295,16 +295,6 @@ namespace Project.UI.MVVM.View
             Queue.Remove(entry);
             entry.Stage = DownloadStage.Error;
             Done.Add(entry);
-        }
-
-        private void AutoDownloadRadioButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            AutoDownloadEnabled = false;
-        }
-
-        private void AutoDownloadRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            AutoDownloadEnabled = true;
         }
 
 
