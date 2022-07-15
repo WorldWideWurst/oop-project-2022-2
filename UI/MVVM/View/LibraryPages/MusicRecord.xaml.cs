@@ -46,7 +46,7 @@ namespace Project.UI.MVVM.View.LibraryPages
                 {
                     Text = artist.ArtistId,
                     Foreground = Brushes.White,
-                    FontSize = 14
+                    FontSize = 13
                 });
             }
         }
