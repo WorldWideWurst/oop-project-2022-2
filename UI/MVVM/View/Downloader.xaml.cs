@@ -152,7 +152,7 @@ namespace Project.UI.MVVM.View
             var downloadEntry = new DownloadEntry()
             {
                 Info = downloadInfo,
-                Target = $"{Download.Download.Instance.DataDownloadPath}\\{downloadInfo.Title}.mp3",
+                Target = $"{Config.getconf(3)}.mp3",
                 Progress = 0f,
                 Stage = DownloadStage.Waiting,
                 Settings = new DownloadSettings()

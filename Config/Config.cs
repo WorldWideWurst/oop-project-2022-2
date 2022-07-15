@@ -1,12 +1,13 @@
 using System;
 using System.IO;
-
-class Config
+using Project;
+public class Config
 {
-    String path;
-    public Config(String path)
+    static String path;
+     static Config()
     {
-        this.path = path;
+        path = Project.Data.Database.DataPath + "\\Config.txt";
+
         if (!File.Exists(path))
         {
             // Create a file to write to.
@@ -15,7 +16,7 @@ class Config
                 //first init
                 sw.WriteLine("Config");
                 sw.WriteLine("Donwloader");
-                sw.WriteLine("path:");
+                sw.WriteLine("path:" + Project.Data.Database.DataPath);
                 sw.WriteLine("speed:0");
                 sw.WriteLine("default quality:0");
                 sw.WriteLine("socket-timeout SECONDS:");
@@ -28,24 +29,16 @@ class Config
                 sw.WriteLine("retries:");
                 sw.WriteLine("buffer-size:1024");
                 sw.WriteLine("no-overwrites:true");
-                sw.WriteLine(":");
-                sw.WriteLine(":");
-                sw.WriteLine(":");
-                sw.WriteLine(":");
-                sw.WriteLine(":");
-                sw.WriteLine(":");
-                sw.WriteLine(":");
-                sw.WriteLine(":");
             }
         }
     }
-    static void editconf(string vallue, string path, int line_to_edit)
+    public static void setconf(string vallue, int line_to_edit)
     {
         string[] arrLine = File.ReadAllLines(path);
         arrLine[line_to_edit - 1] = arrLine[line_to_edit - 1].Split(":")[0] + ":" + vallue;
         File.WriteAllLines(path, arrLine); 
     }
-    static String readconf(string path, int line_to_read)
+    public static String getconf(int line_to_read)
     {
         string[] arrLine = File.ReadAllLines(path);
         return arrLine[line_to_read - 1];
