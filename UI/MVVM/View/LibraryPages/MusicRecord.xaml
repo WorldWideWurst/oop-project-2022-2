@@ -19,8 +19,8 @@
             <ColumnDefinition Width="40" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
-            <RowDefinition Height="15" />
+            <RowDefinition Height="22" />
+            <RowDefinition Height="18" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Button Name="PlayButton"
