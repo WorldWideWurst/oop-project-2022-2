@@ -341,6 +341,7 @@ namespace Project.UI.MVVM.View
             return currentDownloadProcess = Task.Run(() =>
             {
                 var e = Queue[0];
+                e.Stage = DownloadStage.Downloading;
                 Download.Download.Instance.DownloadMusic(e.Info.Source, e.Target, e.Settings, new DownloadProgressObserver(this, e));
                 if(AutoDownloadEnabled)
                 {

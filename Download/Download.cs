@@ -16,7 +16,7 @@ namespace Project.Download
         public static readonly Download Instance = new Download();
         //start ytdl
         public readonly string YTDLExecutablePath = "Download\\youtube-dl.exe";
-        public readonly string DataDownloadPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.music_db\\download";
+        public readonly string DataDownloadPath = Data.Database.DataPath;
         public string MusicDownloadPath => DataDownloadPath + "\\music";
         public string ThumbnailDownloadPath => DataDownloadPath + "\\thumbnails";
 
