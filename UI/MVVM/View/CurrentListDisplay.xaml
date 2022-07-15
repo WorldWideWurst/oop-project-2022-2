@@ -20,10 +20,11 @@
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <RadioButton GroupName="List"
-                             IsChecked="{Binding IsCurrentlyPlaying}">
+                             IsChecked="{Binding IsCurrentlyPlaying}"
+                             >
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="229" />
+                            <ColumnDefinition Width="210" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>

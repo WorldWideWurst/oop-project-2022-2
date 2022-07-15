@@ -312,6 +312,10 @@ namespace Project.Player
 
         public void RemoveMusic(int index)
         {
+            if(Repeat == RepeatState.RepeatQueue && index < repeatMark)
+            {
+                repeatMark--;
+            }
             if(index < CurrentIndex)
             {
                 currentIndex--;
