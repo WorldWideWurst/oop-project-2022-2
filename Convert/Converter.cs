@@ -61,7 +61,7 @@ namespace Project.Convert
                 ffmpegProcess.StartInfo.RedirectStandardError = true;
                 ffmpegProcess.StartInfo.CreateNoWindow = true;
             //ffmpeg.exe Pfad
-                ffmpegProcess.StartInfo.FileName = @"ffmpeg";
+                ffmpegProcess.StartInfo.FileName = @"Convert\ffmpeg";
             //ffmpeq konvertierungs command
             ffmpegProcess.StartInfo.Arguments = " -i \"" + source + "\" -vn \"" + target + "\"";  //source & target (Datei im falschen Format/ konvertierte mp3 Datei)
                 ffmpegProcess.Start();
