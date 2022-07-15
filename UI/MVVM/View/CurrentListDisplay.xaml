@@ -14,6 +14,8 @@
              ItemsSource="{Binding CurrentListMirror}"
              Background="#202225"
              BorderThickness="0"
+             HorizontalAlignment="Stretch"
+             HorizontalContentAlignment="Stretch"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListBox.ItemTemplate>
             <DataTemplate>
@@ -22,19 +24,12 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="229" />
-                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Button x:Name="RemoveButton"
-                                Style="{DynamicResource RemoveButton}"
-                                Click="Remove_Click" 
-                                VerticalAlignment="Center"
-                                Grid.Column="1"
-                                Grid.RowSpan="2"
-                                Width="20"/>
                         <TextBlock Text="{Binding Title}"
                                    Foreground="White"
                                    TextTrimming="CharacterEllipsis"
@@ -43,6 +38,13 @@
                                    Foreground="White"
                                    TextTrimming="CharacterEllipsis"
                                    Grid.Row="1"/>
+                        <Button x:Name="RemoveButton"
+                                Style="{DynamicResource RemoveButton}"
+                                Click="Remove_Click" 
+                                VerticalAlignment="Center"
+                                Grid.Column="1"
+                                Grid.RowSpan="2"
+                                Width="20"/>
                     </Grid>
                 </RadioButton>
             </DataTemplate>
