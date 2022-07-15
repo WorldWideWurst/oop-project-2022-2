@@ -91,36 +91,30 @@ namespace Project.UI.MVVM.View
         }
 
 
-        private void LikeCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            if(!Player.Player.Instance.IsIdle)
-            {
-                var favs = Data.Database.Instance.GetMusicList("Lieblingslieder").First(); // TODO: böser hack. Direkter zugriff über Guid auf Datenbank geht nicht, dann also über namen
-                new Data.MusicInList(Player.Player.Instance.CurrentMusic.Id, favs.Id)
-                {
-                    DateAdded = DateTime.Now,
-                }
-                .Insert();
-                LikeCheckbox.IsChecked = true;
-            }
-            else
-            {
-                LikeCheckbox.IsChecked = false;
-            }
-        }
-
-        private void LikeCheckbox_Unchecked(object sender, RoutedEventArgs e)
+        private void LikeCheckbox_Clicked(object sender, RoutedEventArgs e)
         {
             if (!Player.Player.Instance.IsIdle)
             {
                 var favs = Data.Database.Instance.GetMusicList("Lieblingslieder").First(); // TODO: böser hack. Direkter zugriff über Guid auf Datenbank geht nicht, dann also über namen
-                var mil = Data.Database.Instance.GetMusicInList(Player.Player.Instance.CurrentMusic.Id, favs.Id);
-                if(mil.HasValue)
+                if(LikeCheckbox.IsChecked.Value)
                 {
-                    mil.Value.Delete();
+                    // musik wird geliket
+                    var mil = new Data.MusicInList(Player.Player.Instance.CurrentMusic.Id, favs.Id)
+                    {
+                        DateAdded = DateTime.Now,
+                    };
+                    mil.Insert();
                 }
-                LikeCheckbox.IsChecked = false;
-            }
+                else
+                {
+                    // musik wird entliket
+                    var mil = Data.Database.Instance.GetMusicInList(Player.Player.Instance.CurrentMusic.Id, favs.Id);
+                    if (mil.HasValue && mil.Value.MusicId != Guid.Empty)
+                    {
+                        mil.Value.Delete();
+                    }
+                }
+             } 
         }
 
 
@@ -214,7 +208,8 @@ namespace Project.UI.MVVM.View
             else if (music.Sources.Target.Any()) SongNameText.Text = music.Sources.Target[0].Address.Split("\\").Last().Split(".").First();
             ArtistText.Text = music.Artists.Target.Any() ? new StringBuilder().AppendJoin(", ", music.Artists.Target.Select(mba => mba.ArtistId)).ToString() : "<unknown>";
             AlbumText.Text = music.AlbumName ?? "<unknown>";
-            LikeCheckbox.IsChecked = Data.Database.Instance.GetMusicInList(Data.Database.Instance.GetMusicList("Lieblingslieder").First().Id, Player.Player.Instance.CurrentMusic.Id).HasValue;
+            LikeCheckbox.IsEnabled = true;
+            LikeCheckbox.IsChecked = Data.Database.Instance.GetMusicInList(Data.Database.Instance.GetMusicList("Lieblingslieder").First().Id, Player.Player.Instance.CurrentMusic.Id).Value.MusicId != Guid.Empty;
         }
 
         //passiert wenn der Player Idle geht
@@ -225,6 +220,7 @@ namespace Project.UI.MVVM.View
             ArtistText.Text = null;
             AlbumText.Text = null;
             LikeCheckbox.IsChecked = false;
+            LikeCheckbox.IsEnabled = false;
         }
     }
 }

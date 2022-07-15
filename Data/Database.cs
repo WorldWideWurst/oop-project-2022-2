@@ -161,10 +161,10 @@ namespace Project.Data
             TableName = "music",
             Table = new ConversionTable<Music>.Entry<Music>[]
             {
-                new("id", m => m.Id),
+                new("id", m => m.Id.ToByteArray()),
                 new("title", m => m.Title),
                 new("album", m => m.AlbumName),
-                new("_album", m => m.AlbumId),
+                new("_album", m => m.AlbumId.GetValueOrDefault().ToByteArray()),
                 new("last_played", m => m.LastPlayed?.ToString("s")),
                 new("first_registered", m => m.FirstRegistered.ToString("s")),
                 new("_art", m => m.ArtAddress),
@@ -182,7 +182,7 @@ namespace Project.Data
             {
                 new("address", s => s.Address),
                 new("type", s => s.SourceType),
-                new("_source_of", s => s.MusicId),
+                new("_source_of", s => s.MusicId.ToByteArray()),
                 new("checksum", s => s.Checksum),
             },
             PrimaryKeys = 1,
@@ -193,7 +193,7 @@ namespace Project.Data
             TableName = "music_list",
             Table = new ConversionTable<MusicList>.Entry<MusicList>[]
             {
-                new("id", l => l.Id),
+                new("id", l => l.Id.ToByteArray()),
                 new("name", l => l.Name),
                 new("type", l => l.Type),
                 new("publish_date", l => l.PublishDate?.ToString("s")),
@@ -230,7 +230,7 @@ namespace Project.Data
             TableName = "_music_by_artist",
             Table = new ConversionTable<MusicByArtist>.Entry<MusicByArtist>[]
             {
-                new("_music", b => b.MusicId),
+                new("_music", b => b.MusicId.ToByteArray()),
                 new("_artist", b => b.ArtistId),
             },
             PrimaryKeys = 2,
@@ -241,8 +241,8 @@ namespace Project.Data
             TableName = "_music_in_list",
             Table= new ConversionTable<MusicInList>.Entry<MusicInList>[]
             {
-                new("_music", i => i.MusicId),
-                new("_list", i => i.ListId),
+                new("_music", i => i.MusicId.ToByteArray()),
+                new("_list", i => i.ListId.ToByteArray()),
                 new("position", i => i.Position),
                 new("date_added", i => i.DateAdded?.ToString("s")),
             },
@@ -441,7 +441,7 @@ namespace Project.Data
             // Command erstellen
             using var cmd = new SQLiteCommand("select * from music where id = @id", connection);
             // parameterdaten hinzufügen
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@id", id.ToByteArray());
             // PREPARE: nur wenn parameter hinzugefügt wurden
             cmd.Prepare();
 
@@ -520,7 +520,7 @@ namespace Project.Data
         internal IEnumerable<MusicByArtist> GetMusicArtists(Music music)
         {
             using var cmd = new SQLiteCommand("select * from _music_by_artist where _music = @_music", connection);
-            cmd.Parameters.AddWithValue("@_music", music.Id);
+            cmd.Parameters.AddWithValue("@_music", music.Id.ToByteArray());
             cmd.Prepare();
 
             return parseAll(cmd.ExecuteReader(), parseMusicByArtist);
@@ -529,7 +529,7 @@ namespace Project.Data
         internal IEnumerable<Source> GetMusicSources(Music music)
         {
             using var cmd = new SQLiteCommand("select * from source where _source_of = @_source_of", connection);
-            cmd.Parameters.AddWithValue("@_source_of", music.Id);
+            cmd.Parameters.AddWithValue("@_source_of", music.Id.ToByteArray());
             cmd.Prepare();
 
             return parseAll(cmd.ExecuteReader(), parseSource);
@@ -713,8 +713,8 @@ namespace Project.Data
         public MusicInList? GetMusicInList(Guid listId, Guid musicId)
         {
             using var cmd = new SQLiteCommand("select * from _music_in_list where _list = @_list and _music = @_music", connection);
-            cmd.Parameters.AddWithValue("@_list", listId);
-            cmd.Parameters.AddWithValue("@_music", musicId);
+            cmd.Parameters.AddWithValue("@_list", listId.ToByteArray());
+            cmd.Parameters.AddWithValue("@_music", musicId.ToByteArray());
             cmd.Prepare();
 
             return parseAll(cmd.ExecuteReader(), parseMusicInList).FirstOrDefault();
@@ -760,7 +760,7 @@ namespace Project.Data
                 inner join music m on m.id = ml._music
                 where l.id = @id
             ", connection);
-            cmd.Parameters.AddWithValue("@id", musicList.Id);
+            cmd.Parameters.AddWithValue("@id", musicList.Id.ToByteArray());
             cmd.Prepare();
 
             return parseAll(cmd.ExecuteReader(), parseMusic);

@@ -56,8 +56,8 @@
                 Panel.ZIndex="901" 
                 Margin="0,0,0,0">
             <CheckBox   x:Name="LikeCheckbox"
-                        Checked="LikeCheckbox_Checked"
-                        Unchecked="LikeCheckbox_Unchecked"
+                        Click="LikeCheckbox_Clicked"
+                        IsEnabled="False"
                         Style="{StaticResource LikeCheckbox}"
                         BorderBrush="{x:Null}" 
                         Height="35" Width="35"
