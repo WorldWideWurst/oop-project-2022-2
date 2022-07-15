@@ -79,15 +79,15 @@ namespace Project.UI.MVVM.View
 
         private void RepeatCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
+            Player.Player.Instance.Repeat = RepeatState.RepeatCurrent;
         }
         private void RepeatCheckbox_Unchecked(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
+            Player.Player.Instance.Repeat = RepeatState.NoRepeat;
         }
         private void RepeatCheckbox_Indeterminant(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Dieses Feature macht leider noch nichts :(");
+            Player.Player.Instance.Repeat = RepeatState.RepeatQueue;
         }
 
 
@@ -162,7 +162,7 @@ namespace Project.UI.MVVM.View
         //passiert bei jedem Tick 
         public void timer_Tick()
         {
-            lblStatus.Content = Player.Player.Instance.GetLabel();
+            lblStatus.Content = getPlayerLabel();
 
             if (!SongSlider.IsMouseCaptureWithin)
                 SongSlider.Value = Player.Player.Instance.GetSlider() * 100;
@@ -170,6 +170,41 @@ namespace Project.UI.MVVM.View
             PlayCheckbox.IsChecked = Player.Player.Instance.Playing;
             RandomizeCheckbox.IsChecked = Player.Player.Instance.Shuffle;
         }
+
+        private string getPlayerLabel()
+        {
+            var p = Player.Player.Instance;
+            string text;
+            if (p.CurrentState == PlayerState.Idle)
+            {
+                text = "Es wurde keine Musik ausgewählt!";
+            }
+            else if (p.CurrentState == PlayerState.Loading)
+            {
+                text = "Musik wird geladen...";
+            }
+            else
+            {
+                string format;
+                if (p.Duration >= new TimeSpan(1, 0, 0))
+                {
+                    format = @"hh\:mm\:ss";
+                }
+                else if (p.Duration >= new TimeSpan(0, 1, 0))
+                {
+                    format = @"mm\:ss";
+                }
+                else
+                {
+                    format = @"'00:'ss\.fff";
+                }
+                var dur = p.Duration.ToString(format);
+                var pos = p.Position.ToString(format);
+                text = $"{pos} / {dur}";
+            }
+            return text;
+        }
+
 
         //passiert wenn der Song geändert wird 
         public void Player_MusicChanged(Data.Music music, int index)

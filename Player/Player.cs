@@ -23,6 +23,13 @@ namespace Project.Player
         Loaded
     }
 
+    public enum RepeatState
+    {
+        NoRepeat,
+        RepeatCurrent,
+        RepeatQueue,
+    }
+
     public class Player
     {
 
@@ -74,6 +81,10 @@ namespace Project.Player
                 if (value < CurrentList.Count)
                 {
                     currentIndex = value;
+                    if(value < repeatMark)
+                    {
+                        repeatMark = value;
+                    }
                     LoadMusic(CurrentList[value]);
                 }
                 else
@@ -165,6 +176,7 @@ namespace Project.Player
                 shuffle = value;
                 if (!value) return;
 
+                // Algorithums kopiert aus StackOverflow
                 var rng = new Random();
                 int offset = CurrentIndex + 1;
                 int n = CurrentList.Count - offset;
@@ -180,6 +192,24 @@ namespace Project.Player
         }
         private bool shuffle = false;
 
+        public RepeatState Repeat
+        {
+            get => repeat;
+            set
+            {
+                if(value == RepeatState.RepeatQueue)
+                {
+                    repeatMark = CurrentIndex;
+                }
+                else if(value == RepeatState.NoRepeat)
+                {
+                    repeatMark = -1;
+                }
+                repeat = value;
+            }
+        }
+        private RepeatState repeat = RepeatState.NoRepeat;
+        private int repeatMark = -1;
 
         public TimeSpan Tickspeed
         {
@@ -201,12 +231,38 @@ namespace Project.Player
 
         public void PlayNext()
         {
-            CurrentIndex++;
+            if(Repeat == RepeatState.RepeatCurrent)
+            {
+                RestartMusic();
+            }
+            else if(Repeat == RepeatState.RepeatQueue && CurrentIndex == CurrentList.Count - 1)
+            {
+                if(repeatMark > CurrentIndex)
+                {
+                    repeatMark = CurrentIndex;
+                }
+                CurrentIndex = repeatMark;
+            }
+            else
+            {
+                CurrentIndex++;
+            }
         }
 
         public void PlayPrevious()
         {
-            CurrentIndex--;
+            if (Repeat == RepeatState.RepeatCurrent)
+            {
+                RestartMusic();
+            }
+            else if (Repeat == RepeatState.RepeatQueue && CurrentIndex == repeatMark)
+            {
+                CurrentIndex = CurrentList.Count - 1;
+            }
+            else
+            {
+                CurrentIndex--;
+            }
         }
 
         public void RestartMusic()
@@ -329,39 +385,6 @@ namespace Project.Player
             PlayerTickUpdate?.Invoke();
         }
 
-        public string GetLabel()
-         {
-             string text;
-             if(CurrentState == PlayerState.Idle)
-             {
-                 text = "Es wurde keine Musik ausgewählt!";
-             }
-             else if(CurrentState == PlayerState.Loading)
-             {
-                 text = "Musik wird geladen...";
-             }
-             else
-             {
-                 string format;
-                 if(Duration >= new TimeSpan(1, 0, 0))
-                 {
-                     format = @"hh\:mm\:ss";
-                 }
-                 else if(Duration >= new TimeSpan(0, 1, 0))
-                 {
-                     format = @"mm\:ss";
-                 }
-                 else
-                 {
-                     format = @"'00:'ss\.fff";
-                 }
-                 var dur = Duration.ToString(format);
-                 var pos = Position.ToString(format);
-                 text = $"{pos} / {dur}";
-             }
-             return text;
-         }
-
-         public double GetSlider() => PositionRatio;
+        public double GetSlider() => PositionRatio;
     }
 }
