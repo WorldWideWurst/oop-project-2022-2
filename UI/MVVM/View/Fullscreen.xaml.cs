@@ -1,4 +1,6 @@
-﻿using System;
+﻿// verfasst von Janek Engel und Philipp Funk <3
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,12 @@ namespace Project.UI.MVVM.View
         public Fullscreen()
         {
             InitializeComponent();
+            Player.Player.Instance.CurrentMusicChanged += Player_MusicChanged;
+        }
+
+        private void Player_MusicChanged(Data.Music music, int index)
+        {
+            FullscreenTitle.Text = music.Title;
         }
     }
 }

@@ -33,6 +33,7 @@
     <None Remove="UI\Images\help_hover.png" />
     <None Remove="UI\Images\info.png" />
     <None Remove="UI\Images\info_hover.png" />
+    <None Remove="UI\Images\Kassette.png" />
     <None Remove="UI\Images\loop.png" />
     <None Remove="UI\Images\loop_hover.png" />
     <None Remove="UI\Images\loop_list.png" />
@@ -138,6 +139,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\info_hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\Images\Kassette.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\Images\loop.png">
