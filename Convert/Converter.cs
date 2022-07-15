@@ -45,17 +45,13 @@ namespace Project.Convert
         /// <summary>
         /// Temporäre statische funktion, die ffmpeg zum konvertieren Nutzt.
         /// </summary>
-        public void Convert(string[] args, string source, string target)
+        public void Convert(string source, string target)
         {
-            
-                //var source = args[0] + ".mp4";
-                //var target = args[1] + ".mp3";
+           
                
-            //Source Dateipfad
-                var inputFile = @"C:\Videos\Allein.mp4"; 
-            //Output Dateipfad
-                var outputFile = @"C:\Videos\output.mp3";
-                var mp3out = "";
+               
+            
+                //var mp3out = "";
                
                 var ffmpegProcess = new Process();
             //Einstellungen 
@@ -65,27 +61,35 @@ namespace Project.Convert
                 ffmpegProcess.StartInfo.RedirectStandardError = true;
                 ffmpegProcess.StartInfo.CreateNoWindow = true;
             //ffmpeg.exe Pfad
-                ffmpegProcess.StartInfo.FileName = @"C:\ffmpeg.exe";
+                ffmpegProcess.StartInfo.FileName = @"/ffmpeg.exe";
             //ffmpeq konvertierungs command
-                ffmpegProcess.StartInfo.Arguments = " -i " + inputFile + " -vn -f mp3 -ab 320k " + outputFile;  //source & target
+            ffmpegProcess.StartInfo.Arguments = " -i " + source + " -vn " + target;  //source & target (Datei im falschen Format/ konvertierte mp3 Datei)
                 ffmpegProcess.Start();
-                ffmpegProcess.StandardOutput.ReadToEnd();
-                mp3out = ffmpegProcess.StandardError.ReadToEnd();
-                ffmpegProcess.WaitForExit();
+            
+            ffmpegProcess.OutputDataReceived += (s, e) =>
+            {
+                if (e.Data == null) return;
+                Console.WriteLine(e.Data);
+            };
+            ffmpegProcess.BeginOutputReadLine();
+            ffmpegProcess.ErrorDataReceived += (s, e) =>
+            {
+                if (e.Data == null) return;
+                Console.WriteLine(e.Data);
+            };
+            ffmpegProcess.BeginErrorReadLine();
+            ffmpegProcess.WaitForExit();
             //ffmpeg schließen nach Prozessende
                 if (!ffmpegProcess.HasExited)
                 {
                     ffmpegProcess.Kill();
                 }
-               // Console.WriteLine(mp3out);
+                //Console.WriteLine(mp3out);
 
         }
 
 
-        public void Convert(string source, string target)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public bool SupportsConversion(string sourceExtension, string targetExtension)
         {

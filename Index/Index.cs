@@ -50,6 +50,7 @@ namespace Project.Index
             "ogg",
             "m4a",
             "wav",
+            "mp4",
         });
 
         private string[] playableExtensions;
