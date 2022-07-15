@@ -12,7 +12,7 @@
 
     <ListBox x:Name="List"
              ItemsSource="{Binding CurrentListMirror}"
-             Background="#202225"
+             Background="#ff323232"
              BorderThickness="0"
              HorizontalAlignment="Stretch"
              HorizontalContentAlignment="Stretch"
