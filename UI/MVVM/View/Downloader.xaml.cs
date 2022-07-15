@@ -206,7 +206,7 @@ namespace Project.UI.MVVM.View
         {
             if(CurrentEntry != null && e.AddedItems.Count > 0)
             {
-                CurrentEntry.Settings.Quality = (string)e.AddedItems[0] switch
+                CurrentEntry.Settings.Quality = (string)((ComboBoxItem)e.AddedItems[0]).Content switch
                 {
                     "Schlechteste" => QualitySetting.Lowest,
                     "Standard" => QualitySetting.Default,
