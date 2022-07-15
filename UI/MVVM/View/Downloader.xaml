@@ -45,7 +45,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition MaxHeight="70"/>
+                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
@@ -75,6 +75,7 @@
                       Grid.Column="0"
                       Grid.ColumnSpan="1"
                       Grid.Row="1"
+                          Margin="0,10,0,0"
                       DataContext="{Binding CurrentEntry}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -89,6 +90,7 @@
                                Grid.Column="0"
                                Grid.Row="0"
                                Grid.RowSpan="3"
+                               Margin="0,0,10,0"
                                Height="70"/>
                         <TextBlock Grid.Column="1"
                                Grid.Row="0"
@@ -168,14 +170,14 @@
                 <!-- With DataTemplate -->
                 <TextBlock Text="Warteschlange"
                        Foreground="White"
-                       Margin="0,5,0,5"/>
+                       Margin="0,10,0,5"/>
                 <ListBox BorderBrush="Transparent" 
-                     Grid.IsSharedSizeScope="True"
-                     HorizontalContentAlignment="Stretch"
-                     SelectionMode="Single"
-                     SelectionChanged="QueueDisplay_SelectionChanged"
-                     x:Name="Results"
-                     ItemsSource="{Binding Queue}">
+                         Grid.IsSharedSizeScope="True"
+                         HorizontalContentAlignment="Stretch"
+                         SelectionMode="Single"
+                         SelectionChanged="QueueDisplay_SelectionChanged"
+                         x:Name="Results"
+                         ItemsSource="{Binding Queue}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="4"
@@ -195,6 +197,36 @@
                                          Minimum="0"
                                          Maximum="1"
                                          Value="{Binding Progress}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock Text="Abgeschlossen"
+                           Foreground="White"
+                           Margin="0,10,0,5"/>
+                <ListBox BorderBrush="Transparent" 
+                         Grid.IsSharedSizeScope="True"
+                         HorizontalContentAlignment="Stretch"
+                         SelectionMode="Single"
+                         x:Name="DoneList"
+                         ItemsSource="{Binding Done}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="4"
+                                  HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Path=Info.Thumbnail}"
+                                       Margin="0,0,10,0"
+                                   Height="20"/>
+                                <TextBlock Grid.Column="1" 
+                                       Text="{Binding Path=Info.Title}" 
+                                       TextWrapping="Wrap"/>
+                                <TextBlock Grid.Column="2"
+                                           Text="{Binding Path=Stage}"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
