@@ -116,6 +116,11 @@ Benötigte Zeit: {(DateTime.Now - beginTime)}");
                     if (targetFile == null)
                         return () => { };
 
+                    if(File.Exists(targetFile))
+                    {
+                        return () => AddToList(AlreadyExistsList, AlreadyExistsListExpander, new ImportReportEntry(file[(dir.Length + 1)..]));
+                    }
+
                     try
                     {
                         Convert.Converter.Instance.Convert(file, targetFile);
