@@ -135,7 +135,7 @@ Benötigte Zeit: {(DateTime.Now - beginTime)}");
                     catch (Convert.ConversionException)
                     {
                         // konvertierung in angegebenes Format nicht möglich
-                        failureReason = $"Konnte nicht eingelesen werden und beim Konvertieren trat ein Fehler auf.";
+                        failureReason = $"Datei konnte nicht eingelesen werden und beim Konvertieren trat ein Fehler auf.";
                     }
                     catch (NotImplementedException)
                     {

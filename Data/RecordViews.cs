@@ -376,30 +376,32 @@ namespace Project.Data
     /// </summary>
     public class Art : IRecordView
     {
+        /// <summary>
+        /// Dateipfad einer Coverart-Datei.
+        /// </summary>
         public string Address { get; }
+        /// <summary>
+        /// Checksum, gleiches wie bei Source.
+        /// </summary>
+        /// <see cref="Source"/>
         public ulong? Checksum { get; set; }
 
+        /// <summary>
+        /// Art-Objekt konstruieren.
+        /// </summary>
         public Art(string address)
         {
             Address = address;
         }
 
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Insert()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
+        public void Delete() => throw new NotImplementedException();
+        public void Insert() => throw new NotImplementedException();
+        public void Save() => throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Verschiedene Typen von Musik
+    /// </summary>
     public enum MusicListType
     {
         Undefined,

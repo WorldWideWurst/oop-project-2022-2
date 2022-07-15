@@ -256,6 +256,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Convert\ffmpeg.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Download\youtube-dl.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

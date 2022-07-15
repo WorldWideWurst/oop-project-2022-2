@@ -6,7 +6,8 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
-// verfasst von Louis Rädisch
+// verfasst von Richard Förster
+// mit inspiration und mitarbeit von Louis Rädisch
 
 namespace Project.Download
 {

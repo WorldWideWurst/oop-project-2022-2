@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+// erstellt von Janek Engel, haupsächliche Design und Implementierungsarbeit von Phil Funk
+
 namespace Project.UI.MVVM.View
 {
     /// <summary>

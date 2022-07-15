@@ -15,14 +15,23 @@ using System.Collections.ObjectModel;
 
 namespace Project.Player
 {
-
+    /// <summary>
+    /// Mögliche Zustände für den Player
+    /// </summary>
     public enum PlayerState
     {
-        Idle,
-        Loading,
-        Loaded
+        Idle, // Es wird nichts abgespielt.
+        Loading, // Musik wird geladen.
+        Loaded // Musik ist spielbereit oder wird abgespielt.
     }
 
+    /// <summary>
+    /// Mögliche Zustände für den Repeat-Moduls.
+    /// NoRepeat: Kein Lied wird wiederholt, die Warteschlange wird abgearbeitet.
+    /// RepeatCurrent: Das Aktuelle Lied wird permanent wiederholt.
+    /// RepeatQueue: Wenn aktiviert, wird ab dem zu dem 
+    /// Zeitpunk spielenden Lied die Warteschlagne bis zum Ende wiederholt.
+    /// </summary>
     public enum RepeatState
     {
         NoRepeat,
@@ -30,13 +39,24 @@ namespace Project.Player
         RepeatQueue,
     }
 
+    /// <summary>
+    /// Zentrale Player-Klasse, die das Verwalten des Zustands des Musik-Players.
+    /// </summary>
     public class Player
     {
-
+        /// <summary>
+        /// Unterliegender Player, der das low-level Abspielen von Musik übernimmt.
+        /// </summary>
         private readonly MediaPlayer player = new();
+        /// <summary>
+        /// Sendet ticks aus, die regelmäßig Event Listener benachrichtigen über den Fortschritt des Musikabspielens.
+        /// </summary>
         private readonly DispatcherTimer timer = new();
 
 
+        /// <summary>
+        /// Zentrale Player-Instanz.
+        /// </summary>
         public static readonly Player Instance = new();
 
 
@@ -48,6 +68,8 @@ namespace Project.Player
             player.MediaOpened += Player_MediaOpened;
             player.MediaEnded += Player_MediaEnded;
 
+            // dieser Eventhandler sorgt dafür, dass wenn der Player gerade Idle ist und neues zur
+            // Warteschlange hinzugefügt wurde auch sofort diese neue Musik lädt.
             CurrentList.CollectionChanged += (sender, e) =>
             {
                 switch (e.Action)
@@ -62,8 +84,15 @@ namespace Project.Player
             };
         }
 
+        /// <summary>
+        /// Die Warteschlange. Ist eine ObservableCollection, damit Änderungen leichter von
+        /// Interessierten abgefangen werden können.
+        /// </summary>
         public ObservableCollection<Music> CurrentList { get; } = new ObservableCollection<Music>();
 
+        /// <summary>
+        /// Der momentane Index des aktuell gespielten Liedes in der Warteschlange.
+        /// </summary>
         public int CurrentIndex
         {
             get
@@ -97,8 +126,15 @@ namespace Project.Player
 
         private int currentIndex;
 
+        /// <summary>
+        /// Abfrage, ob der Player Idle (faul) ist.
+        /// </summary>
         public bool IsIdle => CurrentState == PlayerState.Idle;
 
+        /// <summary>
+        /// Genauere Abfrage des aktuellen STatus des Players.
+        /// </summary>
+        /// <seealso cref="PlayerState"/>
         public PlayerState CurrentState
         {
             get => currentState;
@@ -107,8 +143,17 @@ namespace Project.Player
         PlayerState currentState = PlayerState.Idle;
 
 
+        /// <summary>
+        /// Welches Musikstück atkuell gespielt wird.
+        /// </summary>
         public Music? CurrentMusic => IsIdle ? null : CurrentList[CurrentIndex];
 
+        /// <summary>
+        /// Ob der Player im Spiel-Moduls ist oder nicht.
+        /// Der Spielmodus wird selbst im Idle-Zustand erhalten - heißt, wenn der Player im Idle-Zustand
+        /// ist und man ein Lied in die Warteschlange hinzufügt, fängt dieser von selbst an zu spielen.
+        /// In diesem Verhalten unterchiedet er sich Beispielsweise von Spotify oder anderen Musik-Playern.
+        /// </summary>
         public bool Playing
         {
             get => playing;
@@ -134,14 +179,27 @@ namespace Project.Player
 
         private bool playing = false;
 
+        /// <summary>
+        /// Fortschritt von 0 bis 1 im Lied.
+        /// </summary>
         public double PositionRatio => IsIdle ? 0.0 : player.NaturalDuration.HasTimeSpan ? player.Position / player.NaturalDuration.TimeSpan : 0;
+        /// <summary>
+        /// Zeit-Position im Lied.
+        /// </summary>
         public TimeSpan Position => IsIdle ? TimeSpan.Zero : player.Position;
+        /// <summary>
+        /// Dauer des aktuellen Musikstücks.
+        /// </summary>
         public TimeSpan Duration => IsIdle ? TimeSpan.Zero : player.NaturalDuration.HasTimeSpan ? player.NaturalDuration.TimeSpan : player.Position;
 
 
         public void Play() => Playing = true;
         public void Pause() => Playing = false;
 
+        /// <summary>
+        /// Interne Funktion, um den internen Musikplayer zu beauftragen.
+        /// </summary>
+        /// <param name="music"></param>
         private void LoadMusic(Music music)
         {
             var source = music.Sources.Target[0];
@@ -158,6 +216,9 @@ namespace Project.Player
                 Player_MediaOpened(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Der interne Musikplayer wird mit sofortiger wirkung gestoppt.
+        /// </summary>
         private void Idle()
         {
             player.Stop();
@@ -167,7 +228,10 @@ namespace Project.Player
             PlayerTickUpdate?.Invoke();
         }
 
-
+        /// <summary>
+        /// Shuffle Modus. Wenn aktiviert, werden: 1. alle vor der aktuellen Musik vorhandene
+        /// Musikstücke gemischt und 2. alle hinzugefügten Musiklisten werden gemischt hinzugefügt.
+        /// </summary>
         public bool Shuffle
         {
             get => shuffle;
@@ -177,6 +241,7 @@ namespace Project.Player
                 if (!value) return;
 
                 // Algorithums kopiert aus StackOverflow
+                // mischt den inhalt der CurrentList zufällig
                 var rng = new Random();
                 int offset = CurrentIndex + 1;
                 int n = CurrentList.Count - offset;
@@ -192,6 +257,10 @@ namespace Project.Player
         }
         private bool shuffle = false;
 
+        /// <summary>
+        /// Repeat-Zustand des Players.
+        /// </summary>
+        /// <see cref="RepeatState"/>
         public RepeatState Repeat
         {
             get => repeat;
@@ -218,9 +287,17 @@ namespace Project.Player
         }
 
 
-
+        /// <summary>
+        /// Wird immer ausgelöst, wenn ein Tick-Update stattfindet. (standartmäßig alle 1/4 sekunden)
+        /// </summary>
         public event Action PlayerTickUpdate;
+        /// <summary>
+        /// Wird ausgelöst, wenn ein neues Musikstück angespielt wird.
+        /// </summary>
         public event Action<Music, int> CurrentMusicChanged;
+        /// <summary>
+        /// Wird ausgeläst, wenn der Player nicths mehr zu spielen hat und in den Zustand Idle geht.
+        /// </summary>
         public event Action WentIdle;
 
 
@@ -228,7 +305,12 @@ namespace Project.Player
 
 
 
-
+        /// <summary>
+        /// Command, um zum nächsten Lied zu wechseln.
+        /// Ist der Player im Repeat-Single-Modus, wird einfach das Aktuelle Lied wiederholt.
+        /// Ist er im RepeatQueue-Modus und ist er am ender der Warteschlange, beginnt er wieder
+        /// an einer Markierten stelle in der Warteschlange zu spielen.
+        /// </summary>
         public void PlayNext()
         {
             if(Repeat == RepeatState.RepeatCurrent)
@@ -249,6 +331,12 @@ namespace Project.Player
             }
         }
 
+        /// <summary>
+        /// Command, um zum vorherigen Lied zu wechseln.
+        /// Ist der Player im Repeat-Single-Modus, wird einfach das Aktuelle Lied wiederholt.
+        /// Ist er im RepeatQueue-Modus und ist er an einer markierten STelle in der Warteschlange angelangt,
+        /// beginnt er, das letzte lied in der Warteschlange zu spielen (wrap-around)
+        /// </summary>
         public void PlayPrevious()
         {
             if (Repeat == RepeatState.RepeatCurrent)
@@ -265,17 +353,31 @@ namespace Project.Player
             }
         }
 
+        /// <summary>
+        /// Setzt den aktuellen Spielfortschritt zurück.
+        /// Wiederholt die aktuelle Musik effektiv.
+        /// </summary>
         public void RestartMusic()
         {
             player.Position = TimeSpan.Zero;
         }
 
+        /// <summary>
+        /// Array zufällig Mischen.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
         private static T[] reorderRandom<T>(T[] list)
         {
             var r = new Random();
             return list.OrderBy(e => r.Next()).ToArray();
         }
 
+        /// <summary>
+        /// Fügt eine ganze Musikliste hinten an die Warteschlange an,
+        /// </summary>
+        /// <param name="list"></param>
         public void AppendMusicList(Data.MusicList list)
         {
             var entries = list.MusicEntries.Target;
@@ -287,6 +389,10 @@ namespace Project.Player
             }
         }
 
+        /// <summary>
+        /// fügt eine ganze Musikliste direkt hinter das aktuelle Musikstück ein.
+        /// </summary>
+        /// <param name="list"></param>
         public void PrependMusicList(MusicList list)
         {
             var entries = list.MusicEntries.Target;
@@ -299,23 +405,37 @@ namespace Project.Player
             }
         }
 
+        /// <summary>
+        /// Fügt ein einzelnes Musikstück direkt hinter das aktuelle ein.
+        /// </summary>
+        /// <param name="music"></param>
         public void PrependMusic(Music music)
         {
             int offset = CurrentIndex + (IsIdle ? 0 : 1);
             CurrentList.Insert(offset, music);
         }
 
+        /// <summary>
+        /// Fügt Musik an das Ende der Warteschlange an.
+        /// </summary>
+        /// <param name="music"></param>
         public void AppendMusic(Music music)
         {
             CurrentList.Add(music);
         }
 
+        /// <summary>
+        /// Entfernt einen Eintrag aus der WArteschlange.
+        /// </summary>
+        /// <param name="index"></param>
         public void RemoveMusic(int index)
         {
+            // repeatMark wenn nötig verschieben
             if(Repeat == RepeatState.RepeatQueue && index < repeatMark)
             {
                 repeatMark--;
             }
+            // den aktuelle Liedindex auch verschieben falls nötig
             if(index < CurrentIndex)
             {
                 currentIndex--;
@@ -327,6 +447,10 @@ namespace Project.Player
             }
         }
 
+        /// <summary>
+        /// Eine kombinierte Methode, um ein Lied sofort abzuspielen. Klick, Play.
+        /// </summary>
+        /// <param name="music"></param>
         public void PlayImmediately(Music music)
         {
             if(IsIdle)
@@ -348,12 +472,19 @@ namespace Project.Player
             Playing = true;
         }
 
-
+        /// <summary>
+        /// Lautstärke ändern.
+        /// </summary>
+        /// <param name="volume"></param>
         public void ChangeVolume(double volume)
         {
             player.Volume = volume;
         }
 
+        /// <summary>
+        /// Spiel-Fortschritt setzen.
+        /// </summary>
+        /// <param name="value"></param>
         public void ChangedSliderValue(double value)
         {
             if (!IsIdle)
@@ -364,7 +495,9 @@ namespace Project.Player
         }
 
 
-        //Event tritt bei jedem Tick des Timers auf
+        /// <summary>
+        /// Event tritt bei jedem Tick des Timers auf
+        /// </summary>
         private void timer_Tick(object sender, EventArgs e)
         {
             PlayerTickUpdate?.Invoke();
@@ -389,6 +522,10 @@ namespace Project.Player
             PlayerTickUpdate?.Invoke();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public double GetSlider() => PositionRatio;
     }
 }

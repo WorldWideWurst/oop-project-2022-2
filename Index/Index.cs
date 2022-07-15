@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-// verfasst von Richard Förster
+// verfasst von Phil Funk
 
 namespace Project.Index
 {
