@@ -16,14 +16,7 @@
             </Image.Effect>
         </Image>
 
-        <StackPanel>
-            <TextBlock Text="Wiedergabe auf Kassette" 
-                                   Foreground="White" 
-                                   FontSize="15" 
-                                   Height="auto" 
-                                   VerticalAlignment="Top" 
-                                   Margin="10,0,10,0" />
-        </StackPanel>
+       
         
         <Image x:Name="image" Source="/UI/Images/Kassette.png"
                Margin="0,10,0,10"
